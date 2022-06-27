@@ -1,0 +1,58 @@
+.container {
+    font-family: "Roboto", sans-serif;
+    background-size: cover;
+    height: 100%;
+    width: 68%;
+    position: fixed;
+    top: 0;
+    overflow-y: "hidden";
+    left: 0;
+  }
+  .container ::-webkit-scrollbar {
+    display: none;
+  }
+  .container .wrap-gambar {
+    display: flex;
+    flex-direction: row;
+  }
+  .container .login {
+    width: 100%;
+    margin-left: 5%;
+    padding-top: 21%;
+  }
+  .container .div2 .label-input {
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #02414D;
+  }
+  .container .div2 .button {
+    background-color: #02414D;
+    border-color: #02414D;
+    color: white;
+    margin-top: 10px;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 300%;
+  }
+  .container .div2 .button:hover {
+    background: #011c22;
+  }
+  .container .div2 .input {
+    background-color: #F5F5F5;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    color: #02414D;
+    width: 300%;
+    margin-bottom: 20px;
+  }
+  .container .gambar {
+    display: flex;
+    width: 100%;
+  }
+  .container p {
+    font-size: 16px;
+    color: red;
+  }/*# sourceMappingURL=login.css.map */
