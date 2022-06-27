@@ -1,8 +1,8 @@
 .container {
     font-family: "Roboto", sans-serif;
     background-size: cover;
-    height: 100%;
-    width: 68%;
+    height: 120%;
+    width: 120%;
     position: fixed;
     top: 0;
     overflow-y: "hidden";
@@ -18,7 +18,8 @@
   .container .login {
     width: 100%;
     margin-left: 5%;
-    padding-top: 21%;
+    padding-top: 13%;
+   
   }
   .container .div2 .label-input {
     font-size: 14px;
@@ -34,7 +35,7 @@
     padding: 10px;
     font-weight: bold;
     border-radius: 10px;
-    width: 300%;
+    width: 40%;
   }
   .container .div2 .button:hover {
     background: #011c22;
@@ -45,7 +46,7 @@
     border-radius: 10px;
     border: none;
     color: #02414D;
-    width: 300%;
+    width: 40%;
     margin-bottom: 20px;
   }
   .container .gambar {
