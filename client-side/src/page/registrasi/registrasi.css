@@ -55,7 +55,9 @@
   }
   .container p {
     font-size: 16px;
-    color: rgb(2, 0, 0); 
-    position: relative;
-    align-items: center;
+    color: red;
   }/*# sourceMappingURL=login.css.map */
+
+  h1 {
+    color:#102D81
+  }
