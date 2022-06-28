@@ -48,11 +48,12 @@
   font-weight: bold;
   background-color: #ffffff;
   color: #102D81;
+  height: 70px;
 }
 .body .sidebar .iconSidebar {
-  margin-right: 16px;
-  align-items: center;
-  font-size: 25px;
+    margin-right: 16px;
+    align-items: center;
+    font-size: 25px;
 }
 .body .sidebar img {
   padding-top: 10px;
@@ -73,9 +74,9 @@
   margin-left: 20%;
   position: absolute;
 }
-.body .head::-webkit-scrollbar {
+/* .body .head::-webkit-scrollbar {
   display: none;
-}
+} */
 .body .head .wrap-bagianAtas {
   display: flex;
   flex-direction: row;
@@ -85,31 +86,11 @@
 }
 .body .head .wrap-bagianAtas .bagianAtas {
   color: #102D81;
-  width: 50%;
+  width: 60%;
   margin-left: 30px;
-  align-items: center;
   align-self: center;
   height: 8vh;
   font-size: 1em;
-}
-.body .head .table-bordered {
-  margin-left: 10%;
-  align-items: center;
-  width: 60%;
-}
-.body .head .table-bordered tbody tr:nth-child(odd) {
-  background-color: #fff;
-}
-.body .head .table-bordered thead {
-  margin-right: 80%;
-}
-.body .head .table-bordered th {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #102D81;
-}
-.body .head .table-bordered tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
 }
 .body .head .wrap-table {
   padding-top: 5px;
@@ -117,7 +98,6 @@
   width: 100%;
   background-color: #fff;
   align-items: center;
-  justify-content: center;
   margin-top: 10px;
 }
 .body .head .wrap-table .flex-input {
@@ -125,29 +105,21 @@
   align-items: stretch;
   width: 95%;
 }
-.body .head .wrap-table img {
-  width: 50%;
-  height: 50%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
 .body .head .wrap-table .wrap-input {
   display: grid;
   width: 100%;
   padding-top: 20px;
 }
 .body .head .wrap-table .wrap-input .label-input {
-  font-size: 25px;
-  margin-left: 20px;
-  margin-bottom: 10px;
+  font-size: 12px;
+  margin-left: 18px;
+  margin-bottom: 2px;
   font-weight: bold;
   color: #102D81;
 }
 .body .head .wrap-table .wrap-input .input-field {
-  font-size: 15px;
   background-color: #F5F5F5;
-  height: 50px;
+  height: 40px;
   border-radius: 10px;
   border: none;
   color: #102D81;
@@ -156,33 +128,7 @@
   margin-right: 20px;
   padding-left: 10px;
 }
-.body .head .wrap-table .wrap-input textarea {
-  font-family: Arial;
-}
-.body .head .wrap-table .wrap-input textarea ::-moz-placeholder {
-  font-family: "Roboto";
-}
-.body .head .wrap-table .wrap-input textarea :-ms-input-placeholder {
-  font-family: "Roboto";
-}
-.body .head .wrap-table .wrap-input textarea ::placeholder {
-  font-family: "Roboto";
-}
-.body .head .wrap-table .wrap-input .container {
-  display: block;
-  position: relative;
-  padding-left: 20px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.body .head .wrap-table .wrap-input option {
-  font-size: 16px;
-}
-.body .head .wrap-table .btn-ubah {
+.body .head .wrap-table .btn-edit {
   background-color: #102D81;
   color: white;
   border: none;
@@ -193,28 +139,28 @@
   margin-left: 15px;
   margin-bottom: 20px;
 }
-.body .head .wrap-table .btn-ubah:hover {
+.body .head .wrap-table .btn-edit:hover {
   background: #011c22;
 }
-.body .head .wrap-table .table {
+/* .body .head .wrap-table .table {
   margin-left: 15px;
   margin-right: 15px;
   margin-top: 15px;
-}
-.body .head .wrap-table .table table {
+} */
+/* .body .head .wrap-table .table table {
   border-collapse: collapse;
-  border: 10px solid #090909;
+  border: 1px solid #EBEBEB;
   text-align: center;
   vertical-align: middle;
   width: 100%;
 }
 .body .head .wrap-table .table table thead {
   background-color: #f5f5f5;
-  color: #102D81;
+  color: #02414D;
   font-size: 15px;
   letter-spacing: 2%;
-}
-.body .head .wrap-table .table table thead th {
+} */
+/* .body .head .wrap-table .table table thead th {
   width: 25%;
 }
 .body .head .wrap-table .table table tbody tr:nth-child(odd) {
@@ -222,10 +168,10 @@
 }
 .body .head .wrap-table .table table tbody tr:nth-child(even) {
   background-color: #f5f5f5;
-}
-.body .head .wrap-table .table table th,
+} */
+/* .body .head .wrap-table .table table th,
 .body .head .wrap-table .table table td {
   padding: 8px;
   font-size: 12px;
-  color: #102D81;
-}/*# sourceMappingURL=form.css.map */
+  color: #02414D;
+}# sourceMappingURL=editRegist1.css.map */
