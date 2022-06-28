@@ -10,7 +10,7 @@
   top: 0;
   width: 340px;
   height: 100%;
-  background: #02414D;
+  background: #102D81;
 }
 .body .sidebar .header {
   font-size: 48px;
@@ -47,7 +47,7 @@
 .body .sidebar .active {
   font-weight: bold;
   background-color: #ffffff;
-  color: #02414D;
+  color: #102D81;
   height: 70px;
 }
 .body .sidebar .iconSidebar {
@@ -85,7 +85,7 @@
   height: 15%;
 }
 .body .head .wrap-bagianAtas .bagianAtas {
-  color: #02414D;
+  color: #102D81;
   width: 60%;
   margin-left: 30px;
   align-self: center;
@@ -115,21 +115,21 @@
   margin-left: 18px;
   margin-bottom: 2px;
   font-weight: bold;
-  color: #02414D;
+  color: #102D81;
 }
 .body .head .wrap-table .wrap-input .input-field {
   background-color: #F5F5F5;
   height: 40px;
   border-radius: 10px;
   border: none;
-  color: #02414D;
+  color: #102D81;
   width: 90%;
   margin-left: 20px;
   margin-right: 20px;
   padding-left: 10px;
 }
 .body .head .wrap-table .btn-edit {
-  background-color: #02414D;
+  background-color: #102D81;
   color: white;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
