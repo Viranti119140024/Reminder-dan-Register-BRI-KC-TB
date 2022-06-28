@@ -10,7 +10,7 @@
   top: 0;
   width: 340px;
   height: 100%;
-  background: #02414D;
+  background: #102d81;
 }
 .body .sidebar .header {
   font-size: 48px;
@@ -47,7 +47,7 @@
 .body .sidebar .active {
   font-weight: bold;
   background-color: #ffffff;
-  color: #02414D;
+  color: #102d81;
 }
 .body .sidebar img {
   padding-top: 10px;
@@ -79,7 +79,7 @@
   height: 15%;
 }
 .body .head .wrap-bagianAtas .bagianAtas {
-  color: #02414D;
+  color: #102d81;
   width: 50%;
   margin-left: 30px;
   align-items: center;
@@ -101,7 +101,7 @@
 .body .head .table-bordered th {
   font-size: 1.2em;
   font-weight: bold;
-  color: #02414D;
+  color: #102d81;
 }
 .body .head .table-bordered tbody tr:nth-child(even) {
   background-color: #f5f5f5;
@@ -137,14 +137,14 @@
   margin-left: 20px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #02414D;
+  color: #102d81;
 }
 .body .head .wrap-table .wrap-input .input-field {
   background-color: #F5F5F5;
   height: 40px;
   border-radius: 10px;
   border: none;
-  color: #02414D;
+  color: #102d81;
   width: 90%;
   margin-left: 20px;
   margin-right: 20px;
@@ -177,7 +177,7 @@
   font-size: 16px;
 }
 .body .head .wrap-table .btn-ubah {
-  background-color: #02414D;
+  background-color: #102d81;
   color: white;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -204,7 +204,7 @@
 }
 .body .head .wrap-table .table table thead {
   background-color: #f5f5f5;
-  color: #02414D;
+  color: #102d81;
   font-size: 15px;
   letter-spacing: 2%;
 }
@@ -221,5 +221,5 @@
 .body .head .wrap-table .table table td {
   padding: 8px;
   font-size: 12px;
-  color: #02414D;
+  color: #102d81;
 }/*# sourceMappingURL=form.css.map */

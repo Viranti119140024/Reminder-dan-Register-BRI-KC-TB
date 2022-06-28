@@ -10,7 +10,7 @@
   top: 0;
   width: 340px;
   height: 100%;
-  background: #02414D;
+  background: #102d81;
 }
 .body .sidebar .header {
   font-size: 48px;
@@ -46,7 +46,7 @@
 .body .sidebar .active {
   font-weight: bold;
   background-color: #fff;
-  color: #02414D;
+  color: #102d81;
   height: 70px;
 }
 .body .sidebar img {
@@ -70,7 +70,7 @@
   font-size: 40px;
 }
 .body .head .bagianAtas {
-  color: #02414D;
+  color: #102d81;
   width: 50%;
   margin-left: 30px;
   align-items: center;
@@ -80,7 +80,7 @@
 .body .head .line {
   height: 0.5%;
   width: 70%;
-  background-color: #02414D;
+  background-color: #102d81;
 }
 .body .head h2 {
   font-weight: bold;
@@ -97,7 +97,7 @@
   display: flex;
 }
 .body .head .btn_tambah {
-  background-color: #02414D;
+  background-color: #102d81;
   color: white;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -121,7 +121,7 @@
 }
 .body .head .table table thead {
   background-color: #f5f5f5;
-  color: #02414D;
+  color: #102d81;
   font-size: 15px;
   letter-spacing: 2%;
 }
@@ -138,5 +138,5 @@
 .body .head .table table td {
   padding: 10px;
   font-size: 12px;
-  color: #02414D;
+  color: #102d81;
 }/*# sourceMappingURL=historyRekamMedis.css.map */
