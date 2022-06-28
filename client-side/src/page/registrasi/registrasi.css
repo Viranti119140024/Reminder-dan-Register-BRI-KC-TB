@@ -25,11 +25,11 @@
     font-size: 14px;
     margin-bottom: 20px;
     font-weight: bold;
-    color: #02414D;
+    color: #102D81;
   }
   .container .div2 .button {
-    background-color: #02414D;
-    border-color: #02414D;
+    background-color: #102D81;
+    border-color: #102D81;
     color: white;
     margin-top: 10px;
     padding: 10px;
@@ -38,14 +38,14 @@
     width: 40%;
   }
   .container .div2 .button:hover {
-    background: #011c22;
+    background: #102D81;
   }
   .container .div2 .input {
     background-color: #F5F5F5;
     height: 40px;
     border-radius: 10px;
     border: none;
-    color: #02414D;
+    color: #102D81;
     width: 40%;
     margin-bottom: 20px;
   }
@@ -57,3 +57,7 @@
     font-size: 16px;
     color: red;
   }/*# sourceMappingURL=login.css.map */
+
+  h1 {
+    color:#102D81
+  }

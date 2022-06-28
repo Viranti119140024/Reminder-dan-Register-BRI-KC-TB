@@ -10,14 +10,14 @@
   top: 0;
   width: 340px;
   height: 100%;
-  background: #02414D;
+  background: #102D81;
 }
 .body .sidebar .header {
   font-size: 3rem;
   color: white;
   text-align: center;
   line-height: 100px;
-  background: #02414D;
+  background: #102D81;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -48,7 +48,7 @@
 .body .sidebar .active {
   font-weight: bold;
   background-color: #fff;
-  color: #02414D;
+  color: #102D81;
   height: 70px;
 }
 .body .sidebar .iconSidebar {
@@ -76,7 +76,7 @@
 }
 .body .head .Logo {
   font-size: 3rem;
-  color: #02414D;
+  color: #102D81;
   margin-top: 15%;
   text-align: center;
   align-content: center;
