@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./editRegist1.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Edit Register 1</title>
+</head>
+
+<body>
+  <div class="body">
+      <div class="sidebar">
+        <header class="header">RemindUs</header>
+          <ul class="ul">
+            <li>
+                <a href="">
+                  <img src="https://img.icons8.com/windows/48/FFFFFF/home-page.png" />
+                  <!-- <a target="_blank" href="https://icons8.com/icon/6g6b5Mh-1uJ7/home-page">Home Page icon by Icons8</a> -->
+                  <p>BERANDA</p>
+                </a>
+              </li>
+              <li>
+                <a href="" class="active">
+                  <img
+                    src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/02414D/external-hospital-bed-healthcare-tanah-basah-basic-outline-tanah-basah.png"
+                     />
+                  <!-- <img src="https://img.icons8.com/small/42/FFFFFF/user.png" /> -->
+                  <p>REGISTER</p>
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-healthcare-1-healthcare-tanah-basah-basic-outline-tanah-basah.png" 
+                  />
+                  <!-- <a target="_blank" href="https://icons8.com/icon/oCzpAjdWh4qT/healthcare-1">healthcare 1 icon by Icons8</a> -->
+                  <p>NOTIFIKASI</p>
+                </a>
+              </li>
+                <a href="">
+                  <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+                  <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+                  <p>Logout</p>
+                </a>
+              </li>
+        </ul>
+      </div>
+
+      <div class="head">
+        <div class="wrap-bagianAtas">
+          <div class="bagianAtas">
+            <h1>Detail Nama DEBITUR</h1>
+          </div>
+        </div>
+
+        <div class="wrap-table">
+          <form action="/edit_register" method="post">
+            <div class="wrap-input">
+              <label htmlfor="namaregister" class="label-input">
+                Nama Lengkap
+              </label>
+              <input
+                type="text"
+                class="input-field"
+              />
+            </div>
+            <div class="wrap-input">
+              <label htmlfor="NO.IPK" class="label-input">
+                NO. IPK
+              </label>
+              <input
+                type="text"
+                class="input-field"
+              />
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="NO.PTK" class="label-input">
+                  NO. PTK
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="akad" class="label-input">
+                  Akad
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="jangka_waktu" class="label-input">
+                  Jangka Waktu
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="jatuh_tempo" class="label-input">
+                  Jatuh Tempo
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="No_rekening" class="label-input">
+                  No. Rekening
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="suku_bunga" class="label-input">
+                  Suku Bunga
+                </label>
+                <input
+                  type="text"
+                  class="input-field"
+                />
+              </div>
+            </div>
+            <input type="submit" value="Edit Data" class="btn-edit" name="buttonEditData" />
+          </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
