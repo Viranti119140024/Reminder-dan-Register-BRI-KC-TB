@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+.body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.body .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background: #02414D;
+}
+.body .sidebar .header {
+  font-size: 48px;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+}
+.body .sidebar ul li {
+  list-style-type: none;
+}
+.body .sidebar ul a {
+  display: block;
+  height: 70px;
+  width: 100%;
+  line-height: 65px;
+  font-size: 22px;
+  color: white;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.4s;
+  list-style: none;
+  text-decoration: none;
+}
+.body .sidebar ul li:hover a {
+  padding-left: 20px;
+}
+.body .sidebar .active {
+  font-weight: bold;
+  background-color: #fff;
+  color: #02414D;
+  height: 70px;
+}
+.body .sidebar img {
+  padding-top: 10px;
+}
+.body .sidebar p {
+  margin-top: -80px;
+  padding-left: 60px;
+}
+.body .head {
+  width: calc(100% - 340px);
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: #F5F5F5;
+  margin-left: 20%;
+  position: fixed;
+  overflow-y: auto;
+}
+.body .head h1 {
+  font-size: 40px;
+}
+.body .head .bagianAtas {
+  color: #02414D;
+  width: 50%;
+  margin-left: 30px;
+  align-items: center;
+  align-self: center;
+  height: 100vh;
+}
+.body .head .line {
+  height: 0.5%;
+  width: 70%;
+  background-color: #02414D;
+}
+.body .head h2 {
+  font-weight: bold;
+  font-size: 25px;
+}
+.body .head .space {
+  justify-content: space-between;
+  display: flex;
+}
+.body .head .space p {
+  color: "black";
+}
+.body .head .buttonrekammedis {
+  display: flex;
+}
+.body .head .btn_tambah {
+  background-color: #02414D;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.body .head .btn_tambah:hover {
+  background: #011c22;
+}
+.body .head .table {
+  margin-top: 15px;
+}
+.body .head .table table {
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  text-align: center;
+  vertical-align: middle;
+  width: 190%;
+}
+.body .head .table table thead {
+  background-color: #f5f5f5;
+  color: #02414D;
+  font-size: 15px;
+  letter-spacing: 2%;
+}
+.body .head .table table thead th {
+  width: 8%;
+}
+.body .head .table table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+.body .head .table table tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+.body .head .table table th,
+.body .head .table table td {
+  padding: 10px;
+  font-size: 12px;
+  color: #02414D;
+}/*# sourceMappingURL=historyRekamMedis.css.map */
