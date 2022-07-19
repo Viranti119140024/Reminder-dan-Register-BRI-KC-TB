@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('statics', filename='login.css') }}">
+  <title>Login</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrap-gambar">
+      <img class="gambar" src="{{ url_for('static', filename='backlogin.png') }}">
+      
+      <div class="login">
+        <div class="div2">
+            
+            <h1>LOGIN</h1>
+            <form action="{{ url_for('login') }}" method="post">
+              <div class="wrap-input">
+                <label htmlfor="username" class="label-input">Username</label><br />
+                <input type="text" name="username" class="input" placeholder="Username" />
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="password" class="label-input">Password</label><br />
+                <input type="password" name="password" class="input" placeholder="Password" />
+              </div>
+              <p>{{ msg }}</p>
+              <input type="submit" value="LOGIN" class="button" />
+              <p></p>
+              <p>Belum Punya Akun?</p>
+              <input type="submit" value="SIGN IN" class="button" />
+              <p></p>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
