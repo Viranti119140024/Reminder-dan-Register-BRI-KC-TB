@@ -46,7 +46,7 @@
 }
 .body .sidebar .active {
   font-weight: bold;
-  background-color: #fff;
+  background-color: #F5F5F5;
   color: #102d81;
   height: 70px;
 }
@@ -145,7 +145,7 @@
 }/*# sourceMappingURL=historyRekamMedis.css.map */
 
 .body .head .bagianAtas .notif{
-    margin-top: 5%;
+    margin-top: 40px;
     position: relative;
 }
 .body .btn_close {
@@ -159,3 +159,17 @@
   margin-bottom: 30px;
 
 }
+
+.body .head .bagianAtas .inline{
+  position: relative;
+  display: inline-flex;
+  padding: 0%; 
+  margin-top: -20px;
+}
+
+.body .head .bagianAtas .inline .back{
+  float: left;
+  margin-top: 25px;
+  margin-right: 10px;
+}
+
