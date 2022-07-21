@@ -45,7 +45,7 @@
 }
 .body .sidebar .active {
   font-weight: bold;
-  background-color: #fff;
+  background-color: #F5F5F5;
   color: #102d81;
   height: 70px;
 }
@@ -93,24 +93,12 @@
 .body .head .space p {
   color: "black";
 }
-.body .head .buttonrekammedis {
-  display: flex;
-}
-.body .head .btn_tambah {
-  background-color: #102d81;
-  color: white;
-  border: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-}
-.body .head .btn_tambah:hover {
-  background: #011c22;
-}
-.body .head .table {
-  margin-top: 15px;
+
+
+
+.body .head .bagianAtas .table {
+  margin-top: 45px;
+  position: relative;
 }
 .body .head .table table {
   border-collapse: collapse;
@@ -118,6 +106,7 @@
   text-align: center;
   vertical-align: middle;
   width: 190%;
+  margin-top: 60px;
 }
 .body .head .table table thead {
   background-color: #f5f5f5;
@@ -140,3 +129,43 @@
   font-size: 12px;
   color: #102d81;
 }/*# sourceMappingURL=historyRekamMedis.css.map */
+
+.body .head .bagianAtas .inline{
+  position: relative;
+  display: inline-flex;
+  padding: 0%; 
+  margin-top: -7px;
+}
+
+.body .head .bagianAtas .inline .back{
+  float: left;
+  margin-top: 55px;
+  margin-right: 10px;
+}
+
+
+
+.body .head .bagianAtas .inline .jadwal{
+  margin-top: 40px;
+}
+
+.body .head .bagianAtas .inline .wrap-input .input-field{
+  margin-top: 55px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #E1E1E1; /* grey */
+border: none;
+color: white;
+padding: 5px 10px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 13px;
+border-radius: 10px;
+}
+
+.body .head .bagianAtas .inline h2{
+  line-height: 50px;
+  width: 650px;
+}

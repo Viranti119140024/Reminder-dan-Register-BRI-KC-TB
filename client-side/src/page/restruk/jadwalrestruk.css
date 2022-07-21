@@ -45,7 +45,7 @@
 }
 .body .sidebar .active {
   font-weight: bold;
-  background-color: #fff;
+  background-color: #F5F5F5;
   color: #102d81;
   height: 70px;
 }
@@ -62,7 +62,6 @@
   top: 0;
   right: 0;
   background-color: #F5F5F5;
-  margin-left: 20%;
   position: fixed;
   overflow-y: auto;
 }
@@ -75,11 +74,11 @@
 }
 .body .head .bagianAtas {
   color: #102d81;
-  width: 50%;
   margin-left: 30px;
   align-items: center;
   align-self: center;
   height: 100vh;
+  width: 50%;
 }
 .body .head .line {
   height: 0.5%;
@@ -114,7 +113,7 @@
   background: #011c22;
 }
 .body .head .table {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .body .head .table table {
   border-collapse: collapse;
@@ -150,6 +149,7 @@
 
 .body .head .bagianAtas .table .wrap-input  {
   align-content: center;
+  float: right;
 }
 
 .body .head .bagianAtas .inline .wrap-input  input {
@@ -168,6 +168,32 @@ border-radius: 10px;
 }
 
 .body .head .bagianAtas .inline{
-  display: inline-flex;
   position: relative;
+  display: inline-flex;
+  padding: 0%; 
+  margin-top: -7px;
+}
+
+.body .head .bagianAtas .inline .back{
+  float: left;
+  margin-top: 55px;
+  margin-right: 10px;
+}
+
+.body .head .bagianAtas .inline .lonceng{
+  margin-top: 55px;
+  margin-right: 10px;
+}
+
+.body .head .bagianAtas .inline .jadwal{
+  margin-top: 40px;
+}
+
+.body .head .bagianAtas .inline .wrap-input .input-field{
+  margin-top: 55px;
+}
+
+.body .head .bagianAtas .inline h2{
+  line-height: 50px;
+  width: 650px;
 }

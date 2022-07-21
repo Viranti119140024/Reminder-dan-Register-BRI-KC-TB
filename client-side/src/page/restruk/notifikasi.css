@@ -45,7 +45,7 @@
 }
 .body .sidebar .active {
   font-weight: bold;
-  background-color: #fff;
+  background-color: #F5F5F5;
   color: #102d81;
   height: 70px;
 }
@@ -76,6 +76,7 @@
   align-items: center;
   align-self: center;
   height: 100vh;
+  margin-top: 45px;
 }
 .body .head .line {
   height: 0.5%;
