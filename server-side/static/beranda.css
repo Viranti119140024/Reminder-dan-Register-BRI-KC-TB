@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+.body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.body .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background: #102D81;
+}
+.body .sidebar .header {
+  font-size: 3rem;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+  background: #102D81;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+}
+.body .sidebar ul li {
+  list-style-type: none;
+}
+.body .sidebar ul a {
+  display: block;
+  height: 70px;
+  width: 100%;
+  line-height: 65px;
+  font-size: 22px;
+  color: white;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.4s;
+  padding-left: -40px;
+  list-style: none;
+  text-decoration: none;
+}
+.body .sidebar ul li:hover a {
+  padding-left: 20px;
+}
+.body .sidebar .active {
+  font-weight: bold;
+  background-color: #fff;
+  color: #102D81;
+  height: 70px;
+}
+.body .sidebar .iconSidebar {
+  margin-right: 16px;
+  align-items: center;
+  font-size: 25px;
+}
+.body .sidebar img {
+  padding-top: 10px;
+}
+.body .sidebar p {
+  margin-top: -80px;
+  padding-left: 60px;
+}
+.body .head {
+  width: calc(100% - 340px);
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: #F5F5F5;
+  margin-left: 20%;
+  position: fixed;
+  align-content: center;
+  display: block;
+}
+.body .head .Logo {
+  font-size: 3rem;
+  color: #102D81;
+  margin-top: 15%;
+  text-align: center;
+  align-content: center;
+  font-weight: 900;
+  font-family: "Montserrat", sans-serif;
+}
+
+.body .head .Logo img {
+    height: 200px;
+    width: 250px;
+    padding-bottom: 50PX;
+}
+
+/* .body .head .logo {
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    align-content: center;
+} */
+
+.body .head .logoTxt {
+  margin-top: 0;
+}/*# sourceMappingURL=beranda.css.map */
