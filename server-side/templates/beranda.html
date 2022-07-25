@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./beranda.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='beranda.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -25,31 +25,21 @@
           </a>
         </li>
         <li>
-          <a href="">
-            <img
-              src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-hospital-bed-healthcare-tanah-basah-basic-outline-tanah-basah.png"
-               />
-            <!-- <img src="https://img.icons8.com/small/42/FFFFFF/user.png" /> -->
+          <a href="/restrukturisasi">
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
             <p>REGISTER</p>
           </a>
         </li>
-        <!-- <li>
-          <a href="">
-            <img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-medical-report-healthcare-tanah-basah-basic-outline-tanah-basah.png"
-             />
-            <p>Rekam Medis</p>
-          </a>
-        </li> -->
         <li>
-          <a href="">
-            <img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-healthcare-1-healthcare-tanah-basah-basic-outline-tanah-basah.png" 
-            />
-            <!-- <a target="_blank" href="https://icons8.com/icon/oCzpAjdWh4qT/healthcare-1">healthcare 1 icon by Icons8</a> -->
-            <p>NOTIFIKASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="">
+          <a href="/logout">
             <img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-medicine-healthcare-tanah-basah-basic-outline-tanah-basah.png"
              />
             <!-- <a target="_blank" href="https://icons8.com/icon/7N4bD4LTeOZF/medicine">medicine icon by Icons8</a> -->
