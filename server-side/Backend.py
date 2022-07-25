@@ -104,6 +104,12 @@ def home():
 def restrukturisasi():
     # Check if user is loggedin
     if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM datadebitur ORDER BY namadebitur ASC')
+            datadebitur = cursor.fetchall()
+            return render_template('jadwalrestruk.html', datadebitur=datadebitur)
    
         # User is loggedin show them the home page
         return render_template('jadwalrestruk.html', username=session['username'])
@@ -142,6 +148,17 @@ def tambahdebitur():
         return redirect(url_for('restrukturisasi'))
 
     return render_template('jadwalrestruk.html', msg=msg)
+def postskill():
+    cursor = mysql.connection.cursor()
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST':
+        skills = request.form.getlist('skill[]')
+        for value in skills:  
+            cur.execute("INSERT INTO skills (skillname) VALUES (%s)",[value])
+            mysql.connection.commit()       
+        cur.close()
+        msg = 'New record created successfully'    
+    return jsonify(msg)
 
 # http://localhost:5000/logout - this will be the logout page
 @app.route('/logout')

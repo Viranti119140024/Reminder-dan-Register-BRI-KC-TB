@@ -8,9 +8,53 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
   <title>Tambah Data Debitur</title>
 </head>
 <body>
+  <script>
+    $(document).ready(function() {
+    
+    var MaxInputs       = 8; //maximum input boxes allowed
+    var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
+    var AddButton       = $("#AddMoreFileBox"); //Add button ID
+    
+    var x = InputsWrapper.length; //initlal text box count
+    var FieldCount=1; //to keep track of text box added
+    
+    $(AddButton).click(function (e)  //on add input button click
+    {
+            if(x <= MaxInputs) //max input box allowed
+            {
+                FieldCount++; //text box added increment
+                //add input box
+                $(InputsWrapper).append('<div class="row"><p class="col-xs-6"><input type="text" placeholder="Enter your skill" class="form-control skill_list" name="skill[]" id="field_'+ FieldCount +'" value="Enter your skill '+ FieldCount +'"/></p><a href="#" class="btn btn-danger removeclass">×</a></div>');
+                x++; //text box increment
+            }
+    return false;
+    });
+    
+    $("body").on("click",".removeclass", function(e){ //user click on remove text
+            if( x > 1 ) {
+                    $(this).parent('div').remove(); //remove text box
+                    x--; //decrement textbox
+            }
+    return false;
+    })
+    $('#submit').click(function(){            
+            $.ajax({  
+                    url:"/postskill",  
+                    method:"POST",  
+                    data:$('#add_skills').serialize(),  
+                    success:function(data)  
+                    {  alert(data)
+                        $('#resultbox').html(data);  
+                        $('#add_skills')[0].reset();  
+                    }  
+            });  
+        }); 
+    });
+  </script>
   <div class="body">
     <div class="sidebar">
       <header class="header">BRI-Minder</header>
@@ -39,7 +83,7 @@
           </a>
         </li>
         <li>
-          <a href="" >
+          <a href="/logout" >
             <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
             <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
             <p>KELUAR</p>
@@ -98,6 +142,13 @@
             </label>
             <input type="text" class="input-field" name="jangkawaktu" value=""/>
           </div>
+            
+          <div class="wrap-input">
+            <label htmlfor="jadwal_pokok" class="label-input">
+             Jadwal Pokok
+            </label>
+            <input type="text" class="input-field" name="jadwal_pokok" value=""/>
+          </div>
 
           <div class="wrap-input">
             <label htmlfor="sukubunga" class="label-input">
@@ -109,14 +160,18 @@
               <input type="text" class="input-fieldsb" name="sukubunga3" value=""/>
             </div>
           </div>
-            
-          <div class="wrap-input">
-            <label htmlfor="jadwal_pokok" class="label-input">
-             Jadwal Pokok
+
+          <!-- <div class="wrap-input">
+            <label htmlfor="sukubunga" class="label-input">
+              Suku Bunga
             </label>
-            <input type="text" class="input-field" name="jadwal_pokok" value=""/>
-            
-          </div>
+            <div name="add_skills" id="add_skills" class="add_skills">
+              <div id="InputsWrapper" class="InputsWrapper">
+                <input type="text" name="skill[]" placeholder="Enter your skill" class="form-control" />
+                <button type="button" name="add" id="AddMoreFileBox" class="btn-success">Add More</button>
+              </div>
+            </div>
+          </div>  -->
 
           <div class="wrap-input">
             <label htmlfor="jadwal_jatuh_tempo" class="label-input">

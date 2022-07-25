@@ -191,6 +191,15 @@
 .body .head .wrap-table .wrap-input option {
   font-size: 16px;
 }
+
+/* .body .head .wrap-table .wrap-input .add_skills .InputsWrapper .form-control {
+  width: 100px;
+}
+
+.body .head .wrap-table .wrap-input .add_skills .InputsWrapper .btn-success {
+  width: 100px;
+} */
+
 .body .head .wrap-table .btn-ubah {
   background-color: #102d81;
   color: white;
