@@ -115,6 +115,18 @@ def restrukturisasi():
         return render_template('jadwalrestruk.html', username=session['username'])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+@app.route('/notifikasi', methods=['GET', 'POST'])
+def notifikasi():
+    return render_template('notifikasi.html')
+
+@app.route('/jatuhtempo', methods=['GET', 'POST'])
+def jatuhtempo():
+    return render_template('viewnotifikasi.html')
+
+@app.route('/detaildebitur', methods=['GET', 'POST'])
+def detaildebitur():
+    return render_template('detaildebitur.html')
   
 @app.route('/tambahdebitur', methods=['GET', 'POST'])
 def tambahdebitur():
@@ -131,9 +143,15 @@ def tambahdebitur():
         baki_debet = request.form['baki_debet']
         rm = request.form['rm']
         jangkawaktu = request.form['jangkawaktu']
-        sukubunga1 = request.form['sukubunga1']
-        sukubunga2 = request.form['sukubunga2']
-        sukubunga3 = request.form['sukubunga3']
+        sbaw1 = request.form['sbaw1']
+        sbak1 = request.form['sbak1']
+        sbp1 = request.form['sbp1']
+        sbaw2 = request.form['sbaw2']
+        sbak2 = request.form['sbak2']
+        sbp2 = request.form['sbp2']
+        sbaw3 = request.form['sbaw3']
+        sbak3 = request.form['sbak3']
+        sbp3 = request.form['sbp3']
         jadwal_pokok = request.form['jadwal_pokok']
         jadwal_jatuh_tempo = request.form['jadwal_jatuh_tempo']
         akad = request.form['akad']
@@ -142,7 +160,7 @@ def tambahdebitur():
         if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not sukubunga1 or not jadwal_pokok or not jadwal_jatuh_tempo or not akad or not keterangan:
             msg = 'Please fill out the form!'
 
-        cursor.execute('''INSERT INTO datadebitur VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(nama_debitur, no_rekening, jenis_kredit, baki_debet, rm, jangkawaktu, sukubunga1, sukubunga2, sukubunga3, jadwal_pokok, jadwal_jatuh_tempo, akad, keterangan))
+        cursor.execute('''INSERT INTO datadebitur VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(nama_debitur, no_rekening, jenis_kredit, baki_debet, rm, jangkawaktu, jadwal_pokok, sbaw1, sbak1, sbp1, sbaw2, sbak2, sbp2, sbaw3, sbak3, sbp3, jadwal_jatuh_tempo, akad, keterangan))
         conn.commit()
         cursor.close()
         return redirect(url_for('restrukturisasi'))
