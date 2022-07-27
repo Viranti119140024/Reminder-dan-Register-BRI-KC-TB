@@ -27,7 +27,7 @@
           </a>
         </li>
         <li>
-          <a href="" class="active">
+          <a href="/restrukturisasi" class="active">
             <img src="https://img.icons8.com/ios/45/102d81/overtime.png"  />
             <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
             <p>RESTRUKTURISASI</p>
@@ -54,7 +54,12 @@
           <div class="inline">
             
             <h2 class="jadwal">Jadwal Restrukturisasi</h2>
-            <a><img class="lonceng" src="https://img.icons8.com/external-frizty-kerismaker/20/102d83/external-Notification-virus-protection-frizty-kerismaker.png"/></a>
+            <a href="/notifikasi" >
+              <button type="button" class="icon-button" href>
+                <img src="https://img.icons8.com/fluency/30/bell.png"/>
+                <span class="icon-button__badge">3</span>
+              </button>
+            </a>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
               <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
@@ -89,7 +94,7 @@
                   <th>Suku Bunga 2</th>   
                   <th>Suku Bunga 3</th>                
                   <th>Jadwal Pokok</th>
-                  <th>Jadwal Tempo</th>
+                  <th>Jatuh Tempo</th>
                   <th>Akad</th>
                   <th>BAP</th>
                   <th>Aksi</th>
@@ -105,9 +110,9 @@
                     <td>{{ datadebitur['bakidebet'] }}</td>
                     <td>{{ datadebitur['rm'] }}</td>
                     <td>{{ datadebitur['jangkawaktu'] }}</td>
-                    <td>{{ datadebitur['sb1'] }}</td>
-                    <td>{{ datadebitur['sb2'] }}</td>
-                    <td>{{ datadebitur['sb3'] }}</td>
+                    <td>{{ datadebitur['sbaw1'] }} - {{ datadebitur['sbak1'] }} {{ datadebitur['sbp1'] }}</td>
+                    <td>{{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }}</td>
+                    <td>{{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }}</td>
                     <td>{{ datadebitur['jadwalpokok'] }}</td>
                     <td>{{ datadebitur['jadwaltempo'] }}</td>
                     <td>{{ datadebitur['akad'] }}</td>

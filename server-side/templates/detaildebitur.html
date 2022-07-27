@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./notifikasi.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='detaildebitur.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Jadwal Restrukturisasi</title>
+  <title>Detail debitur</title>
 </head>
 
 <body>
@@ -50,28 +50,38 @@
     </div>
       <div class="head">
         <div class="bagianAtas">
-      
-          <div class="table">
-            <h2></h2>
-            
+          <div class="inline">
+            <a><img class="back"
+              src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png"/> 
+            </a>
+            <h2>Detail Debitur</h2>
           </div>
-
+          
           <div class="notif">
-            <h2> 15 Debitur mengalami Jatuh Tempo </h2>
+            <h5> Nama Debitur:  </h5>
+            <h5> Jenis Kredit:  </h5>
+            <h5> No. Rekening :  </h5>
+            <h5> Tanggal Akad :  </h5>
+            <h5> Tanggal Jatuh Tempo :  </h5>
+            <h5> Baki Debet :  </h5>
+            <h5> Jangka Waktu :  </h5>
+            <h5> Suku Bunga :  </h5>
+            <h5> BAP dan Priority :  </h5>
+            <h5> Jadwal Pokok :  </h5>
 
-            <a href="/jatuhtempo">
-              <button
-                class="btn_tambah"
-              >
-                View
-              </button>
-              </a>
-            
-            
+        
           </div>        
 
         
     </form>
+    <a href="">
+      <button
+        class="btn_close"
+      >
+        Tutup
+      </button>
+      </a>
+    
   
         </div>
       </div>

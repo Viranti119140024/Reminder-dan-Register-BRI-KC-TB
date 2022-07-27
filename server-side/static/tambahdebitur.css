@@ -138,6 +138,7 @@
 
 .body .head .wrap-table .wrap-input .sb {
   display: inline;
+  margin-bottom: 20px;
 }
 
 .body .head .wrap-table .wrap-input .sb .input-fieldsb {
@@ -146,9 +147,9 @@
   border-radius: 10px;
   border: none;
   color: #102d81;
-  width: 25%;
+  width: 10%;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 0px;
   padding-left: 10px;
 }
 
@@ -213,6 +214,7 @@
 }
 .body .head .wrap-table .btn-ubah:hover {
   background: #011c22;
+  cursor: pointer;
 }
 .body .head .wrap-table .table {
   margin-left: 15px;
