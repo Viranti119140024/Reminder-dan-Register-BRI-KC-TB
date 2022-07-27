@@ -94,9 +94,7 @@
 .body .head .space p {
   color: "black";
 }
-.body .head .buttonrekammedis {
-  display: flex;
-}
+
 .body .head .btn_tambah {
   background-color: #102d81;
   color: white;
@@ -110,37 +108,6 @@
 .body .head .btn_tambah:hover {
   background: #011c22;
 }
-.body .head .table {
-  margin-top: 15px;
-}
-.body .head .table table {
-  border-collapse: collapse;
-  border: 1px solid #EBEBEB;
-  text-align: center;
-  vertical-align: middle;
-  width: 190%;
-}
-.body .head .table table thead {
-  background-color: #f5f5f5;
-  color: #102d81;
-  font-size: 15px;
-  letter-spacing: 2%;
-}
-.body .head .table table thead th {
-  width: 8%;
-}
-.body .head .table table tbody tr:nth-child(odd) {
-  background-color: #fff;
-}
-.body .head .table table tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
-.body .head .table table th,
-.body .head .table table td {
-  padding: 10px;
-  font-size: 12px;
-  color: #102d81;
-}/*# sourceMappingURL=historyRekamMedis.css.map */
 
 .body .head .bagianAtas .notif{
     margin-top: 10%;
