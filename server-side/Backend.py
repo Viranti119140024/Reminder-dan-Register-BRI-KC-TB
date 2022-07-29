@@ -178,6 +178,18 @@ def postskill():
         msg = 'New record created successfully'    
     return jsonify(msg)
 
+@app.route('/restrukturisasi/debiturhapus', methods=['GET', 'POST'])
+def debiturhapus(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM datadebitur WHERE norek = %s', (norek,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('restrukturisasi'))
+    return redirect('/login')
+
 # http://localhost:5000/logout - this will be the logout page
 @app.route('/logout')
 def logout():

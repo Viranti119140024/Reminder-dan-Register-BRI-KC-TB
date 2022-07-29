@@ -118,6 +118,11 @@
                     <td>{{ datadebitur['akad'] }}</td>
                     <td>{{ datadebitur['bap'] }}</td>
                     <td>
+                      <form class="aksi" action="{{ url_for('debiturhapus', norek = datadebitur['norek']) }}" method="POST">
+                        <button class="btn_hapus" >
+                          <img src="https://img.icons8.com/pix/20/FFFFFF/experimental-delete-pix.png"/>
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 {% endfor %}
