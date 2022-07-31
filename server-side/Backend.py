@@ -110,12 +110,15 @@ def restrukturisasi():
             date = date.strftime('%Y-%m-%d')
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('ALTER TABLE datadebitur DROP id')
+            cursor.execute('ALTER TABLE datadebitur ADD id INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST')
             cursor.execute("UPDATE datadebitur SET dt = %s", (date))
             # ksb1 = str(ksb1)
             jumlah = cursor.execute("SELECT * FROM datadebitur")
             i=1;
             while i <= jumlah:
                 cursor.execute('INSERT INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
+                conn.commit()
                 i = i+1;
             # for x in range(1, jumlah+1):
             #     cursor.execute('SELECT ksb1 FROM datadebitur WHERE id=%s', (x))
@@ -133,6 +136,12 @@ def restrukturisasi():
             #     cursor = conn.cursor(pymysql.cursors.DictCursor)    
             #     cursor.execute('''INSERT INTO kenaikansukubunga VALUES(%s,%s,%s,%s,%s,%s,%s) WHERE ''',(nama_debitur, no_rekening, jenis_kredit, jangkawaktu, sbp1, jadwal_jatuh_tempo, akad))
             # cursor.execute("UPDATE datadebitur SET dt = %s", (x))
+            # jumlah = cursor.execute("SELECT * FROM datadebitur")
+            # i=1;
+            # while i <= jumlah:
+            #     cursor.execute('INSERT INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
+            #     conn.commit()
+            #     i = i+1;
             cursor.execute('SELECT * FROM datadebitur ORDER BY namadebitur ASC')
             datadebitur = cursor.fetchall()
             conn.commit()
