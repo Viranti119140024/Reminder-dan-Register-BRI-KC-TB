@@ -165,6 +165,22 @@
   padding-left: 10px;
 }
 
+.body .head .wrap-table .wrap-input .ksb1{
+  display: none;
+}
+
+.body .head .wrap-table .wrap-input .ksb2{
+  display: none;
+}
+
+.body .head .wrap-table .wrap-input .ksb3{
+  display: none;
+}
+
+.body .head .wrap-table .wrap-input .dt{
+  display: none;
+}
+
 
 .body .head .wrap-table .wrap-input textarea {
   font-family: Arial;
