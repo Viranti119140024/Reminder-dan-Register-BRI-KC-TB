@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./edit_Roya&KKB.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register Roya&KKB</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" class="active">
+            <img src="https://img.icons8.com/ios/45/102d81/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Edit Data Debitur (Register Roya & KKB)</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form">
+          <div class="wrap-input">
+            <label htmlfor="tgl_surat_roya" class="label-input">
+              Tanggal Surat Roya
+            </label>
+            <input type="text" class="input-field" name="tgl_surat_roya" value=""/>
+          </div>
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Nama_debitur" class="label-input">
+                Nama Debitur
+              </label>
+              <input type="text" class="input-field"  name="Nama_debitur" value=""/>
+            </div>
+            
+            <div class="wrap-input">
+              <label htmlfor="kantor_bpn" class="label-input">
+                Kantor BPN
+              </label>
+              <input type="text" class="input-field"  name="kantor_bpn" value=""/>
+            </div>
+          </div>
+         
+         
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="diterima_oleh" class="label-input">
+                Diterima Debitur (Oleh)
+              </label>
+              <input type="text" name="diterima_oleh" id="diterima_oleh"  class="input-field" >
+            </div>
+            <div class="wrap-input">
+              <label htmlfor="diterima_tgl" class="label-input">
+                Diterima Debitur (Tanggal)
+              </label>
+              <input type="date" class="input-field" name="diterima_tgl" value=""/>
+            </div>
+          </div> 
+          <div class="wrap-input">
+            <label htmlfor="jenis_agunan" class="label-input">
+                Jenis Agunan / Keterangan
+            </label>
+            <input type="text-area" class="input-field"  name="jenis_agunan" value=""/>
+          </div>
+          
+            
+          
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
