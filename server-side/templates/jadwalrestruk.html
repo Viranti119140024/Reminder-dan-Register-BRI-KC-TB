@@ -67,8 +67,8 @@
           </div>
             
           
-            <div class="table">
-              <a href="" >
+          <div class="table">
+            <a href="" >
                   
 
             
@@ -90,9 +90,7 @@
                   <th>Baki Debet</th> 
                   <th>RM</th>   
                   <th>Jangka Waktu</th>  
-                  <th>Suku Bunga 1</th>   
-                  <th>Suku Bunga 2</th>   
-                  <th>Suku Bunga 3</th>                
+                  <th>Suku Bunga</th>               
                   <th>Jadwal Pokok</th>
                   <th>Jatuh Tempo</th>
                   <th>Akad</th>
@@ -110,14 +108,23 @@
                     <td>{{ datadebitur['bakidebet'] }}</td>
                     <td>{{ datadebitur['rm'] }}</td>
                     <td>{{ datadebitur['jangkawaktu'] }}</td>
-                    <td>{{ datadebitur['sbaw1'] }} - {{ datadebitur['sbak1'] }} {{ datadebitur['sbp1'] }}</td>
-                    <td>{{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }}</td>
-                    <td>{{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }}</td>
+                    <td>
+                      {{ datadebitur['sbaw1'] }} - {{ datadebitur['sbak1'] }} {{ datadebitur['sbp1'] }} % <br>
+                      {{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }} %<br>
+                      {{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }} %
+                    </td>
+                    <!-- <td>{{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }}</td>
+                    <td>{{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }}</td> -->
                     <td>{{ datadebitur['jadwalpokok'] }}</td>
                     <td>{{ datadebitur['jadwaltempo'] }}</td>
                     <td>{{ datadebitur['akad'] }}</td>
                     <td>{{ datadebitur['bap'] }}</td>
                     <td>
+                      <a href="/restrukturisasi/debiturhapus/{{ datadebitur['norek'] }}">
+                        <button class="btn_hapus">
+                          <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                        </button>
+                      </a>
                     </td>
                   </tr>
                 {% endfor %}
