@@ -117,36 +117,19 @@ def restrukturisasi():
             jumlah = cursor.execute("SELECT * FROM datadebitur")
             i=1;
             while i <= jumlah:
-                cursor.execute('INSERT INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw1, sbak1, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw2, sbak2, sbp2, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb2', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw3, sbak3, sbp3, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb3', (i) )
                 conn.commit()
                 i = i+1;
-            # for x in range(1, jumlah+1):
-            #     cursor.execute('SELECT ksb1 FROM datadebitur WHERE id=%s', (x))
-            #     cek = cursor.fetchone()
-            #     cekk = cek.get("ksb1")
-            #     cursor.execute("UPDATE datadebitur SET sbaw1 = %s WHERE id = dt", (cekk))
-            #     if date == cek:
-            #         cursor.execute('INSERT INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, janiskredit, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s', (x))
-            # jumlah = len(cursor.fetchall())
-            # result_set = cursor.fetchall()
-            # for row in result_set:
-            #     awal=0
-            #     nama=row['id']+awal
-            #     conn = mysql.connect()
-            #     cursor = conn.cursor(pymysql.cursors.DictCursor)    
-            #     cursor.execute('''INSERT INTO kenaikansukubunga VALUES(%s,%s,%s,%s,%s,%s,%s) WHERE ''',(nama_debitur, no_rekening, jenis_kredit, jangkawaktu, sbp1, jadwal_jatuh_tempo, akad))
-            # cursor.execute("UPDATE datadebitur SET dt = %s", (x))
-            # jumlah = cursor.execute("SELECT * FROM datadebitur")
-            # i=1;
-            # while i <= jumlah:
-            #     cursor.execute('INSERT INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
-            #     conn.commit()
-            #     i = i+1;
-            cursor.execute('SELECT * FROM datadebitur ORDER BY namadebitur ASC')
-            datadebitur = cursor.fetchall()
+            con = mysql.connect()
+            cur = con.cursor(pymysql.cursors.DictCursor)
+            cur.execute('SELECT * FROM datadebitur')
+            notif = cursor.execute("SELECT * FROM kenaikansukubunga")
+            datadebitur = cur.fetchall()
             conn.commit()
             cursor.close()
-            return render_template('jadwalrestruk.html', datadebitur=datadebitur)
+            return render_template('jadwalrestruk.html', datadebitur=datadebitur, notif=notif)
         # User is loggedin show them the home page
         return render_template('jadwalrestruk.html', username=session['username'])
     # User is not loggedin redirect to login page
@@ -154,11 +137,31 @@ def restrukturisasi():
 
 @app.route('/notifikasi', methods=['GET', 'POST'])
 def notifikasi():
-    return render_template('notifikasi.html')
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    notif = cursor.execute("SELECT * FROM kenaikansukubunga")
+    conn.commit()
+    cursor.close()
+    return render_template('notifikasi.html', notif=notif)
 
-@app.route('/jatuhtempo', methods=['GET', 'POST'])
-def jatuhtempo():
-    return render_template('viewnotifikasi.html')
+@app.route('/notifikasi/vewnotif')
+def viewnotif():
+    # Check if user is loggedin
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM kenaikansukubunga ORDER BY namadebitur ASC')
+        kenaikansukubunga = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        # User is loggedin show them the home page
+        return render_template('viewnotifikasi.html', kenaikansukubunga=kenaikansukubunga)
+    # User is not loggedin redirect to login page
+    return redirect(url_for('login'))
+
+# @app.route('/jatuhtempo', methods=['GET', 'POST'])
+# def jatuhtempo():
+#     return render_template('viewnotifikasi.html')
 
 @app.route('/detaildebitur', methods=['GET', 'POST'])
 def detaildebitur():
@@ -243,6 +246,18 @@ def debiturhapus(norek):
             conn.commit()
             cursor.close()
             return redirect(url_for('restrukturisasi'))
+    return redirect('/login')
+
+@app.route('/notifikasi/viewnotif/notifhapus/<norek>', methods=['GET', 'POST'])
+def notifhapus(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM kenaikansukubunga WHERE norek = %s', (norek,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('viewnotif'))
     return redirect('/login')
 
 # http://localhost:5000/logout - this will be the logout page
