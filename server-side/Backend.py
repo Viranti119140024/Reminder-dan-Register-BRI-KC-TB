@@ -162,10 +162,6 @@ def viewnotif():
 # @app.route('/jatuhtempo', methods=['GET', 'POST'])
 # def jatuhtempo():
 #     return render_template('viewnotifikasi.html')
-
-@app.route('/detaildebitur', methods=['GET', 'POST'])
-def detaildebitur():
-    return render_template('detaildebitur.html')
   
 @app.route('/tambahdebitur', methods=['GET', 'POST'])
 def tambahdebitur():
@@ -224,17 +220,19 @@ def tambahdebitur():
         return redirect(url_for('restrukturisasi'))
 
     return render_template('jadwalrestruk.html', msg=msg)
-def postskill():
-    cursor = mysql.connection.cursor()
-    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    if request.method == 'POST':
-        skills = request.form.getlist('skill[]')
-        for value in skills:  
-            cur.execute("INSERT INTO skills (skillname) VALUES (%s)",[value])
-            mysql.connection.commit()       
-        cur.close()
-        msg = 'New record created successfully'    
-    return jsonify(msg)
+
+@app.route('/notifikasi/vewnotif/detail/<norek>', methods=['GET', 'POST'])
+def detaildebitur(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('SELECT * from datadebitur WHERE norek = %s', (norek,))
+            detaildebitur = cursor.fetchall()
+            conn.commit()
+            cursor.close()
+            return render_template('detaildebitur.html', detaildebitur=detaildebitur)
+    return redirect('/login')
 
 @app.route('/restrukturisasi/debiturhapus/<norek>', methods=['GET', 'POST'])
 def debiturhapus(norek):
