@@ -57,7 +57,7 @@
           <h2 class="jadwal">Jadwal Restrukturisasi</h2>
           <label htmlfor="cari" class="label-input"></label> 
           <div class="wrap-input">    
-            <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
+            <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
           </div>
         </div>
       
@@ -65,46 +65,44 @@
             
 
             
-            <table>
+            <table id="myTable">
               <thead>
                 <tr>
                   <th>Nama Debitur</th>
-                  <th>Jenis Kredit</th>                 
-                  <th>No.Rekening</th>
-                  <th>Akad</th>                  
-                  <th>Jatuh Tempo</th>
-                  <th>Baki Debet</th>
-                  <th>Jangka Waktu</th>
+                  <th>No.Rekening</th>                 
+                  <th>Jenis Kredit</th>
+                  <th>Jangka Waktu</th>                  
                   <th>Suku Bunga</th>
-                  <th>BAP</th>
-                  <th>Jadwal Pokok</th>
-                  <th>Detail</th>
+                  <th>Jatuh Tempo</th>
+                  <th>Akad</th>
+                  <th>Aksi</th>
                   
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>KMK CO TETAP</td>
-                  <td>Okta Sihombing</td>
-                  <td>0285.01.055266.10.2</td>
-                  <td>26/10/2021</td>
-                  <td>26/10/2021</td>
-                  <td>200.000.000</td>
-                  <td>17</td>
-                  <td>1-12, 9%</td>
-                  <td>xxx</td>
-                  <td>xxx</td>
-                  <td>
-                    <a href="/detaildebitur" >
-                      <img
-                        src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/20/102d81/external-view-multimedia-kiranshastry-lineal-color-kiranshastry.png"
-                         />
-                      
-                    </a>
-                </td>
-
-
-                </tr>
+                {% for kenaikansukubunga in kenaikansukubunga %}
+                  <tr>
+                    <td>{{ kenaikansukubunga['namadebitur'] }}</td>
+                    <td>{{ kenaikansukubunga['norek'] }}</td>
+                    <td>{{ kenaikansukubunga['jeniskredit'] }}</td>
+                    <td>{{ kenaikansukubunga['jangkawaktu'] }}</td>
+                    <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} {{ kenaikansukubunga['sukubunga'] }} % </td>
+                    <td>{{ kenaikansukubunga['jadwaljatuhtempo'] }}</td>
+                    <td>{{ kenaikansukubunga['akad'] }}</td>
+                    <td>
+                      <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}" >
+                        <img
+                          src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/20/102d81/external-view-multimedia-kiranshastry-lineal-color-kiranshastry.png"
+                          />
+                      </a>
+                      <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
+                        <button class="btn_hapus">
+                          <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                        </button>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -112,4 +110,29 @@
       </div>
     </div>
 </body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
 </html>
