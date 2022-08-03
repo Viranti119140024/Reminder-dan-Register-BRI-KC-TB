@@ -201,9 +201,9 @@ def tambahdebitur():
             msg = 'Please fill out the form!'
         cursor.execute('''INSERT INTO datadebitur VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(id, nama_debitur, no_rekening, jenis_kredit, baki_debet, rm, jangkawaktu, jadwal_pokok, sbaw1, sbak1, sbp1, sbaw2, sbak2, sbp2, sbaw3, sbak3, sbp3, jadwal_jatuh_tempo, akad, keterangan, ksb1, ksb2, ksb3,dt))
         cursor.execute("UPDATE datadebitur SET jadwaltempo = DATE_ADD(akad, INTERVAL %s MONTH) WHERE norek = %s", (jangkawaktu, no_rekening,))
-        cursor.execute("UPDATE datadebitur SET ksb1 = DATE_ADD(akad, INTERVAL %s MONTH) WHERE norek = %s", (sbak1, no_rekening,))
-        cursor.execute("UPDATE datadebitur SET ksb2 = DATE_ADD(akad, INTERVAL %s MONTH) WHERE norek = %s", (sbak2, no_rekening,))
-        cursor.execute("UPDATE datadebitur SET ksb3 = DATE_ADD(akad, INTERVAL %s MONTH) WHERE norek = %s", (sbak3, no_rekening,))
+        cursor.execute("UPDATE datadebitur SET ksb1 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak1, no_rekening,))
+        cursor.execute("UPDATE datadebitur SET ksb2 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak2, no_rekening,))
+        cursor.execute("UPDATE datadebitur SET ksb3 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak3, no_rekening,))
         # ksb1 = cursor.execute("SELECT ksb1 FROM datadebitur")
         import pandas as pd
         ksb1 = pd.to_datetime(ksb1, format='%Y-%m-%d')
@@ -221,6 +221,210 @@ def tambahdebitur():
 
     return render_template('jadwalrestruk.html', msg=msg)
 
+@app.route('/restrukturisasi/editdebitur/<norek>', methods=['GET', 'POST'])
+def editdebitur(norek):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
+            editdebitur = cursor.fetchone()
+            return render_template('editdebitur.html', editdebitur=editdebitur)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['nama_debitur'] == '':
+                new_nama_debitur = request.form['nama_debitur']
+                cursor.execute('UPDATE IGNORE datadebitur SET namadebitur = %s WHERE norek = %s', (new_nama_debitur, norek))
+                conn.commit()
+                
+            if not request.form['no_rekening'] == '':
+                new_no_rekening = request.form['no_rekening']
+                cursor.execute('UPDATE IGNORE datadebitur SET norek = %s WHERE norek = %s', (new_no_rekening, norek))
+                conn.commit()
+                
+            if not request.form['jenis_kredit'] == '':
+                new_jenis_kredit = request.form['jenis_kredit']
+                cursor.execute('UPDATE IGNORE datadebitur SET jeniskredit = %s WHERE norek = %s', (new_jenis_kredit, norek))
+                conn.commit()
+                
+            if not request.form['baki_debet'] == '':
+                new_baki_debet = request.form['baki_debet']
+                cursor.execute('UPDATE IGNORE datadebitur SET bakidebet = %s WHERE norek = %s', (new_baki_debet, norek))
+                conn.commit()
+                
+            if not request.form['rm'] == '':
+                new_rm = request.form['rm']
+                cursor.execute('UPDATE IGNORE datadebitur SET rm = %s WHERE norek = %s', (new_rm, norek))
+                conn.commit()
+                
+            if not request.form['jangkawaktu'] == '':
+                new_jangkawaktu = request.form['jangkawaktu']
+                cursor.execute('UPDATE IGNORE datadebitur SET jangkawaktu = %s WHERE norek = %s', (new_jangkawaktu, norek))
+                conn.commit()
+                
+            if not request.form['jadwal_pokok'] == '':
+                new_jadwal_pokok = request.form['jadwal_pokok']
+                cursor.execute('UPDATE IGNORE datadebitur SET jadwalpokok = %s WHERE norek = %s', (new_jadwal_pokok, norek))
+                conn.commit()
+                
+            if not request.form['sbaw1'] == '':
+                new_sbaw1 = request.form['sbaw1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw1 = %s WHERE norek = %s', (new_sbaw1, norek))
+                conn.commit()
+
+            if not request.form['sbak1'] == '':
+                new_sbak1 = request.form['sbak1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak1 = %s WHERE norek = %s', (new_sbak1, norek))
+                cursor.execute("UPDATE datadebitur SET ksb1 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (new_sbak1, norek,))
+                conn.commit()
+
+            if not request.form['sbp1'] == '':
+                new_sbp1 = request.form['sbp1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp1 = %s WHERE norek = %s', (new_sbp1, norek))
+                conn.commit()
+
+            if not request.form['sbaw2'] == '':
+                new_sbaw2 = request.form['sbaw2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw2 = %s WHERE norek = %s', (new_sbaw2, norek))
+                conn.commit()
+
+            if not request.form['sbak2'] == '':
+                new_sbak2 = request.form['sbak2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak2 = %s WHERE norek = %s', (new_sbak2, norek))
+                cursor.execute("UPDATE datadebitur SET ksb2 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (new_sbak2, norek,))
+                conn.commit()
+
+            if not request.form['sbp2'] == '':
+                new_sbp2 = request.form['sbp2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp2 = %s WHERE norek = %s', (new_sbp2, norek))
+                conn.commit()
+
+            if not request.form['sbaw3'] == '':
+                new_sbaw3 = request.form['sbaw3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw3 = %s WHERE norek = %s', (new_sbaw3, norek))
+                conn.commit()
+
+            if not request.form['sbak3'] == '':
+                new_sbak3 = request.form['sbak3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak3 = %s WHERE norek = %s', (new_sbak3, norek))
+                cursor.execute("UPDATE datadebitur SET ksb3 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (new_sbak3, norek,))
+                conn.commit()
+
+            if not request.form['sbp3'] == '':
+                new_sbp3 = request.form['sbp3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp3 = %s WHERE norek = %s', (new_sbp3, norek))
+                conn.commit()
+
+            if not request.form['keterangan'] == '':
+                new_bap = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE datadebitur SET bap = %s WHERE norek = %s', (new_bap, norek))
+                conn.commit()
+                
+            return redirect(url_for('restrukturisasi'))
+
+@app.route('/restrukturisasi/notifikasi/viewnotif/editdebitur/<norek>', methods=['GET', 'POST'])
+def editdebitur2(norek):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
+            editdebitur = cursor.fetchone()
+            return render_template('editdebitur2.html', editdebitur=editdebitur)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['nama_debitur'] == '':
+                new_nama_debitur = request.form['nama_debitur']
+                cursor.execute('UPDATE IGNORE datadebitur SET namadebitur = %s WHERE norek = %s', (new_nama_debitur, norek))
+                conn.commit()
+                
+            if not request.form['no_rekening'] == '':
+                new_no_rekening = request.form['no_rekening']
+                cursor.execute('UPDATE IGNORE datadebitur SET norek = %s WHERE norek = %s', (new_no_rekening, norek))
+                conn.commit()
+                
+            if not request.form['jenis_kredit'] == '':
+                new_jenis_kredit = request.form['jenis_kredit']
+                cursor.execute('UPDATE IGNORE datadebitur SET jeniskredit = %s WHERE norek = %s', (new_jenis_kredit, norek))
+                conn.commit()
+                
+            if not request.form['baki_debet'] == '':
+                new_baki_debet = request.form['baki_debet']
+                cursor.execute('UPDATE IGNORE datadebitur SET bakidebet = %s WHERE norek = %s', (new_baki_debet, norek))
+                conn.commit()
+                
+            if not request.form['rm'] == '':
+                new_rm = request.form['rm']
+                cursor.execute('UPDATE IGNORE datadebitur SET rm = %s WHERE norek = %s', (new_rm, norek))
+                conn.commit()
+                
+            if not request.form['jangkawaktu'] == '':
+                new_jangkawaktu = request.form['jangkawaktu']
+                cursor.execute('UPDATE IGNORE datadebitur SET jangkawaktu = %s WHERE norek = %s', (new_jangkawaktu, norek))
+                conn.commit()
+                
+            if not request.form['jadwal_pokok'] == '':
+                new_jadwal_pokok = request.form['jadwal_pokok']
+                cursor.execute('UPDATE IGNORE datadebitur SET jadwalpokok = %s WHERE norek = %s', (new_jadwal_pokok, norek))
+                conn.commit()
+                
+            if not request.form['sbaw1'] == '':
+                new_sbaw1 = request.form['sbaw1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw1 = %s WHERE norek = %s', (new_sbaw1, norek))
+                conn.commit()
+
+            if not request.form['sbak1'] == '':
+                new_sbak1 = request.form['sbak1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak1 = %s WHERE norek = %s', (new_sbak1, norek))
+                conn.commit()
+
+            if not request.form['sbp1'] == '':
+                new_sbp1 = request.form['sbp1']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp1 = %s WHERE norek = %s', (new_sbp1, norek))
+                conn.commit()
+
+            if not request.form['sbaw2'] == '':
+                new_sbaw2 = request.form['sbaw2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw2 = %s WHERE norek = %s', (new_sbaw2, norek))
+                conn.commit()
+
+            if not request.form['sbak2'] == '':
+                new_sbak2 = request.form['sbak2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak2 = %s WHERE norek = %s', (new_sbak2, norek))
+                conn.commit()
+
+            if not request.form['sbp2'] == '':
+                new_sbp2 = request.form['sbp2']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp2 = %s WHERE norek = %s', (new_sbp2, norek))
+                conn.commit()
+
+            if not request.form['sbaw3'] == '':
+                new_sbaw3 = request.form['sbaw3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbaw3 = %s WHERE norek = %s', (new_sbaw3, norek))
+                conn.commit()
+
+            if not request.form['sbak3'] == '':
+                new_sbak3 = request.form['sbak3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbak3 = %s WHERE norek = %s', (new_sbak3, norek))
+                conn.commit()
+
+            if not request.form['sbp3'] == '':
+                new_sbp3 = request.form['sbp3']
+                cursor.execute('UPDATE IGNORE datadebitur SET sbp3 = %s WHERE norek = %s', (new_sbp3, norek))
+                conn.commit()
+
+            if not request.form['keterangan'] == '':
+                new_bap = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE datadebitur SET bap = %s WHERE norek = %s', (new_bap, norek))
+                conn.commit()
+                
+            return redirect(url_for('viewnotif'))
+
+
 @app.route('/notifikasi/vewnotif/detail/<norek>', methods=['GET', 'POST'])
 def detaildebitur(norek):
     conn = mysql.connect()
@@ -232,6 +436,19 @@ def detaildebitur(norek):
             conn.commit()
             cursor.close()
             return render_template('detaildebitur.html', detaildebitur=detaildebitur)
+    return redirect('/login')
+
+@app.route('/restrukturisasi/detail/<norek>', methods=['GET', 'POST'])
+def detaildebitur2(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('SELECT * from datadebitur WHERE norek = %s', (norek,))
+            detaildebitur = cursor.fetchall()
+            conn.commit()
+            cursor.close()
+            return render_template('detaildebitur2.html', detaildebitur=detaildebitur)
     return redirect('/login')
 
 @app.route('/restrukturisasi/debiturhapus/<norek>', methods=['GET', 'POST'])
