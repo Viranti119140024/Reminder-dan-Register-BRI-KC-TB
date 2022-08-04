@@ -120,15 +120,14 @@
                     <td>{{ datadebitur['akad'] }}</td>
                     <td>{{ datadebitur['bap'] }}</td>
                     <td>
-                      <a href="/restrukturisasi/debiturhapus/{{ datadebitur['norek'] }}">
-                        <button class="btn_hapus">
-                          <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
-                        </button>
+                      <a href="/restrukturisasi/detail/{{ datadebitur['norek'] }}" >
+                      <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/20/102d81/external-view-multimedia-kiranshastry-lineal-color-kiranshastry.png"/>
                       </a>
-                      <a href="">
-                        <button class="btn_hapus">
-                          <img src="https://img.icons8.com/ios-filled/20/102d81/edit--v1.png"/>
-                        </button>
+                      <a href="/restrukturisasi/debiturhapus/{{ datadebitur['norek'] }}">
+                      <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                      </a>
+                      <a href="/restrukturisasi/editdebitur/{{ datadebitur['norek'] }}">
+                      <img src="https://img.icons8.com/ios-filled/20/102d81/edit--v1.png"/>
                       </a>
                     </td>
                   </tr>
