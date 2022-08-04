@@ -111,15 +111,20 @@ def restrukturisasi():
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute('ALTER TABLE datadebitur DROP id')
+            conn.commit()
             cursor.execute('ALTER TABLE datadebitur ADD id INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST')
+            conn.commit()
             cursor.execute("UPDATE datadebitur SET dt = %s", (date))
+            conn.commit()
+            cursor.execute("TRUNCATE TABLE kenaikansukubunga")
+            conn.commit()
             # ksb1 = str(ksb1)
             jumlah = cursor.execute("SELECT * FROM datadebitur")
             i=1;
             while i <= jumlah:
-                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw1, sbak1, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb1', (i) )
-                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw2, sbak2, sbp2, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb2', (i) )
-                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw3, sbak3, sbp3, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt=ksb3', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw1, sbak1, sbp1, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt>=ksb1 && dt<ksb2 && dt<ksb3', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw2, sbak2, sbp2, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt>=ksb2 && dt<ksb3', (i) )
+                cursor.execute('INSERT IGNORE INTO kenaikansukubunga (namadebitur, norek, jeniskredit, jangkawaktu,sbaw, sbak, sukubunga, jadwaljatuhtempo, akad) SELECT namadebitur, norek, jeniskredit, jangkawaktu, sbaw3, sbak3, sbp3, jadwaltempo, akad FROM datadebitur WHERE id=%s && dt>=ksb3', (i) )
                 conn.commit()
                 i = i+1;
             con = mysql.connect()
@@ -196,7 +201,6 @@ def tambahdebitur():
         ksb3 = request.form['ksb3']
         dt = request.form['dt']
 
-        # jt=akad + datetime.timedelta(month=jangkawaktu)
         if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not jadwal_pokok or not jadwal_jatuh_tempo or not akad or not keterangan:
             msg = 'Please fill out the form!'
         cursor.execute('''INSERT INTO datadebitur VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(id, nama_debitur, no_rekening, jenis_kredit, baki_debet, rm, jangkawaktu, jadwal_pokok, sbaw1, sbak1, sbp1, sbaw2, sbak2, sbp2, sbaw3, sbak3, sbp3, jadwal_jatuh_tempo, akad, keterangan, ksb1, ksb2, ksb3,dt))
@@ -204,17 +208,6 @@ def tambahdebitur():
         cursor.execute("UPDATE datadebitur SET ksb1 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak1, no_rekening,))
         cursor.execute("UPDATE datadebitur SET ksb2 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak2, no_rekening,))
         cursor.execute("UPDATE datadebitur SET ksb3 = DATE_SUB(DATE_ADD(akad, INTERVAL %s MONTH), INTERVAL 2 WEEK) WHERE norek = %s", (sbak3, no_rekening,))
-        # ksb1 = cursor.execute("SELECT ksb1 FROM datadebitur")
-        import pandas as pd
-        ksb1 = pd.to_datetime(ksb1, format='%Y-%m-%d')
-        # cursor.execute("UPDATE datadebitur SET dt = ksb1 WHERE norek = %s", (no_rekening))
-        # dt = datetime.today()
-        # cursor.execute("UPDATE datadebitur SET ksb2 = ksb1 WHERE norek = %s", (no_rekening))
-        #     if ksb1 == dt:
-        #         cursor.execute("UPDATE datadebitur SET ksb2 = ksb1 WHERE norek = %s", (no_rekening))
-        #         cursor.execute('''INSERT INTO kenaikansukubunga VALUES(%s,%s,%s,%s,%s,%s,%s)''',(nama_debitur, no_rekening, jenis_kredit, jangkawaktu, sbp1, jadwal_jatuh_tempo, akad))
-        #         conn.commit()
-        #         cursor.close()
         conn.commit()
         cursor.close()
         return redirect(url_for('restrukturisasi'))
@@ -477,9 +470,112 @@ def notifhapus(norek):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    select = request.form.get('val')
-    if select =='register1':
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        select = (request.form.get('tindakan'))
+        if select == 'register1':
+            return render_template('detail_IPK RESTRUK.html')  
+        elif select == 'register2':
+            return redirect(url_for('ipkrestruk'))
         return render_template('daftarregister.html')
+    return redirect('/login')
+
+@app.route('/register/ipkrestruk', methods=['GET', 'POST'])
+def ipkrestruk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM ipkrestruk')
+        ipkrestruk = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./IPK RESTRUK/detail_IPK RESTRUK.html', ipkrestruk=ipkrestruk)  
+    return redirect('/login')
+
+@app.route('/register/ipkrestruk/tambah', methods=['GET', 'POST'])
+def tambahipkrestruk():
+ # connect
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+  
+    if request.method == 'GET':
+        return render_template('./IPK RESTRUK/tambah_IPK RESTRUK.html', username=session['username'])
+    else:
+        no_ipk = request.form['no_ipk']
+        nama_debitur = request.form['nama_debitur']
+        No_PTK = request.form['No.PTK']
+        Akad = request.form['Akad']
+        Jatuh_Tempo = request.form['Jatuh_Tempo']
+        Jangka_Waktu = int(request.form["Jangka_Waktu"])
+        Rekening = request.form['Rekening']
+        keterangan = request.form['keterangan']
+
+        # if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not jadwal_pokok or not jadwal_jatuh_tempo or not akad or not keterangan:
+        #     msg = 'Please fill out the form!'
+        cursor.execute('''INSERT INTO ipkrestruk VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(no_ipk, nama_debitur, No_PTK, Akad, Jatuh_Tempo, Jangka_Waktu, Rekening, keterangan))
+        conn.commit()
+        cursor.close()
+        return redirect(url_for('ipkrestruk'))
+
+    return render_template('./IPK RESTRUK/detail_IPK RESTRUK.html', msg=msg)
+
+@app.route('/register/ipkrestruk/edit/<norek>', methods=['GET', 'POST'])
+def editipkrestruk(norek):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM ipkrestruk WHERE norek = %s', (norek,))
+            editipkrestruk = cursor.fetchone()
+            return render_template('./IPK RESTRUK/edit_IPK RESTRUK.html', editipkrestruk=editipkrestruk)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['no_ipk'] == '':
+                new_no_ipk = request.form['no_ipk']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET noipk = %s WHERE norek = %s', (new_no_ipk, norek))
+                conn.commit()
+                
+            if not request.form['nama_debitur'] == '':
+                new_nama_debitur = request.form['nama_debitur']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET namadebitur = %s WHERE norek = %s', (new_nama_debitur, norek))
+                conn.commit()
+                
+            if not request.form['No.PTK'] == '':
+                new_No_PTK = request.form['No.PTK']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET noptk = %s WHERE norek = %s', (new_No_PTK, norek))
+                conn.commit()
+            
+            if not request.form['Akad'] == '':
+                new_Akad = request.form['Akad']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET akad = %s WHERE norek = %s', (new_Akad, norek))
+                conn.commit()
+
+            if not request.form['Jatuh_Tempo'] == '':
+                new_Jatuh_Tempo = request.form['Jatuh_Tempo']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET jatuhtempo = %s WHERE norek = %s', (new_Jatuh_Tempo, norek))
+                conn.commit()
+            
+            if not request.form['Jangka_Waktu'] == '':
+                new_Jangka_Waktu = request.form['Jangka_Waktu']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET jangkawaktu = %s WHERE norek = %s', (new_Jangka_Waktu, norek))
+                conn.commit()
+
+            if not request.form['Rekening'] == '':
+                new_Rekening = request.form['Rekening']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET norek = %s WHERE norek = %s', (new_Rekening, norek))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE ipkrestruk SET keterangan = %s WHERE norek = %s', (new_keterangan, norek))
+                conn.commit()
+                
+            return redirect(url_for('ipkrestruk'))
 
 # http://localhost:5000/logout - this will be the logout page
 @app.route('/logout')
