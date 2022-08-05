@@ -458,15 +458,17 @@ def debiturhapus(norek):
 
 @app.route('/notifikasi/viewnotif/notifhapus/<norek>', methods=['GET', 'POST'])
 def notifhapus(norek):
-    conn = mysql.connect()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)
     if 'loggedin' in session:
         if request.method == 'GET':
+            con = mysql.connect()
+            cur = con.cursor(pymysql.cursors.DictCursor)
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cur.execute('DELETE t1 FROM datadebitur t1 JOIN kenaikansukubunga t2 ON t1.sbaw3 = t2.sbaw && t1.sbak3 = t2.sbak && t1.sbp3 = t2.sukubunga && t1.norek = %s && t2.norek = %s', (norek,norek))
+            con.commit()
             cursor.execute('DELETE IGNORE FROM kenaikansukubunga WHERE norek = %s', (norek,))
-            cursor.execute('DELETE t1 FROM datadebitur t1 JOIN kenaikansukubunga t2 ON t1.sbaw3 = t2.sbaw && t1.sbak3 = t2.sbak && t1.sbp3 = t2.sukubunga && t1.norek = %s && t2.norek = %s', (norek,norek))
             conn.commit()
             cursor.close()
-
 
             
             return redirect(url_for('viewnotif'))
@@ -482,6 +484,8 @@ def register():
             return render_template('detail_IPK RESTRUK.html')  
         elif select == 'register2':
             return redirect(url_for('ipkrestruk'))
+        elif select == 'register17':
+            return redirect(url_for('PPND'))
         return render_template('daftarregister.html')
     return redirect('/login')
 
@@ -580,6 +584,113 @@ def editipkrestruk(norek):
                 conn.commit()
                 
             return redirect(url_for('ipkrestruk'))
+
+@app.route('/register/PPND2', methods=['GET', 'POST'])
+def PPND2():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM ppnd')
+        ppnd = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./PPND/detail_PPND.html', ppnd=ppnd)  
+    return redirect('/login')
+
+@app.route('/register/PPND2/tambah', methods=['GET', 'POST'])
+def tambahppnd2():
+ # connect
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+  
+    if request.method == 'GET':
+        return render_template('./PPND/tambah_PPND.html', username=session['username'])
+    else:
+        No_PPND_dan_Tanggal_PPND = request.form['No. PPND dan Tanggal PPND']
+        nama_debitur = request.form['Nama Debitur']
+        Alamat_No_Telp_HP = request.form['Alamat No. Telp/HP']
+        Jenis_Fasilitas_Kredit = request.form['Jenis Fasilitas Kredit']
+        Jenis_Dok_Kredit_yang_Ditunda = request.form['Jenis Dok Kredit yang Ditunda']
+        Lamanya_ditunda = int(request.form["Lamanya ditunda"])
+        Tanggal_Batas_Akhir = request.form['Tanggal Batas Akhir']
+        Pejabat_Pemrakarsa = request.form['Pejabat Pemrakarsa']
+        Pejabat_Pemutus = request.form['Pejabat Pemutus']
+        keterangan = request.form['keterangan']
+
+        # if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not jadwal_pokok or not jadwal_jatuh_tempo or not akad or not keterangan:
+        #     msg = 'Please fill out the form!'
+        cursor.execute('''INSERT INTO ppnd VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(No_PPND_dan_Tanggal_PPND, nama_debitur, Alamat_No_Telp_HP, Jenis_Fasilitas_Kredit, Jenis_Dok_Kredit_yang_Ditunda, Lamanya_ditunda, Tanggal_Batas_Akhir, Pejabat_Pemrakarsa, Pejabat_Pemutus, keterangan))
+        conn.commit()
+        cursor.close()
+        return redirect(url_for('PPND2'))
+    return render_template('./PPND/detail_PPND.html', msg=msg)
+
+@app.route('/register/PPND2/edit/<NoPPNdanTanggalPPN>', methods=['GET', 'POST'])
+def editppnd2(NoPPNdanTanggalPPN):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM ppnd WHERE NoPPNdanTanggalPPN = %s', (NoPPNdanTanggalPPN,))
+            editppnd = cursor.fetchone()
+            return render_template('./PPND/edit_PPND.html', editppnd=editppnd)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['No. PPND dan Tanggal PPND'] == '':
+                new_No_PPND_dan_Tanggal_PPND = request.form['No. PPND dan Tanggal PPND']
+                cursor.execute('UPDATE IGNORE ppnd SET NoPPNdanTanggalPPN = %s WHERE NoPPNdanTanggalPPN = %s', (new_No_PPND_dan_Tanggal_PPND, NoPPNdanTanggalPPN))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_nama_debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE ppnd SET NamaDebitur = %s WHERE NoPPNdanTanggalPPN = %s', (new_nama_debitur, NoPPNdanTanggalPPN))
+                conn.commit()
+                
+            if not request.form['Alamat No. Telp/HP'] == '':
+                new_Alamat_No_TelpHP = request.form['Alamat No. Telp/HP']
+                cursor.execute('UPDATE IGNORE ppnd SET AlamatdanNoTeleponHP = %s WHERE NoPPNdanTanggalPPN = %s', (new_Alamat_No_TelpHP, NoPPNdanTanggalPPN))
+                conn.commit()
+            
+            if not request.form['Jenis Fasilitas Kredit'] == '':
+                new_Jenis_Fasilitas_Kredit = request.form['Jenis Fasilitas Kredit']
+                cursor.execute('UPDATE IGNORE ppnd SET JenisFasilitasKredit = %s WHERE NoPPNdanTanggalPPN = %s', (new_Jenis_Fasilitas_Kredit, NoPPNdanTanggalPPN))
+                conn.commit()
+
+            if not request.form['Jenis Dok Kredit yang Ditunda'] == '':
+                new_Jenis_Dok_Kredit_yang_Ditunda = request.form['Jenis Dok Kredit yang Ditunda']
+                cursor.execute('UPDATE IGNORE ppnd SET JenisDokKredityangDitunda = %s WHERE NoPPNdanTanggalPPN = %s', (new_Jenis_Dok_Kredit_yang_Ditunda, NoPPNdanTanggalPPN))
+                conn.commit()
+            
+            if not request.form['Lamanya ditunda'] == '':
+                new_Lamanya_ditunda = request.form['Lamanya ditunda']
+                cursor.execute('UPDATE IGNORE ppnd SET LamanyaDitunda = %s WHERE NoPPNdanTanggalPPN = %s', (new_Lamanya_ditunda, NoPPNdanTanggalPPN))
+                conn.commit()
+
+            if not request.form['Tanggal Batas Akhir'] == '':
+                new_Tanggal_Batas_Akhir = request.form['Tanggal Batas Akhir']
+                cursor.execute('UPDATE IGNORE ppnd SET TanggalBatasAkhir = %s WHERE NoPPNdanTanggalPPN = %s', (new_Tanggal_Batas_Akhir, NoPPNdanTanggalPPN))
+                conn.commit()
+            
+            if not request.form['Pejabat Pemrakarsa'] == '':
+                new_Pejabat_Pemrakarsa = request.form['Pejabat Pemrakarsa']
+                cursor.execute('UPDATE IGNORE ppnd SET PejabatPemrakarsa = %s WHERE NoPPNdanTanggalPPN = %s', (new_Pejabat_Pemrakarsa, NoPPNdanTanggalPPN))
+                conn.commit()
+
+            if not request.form['Pejabat Pemutus'] == '':
+                new_Pejabat_Pemutus = request.form['Pejabat Pemutus']
+                cursor.execute('UPDATE IGNORE ppnd SET PejabatPemutus = %s WHERE NoPPNdanTanggalPPN = %s', (new_Pejabat_Pemutus, NoPPNdanTanggalPPN))
+                conn.commit()
+
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE ppnd SET Keterangan = %s WHERE NoPPNdanTanggalPPN = %s', (new_keterangan, NoPPNdanTanggalPPN))
+                conn.commit()
+                
+            return redirect(url_for('PPND2'))
 
 # http://localhost:5000/logout - this will be the logout page
 @app.route('/logout')
