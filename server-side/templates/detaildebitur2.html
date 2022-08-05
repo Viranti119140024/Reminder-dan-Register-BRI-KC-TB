@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='detaildebitur2.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Detail debitur</title>
+</head>
+
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi"" class="active">
+            <img src="https://img.icons8.com/ios/45/102d81/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            <a href="/restrukturisasi"><img class="back"
+              src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png"/> 
+            </a>
+            <h2>Detail Debitur</h2>
+          </div>
+          
+          <div class="notif">
+            {% for detaildebitur in detaildebitur %}
+            <table>
+              <tr>
+                <th>Nama Debitur </th>
+                <td>: {{detaildebitur ['namadebitur'] }}</td>
+              </tr>
+              <tr>
+                <th>Jenis Kredit </th>
+                <td>: {{detaildebitur ['jeniskredit'] }}</td>
+              </tr>
+              <tr>
+                <th>No. Rekening </th>
+                <td>: {{detaildebitur ['norek'] }}</td>
+              </tr>
+              <tr>
+                <th>Tanggal Akad </th>
+                <td>: {{detaildebitur ['akad'] }}</td>
+              </tr>
+              <tr>
+                <th>Tanggal Jatuh Tempo </th>
+                <td>: {{detaildebitur ['jadwaltempo'] }}</td>
+              </tr>
+              <tr>
+                <th>Baki Debet </th>
+                <td>: {{detaildebitur ['bakidebet'] }}</td>
+              </tr>
+              <tr>
+                <th>RM </th>
+                <td>: {{detaildebitur ['rm'] }}</td>
+              </tr>
+              <tr>
+                <th>Jangka Waktu </th>
+                <td>: {{detaildebitur ['jangkawaktu'] }}</td>
+              </tr>
+              <tr>
+                <th>Suku Bunga </th>
+                <td>   {{ detaildebitur['sbaw1'] }} - {{ detaildebitur['sbak1'] }} {{ detaildebitur['sbp1'] }} % <br>
+                    :  {{ detaildebitur['sbaw2'] }} - {{ detaildebitur['sbak2'] }} {{ detaildebitur['sbp2'] }} % <br>
+                       {{ detaildebitur['sbaw3'] }} - {{ detaildebitur['sbak3'] }} {{ detaildebitur['sbp3'] }} %</td>
+              </tr>
+              <tr>
+                <th>BAP </th>
+                <td>: {{detaildebitur ['bap'] }}</td>
+              </tr>
+              <tr>
+                <th>Jadwal Pokok</th>
+                <td>: {{detaildebitur ['jadwalpokok'] }}</td>
+              </tr> 
+            {% endfor %}  
+          </div>  
+
+        </div>
+      </div>
+    </div>
+</body>
+</html>

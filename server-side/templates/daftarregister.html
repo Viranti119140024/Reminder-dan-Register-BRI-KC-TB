@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='daftarregister.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Daftar Register</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi">
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register" class="active">
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Pilih Jenis Register</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="{{ url_for('register') }}" method="POST" id="form">
+          <div class="wrap-input">
+            <label htmlfor="tindakan" class="label-input">
+              Daftar Register
+            </label>
+            <select name="tindakan" id="tindakan" class="input-field" required onfocus='this.size=z;'  >
+              <option value="" disabled selected hidden>
+                Pilih Register
+              </option>
+              <option value="register1">Register Titipan Biaya Notaris</a></option>              
+              <option value="register2">Register IPK Restruk </option>
+              <option value="register3">Register PTK Restruk </option>
+              <option value="register4">Register Roya & KKB</option>
+              <option value="register5">Register Persekot Interen Khusus ADK</option>
+              <option value="register6">Register KKB COP Angkringan</option>
+              <option value="register7">Register Tanda Terima Sertifikat Ke Notaris KONSUMER</option>
+              <option value="register8">Register Roya & KKB</option>
+              <option value="register9">Register Pencairan Dana Ditahan</option>
+              <option value="register10">Register Register Verifikasi Berkas</option>
+              <option value="register11">Register Register KPR Bangun</option>
+              <option value="register12">Register IPK (Intruksi Pencairan Kredit) Konsumer</option>
+              <option value="register13">Register Register PTK (Putusan Kredit) FLPP</option>
+              <option value="register14">Register Register PK (Putusan Kredit) KONSUMER</option>
+              <option value="register15">Register Register IPK</option>
+              <option value="register16">Register PPND</option>
+              <option value="register17">Register PPND 2</option>
+              <option value="register18">Register KMK WA</option>              
+              <option value="register19">Register SPPH</option>
+              <option value="register20">Register BPKB yang Dipinjam </option>
+              <option value="register21">Register Peminjaman Berkas 1 (Kecil - Program - Konsumer)</option>
+              <option value="register22">Register Register Blokir (Kecil Program)</option>
+              <option value="register23">Register SLIK</option>
+              <option value="register24">Register ASS Kerugian</option>
+              <option value="register25">Register Jasa Konsultasi</option>
+              <option value="register26">Register NAS DAN BRIDYNA</option>
+            </select>
+            <button type="submit" class="btn-ubah" value="Pilih" name="button_tambah_data">Pilih</button>
+            <!-- </form> -->
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
