@@ -463,8 +463,12 @@ def notifhapus(norek):
     if 'loggedin' in session:
         if request.method == 'GET':
             cursor.execute('DELETE IGNORE FROM kenaikansukubunga WHERE norek = %s', (norek,))
+            cursor.execute('DELETE t1 FROM datadebitur t1 JOIN kenaikansukubunga t2 ON t1.sbaw3 = t2.sbaw && t1.sbak3 = t2.sbak && t1.sbp3 = t2.sukubunga && t1.norek = %s && t2.norek = %s', (norek,norek))
             conn.commit()
             cursor.close()
+
+
+            
             return redirect(url_for('viewnotif'))
     return redirect('/login')
 
