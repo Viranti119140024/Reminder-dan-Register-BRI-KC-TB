@@ -19,30 +19,26 @@
       <ul class="ul">
         <li>
           <a href="/beranda" class="active">
-            <img src="https://img.icons8.com/windows/48/02414D/home-page.png" />
-            <!-- <a target="_blank" href="https://icons8.com/icon/6g6b5Mh-1uJ7/home-page">Home Page icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/berandabiru.png') }}" />
             <p>BERANDA</p>
           </a>
         </li>
         <li>
           <a href="/restrukturisasi">
-            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/restrukputih.png') }}"  />
             <p>RESTRUKTURISASI</p>
           </a>
         </li>
         <li>
           <a href="/register" >
-            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
             <p>REGISTER</p>
           </a>
         </li>
         <li>
           <a href="/logout">
-            <img src="https://img.icons8.com/external-tanah-basah-basic-outline-tanah-basah/48/FFFFFF/external-medicine-healthcare-tanah-basah-basic-outline-tanah-basah.png"
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"
              />
-            <!-- <a target="_blank" href="https://icons8.com/icon/7N4bD4LTeOZF/medicine">medicine icon by Icons8</a> -->
             <p>KELUAR</p>
           </a>
       </ul>
@@ -50,7 +46,7 @@
 
     <div class="head">
       <div class="Logo">
-        <img class="logo" src="https://2.bp.blogspot.com/-lGvmflvsAt0/Vxw8r4FxYLI/AAAAAAAAXCU/_XDIiY_PEz4hpG__6jpxudPBusASFaVgwCLcB/s1600/Logo%2BBRI.png"/>
+        <img class="logo" src="{{ url_for('static', filename='icon/logo.png') }}"/>
         <h2 class="logoTxt">BRI-Minder</h2>
       </div>
       

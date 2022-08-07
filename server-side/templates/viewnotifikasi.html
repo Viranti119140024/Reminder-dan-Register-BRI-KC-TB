@@ -20,29 +20,26 @@
         <li>
           <a href="/beranda" >
             <img
-              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
                />
             <p>BERANDA</p>
           </a>
         </li>
         <li>
           <a href="/restrukturisasi" class="active">
-            <img src="https://img.icons8.com/ios/45/102d81/overtime.png"   />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"   />
             <p>RESTRUKTURISASI</p>
           </a>
         </li>
         <li>
-          <a href="" >
-            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+          <a href="/register" >
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
             <p>REGISTER</p>
           </a>
         </li>
         <li>
           <a href="/logout" >
-            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
             <p>KELUAR</p>
           </a>
         </li>
@@ -51,7 +48,7 @@
       <div class="head">
         <div class="bagianAtas">
           <div class="inline">
-          <a><img class="back"
+          <a href="/notifikasi"><img class="back"
             src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png"/> 
           </a>
           <h2 class="jadwal">Jadwal Restrukturisasi</h2>
@@ -96,9 +93,9 @@
                       <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
                           <img src="https://img.icons8.com/ios-filled/20/102d81/checkmark--v1.png"/>
                       </a>
-                      <a href="/restrukturisasi/notifikasi/viewnotif/editdebitur/{{ kenaikansukubunga['norek'] }}">
+                      <!-- <a href="/restrukturisasi/notifikasi/viewnotif/editdebitur/{{ kenaikansukubunga['norek'] }}">
                         <img src="https://img.icons8.com/ios-filled/20/102d81/edit--v1.png"/>
-                      </a>
+                      </a> -->
                     </td>
                   </tr>
                 {% endfor %}
@@ -119,7 +116,6 @@
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
   
-    // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {

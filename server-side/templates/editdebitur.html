@@ -9,52 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-  <title>Tambah Data Debitur</title>
+  <title>Ubah Data Debitur</title>
 </head>
 <body>
-  <script>
-    $(document).ready(function() {
-    
-    var MaxInputs       = 8; //maximum input boxes allowed
-    var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
-    var AddButton       = $("#AddMoreFileBox"); //Add button ID
-    
-    var x = InputsWrapper.length; //initlal text box count
-    var FieldCount=1; //to keep track of text box added
-    
-    $(AddButton).click(function (e)  //on add input button click
-    {
-            if(x <= MaxInputs) //max input box allowed
-            {
-                FieldCount++; //text box added increment
-                //add input box
-                $(InputsWrapper).append('<div class="row"><p class="col-xs-6"><input type="text" placeholder="Enter your skill" class="form-control skill_list" name="skill[]" id="field_'+ FieldCount +'" value="Enter your skill '+ FieldCount +'"/></p><a href="#" class="btn btn-danger removeclass">×</a></div>');
-                x++; //text box increment
-            }
-    return false;
-    });
-    
-    $("body").on("click",".removeclass", function(e){ //user click on remove text
-            if( x > 1 ) {
-                    $(this).parent('div').remove(); //remove text box
-                    x--; //decrement textbox
-            }
-    return false;
-    })
-    $('#submit').click(function(){            
-            $.ajax({  
-                    url:"/postskill",  
-                    method:"POST",  
-                    data:$('#add_skills').serialize(),  
-                    success:function(data)  
-                    {  alert(data)
-                        $('#resultbox').html(data);  
-                        $('#add_skills')[0].reset();  
-                    }  
-            });  
-        }); 
-    });
-  </script>
   <div class="body">
     <div class="sidebar">
       <header class="header">BRI-Minder</header>
@@ -63,29 +20,26 @@
         <li>
           <a href="/beranda" >
             <img
-              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
                />
             <p>BERANDA</p>
           </a>
         </li>
         <li>
           <a href="/restrukturisasi" class="active">
-            <img src="https://img.icons8.com/ios/45/102d81/overtime.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"  />
             <p>RESTRUKTURISASI</p>
           </a>
         </li>
         <li>
-          <a href="" >
-            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+          <a href="/register" >
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
             <p>REGISTER</p>
           </a>
         </li>
         <li>
           <a href="/logout" >
-            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
             <p>KELUAR</p>
           </a>
         </li>
@@ -95,7 +49,7 @@
     <div class="head">
       <div class="wrap-bagianAtas">
         <div class="bagianAtas">
-          <h2>Form Penambahan Data Debitur</h2>
+          <h2>Form Pengubahan Data Debitur</h2>
         </div>
       </div>
   
@@ -172,13 +126,6 @@
           </div>
 
           <div class="wrap-input">
-            <label htmlfor="jadwal_jatuh_tempo" class="label-input">
-              Jatuh Tempo
-            </label>
-            <input type="date" class="input-field" name="jadwal_jatuh_tempo" value="{{ editdebitur['jadwaltempo'] }}"/>
-          </div>
-
-          <div class="wrap-input">
             <label htmlfor="akad" class="label-input">
               Akad 
             </label>
@@ -191,34 +138,6 @@
               BAP
             </label>
             <textarea type="text" class="input-field" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan" form="form">{{ editdebitur['bap'] }}</textarea>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="ksb1" class="ksb1">
-              BAP
-            </label>
-            <textarea type="text" class="ksb1" name="ksb1" placeholder="" form="form"></textarea>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="ksb2" class="ksb2">
-              BAP
-            </label>
-            <textarea type="text" class="ksb2" name="ksb2" placeholder="" form="form"></textarea>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="ksb3" class="ksb3">
-              BAP
-            </label>
-            <textarea type="text" class="ksb3" name="ksb3" placeholder="" form="form"></textarea>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="dt" class="dt">
-              BAP
-            </label>
-            <textarea type="text" class="dt" name="dt" placeholder="" form="form"></textarea>
           </div>
 
           <p class="msg">{{ msg }}</p>
