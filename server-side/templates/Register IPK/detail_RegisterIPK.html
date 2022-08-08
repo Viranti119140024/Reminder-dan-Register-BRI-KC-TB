@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./detail_Register BPJS TK.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register IPK/detail_RegisterIPK.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Register Roya </title>
+  <title>Register Intruksi Pencairan Kredit</title>
     
 </head>
 
@@ -28,15 +28,15 @@
           </a>
         </li>
         <li>
-          <a href="" class="active">
-            <img src="https://img.icons8.com/ios/45/102d81/overtime.png"  />
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
             <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
             <p>RESTRUKTURISASI</p>
           </a>
         </li>
         <li>
-          <a href="" >
-            <img src="https://img.icons8.com/external-outline-geotatah/48/FFFFFF/external-register-training-management-system-outline-geotatah.png"  />
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
             <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
             <p>REGISTER</p>
           </a>
@@ -54,7 +54,7 @@
         <div class="bagianAtas">
           <div class="inline">
             
-            <h2 class="jadwal">Register Roya</h2>
+            <h2 class="jadwal">Register Intruksi Pencairan Kredit</h2>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
               <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
@@ -68,7 +68,7 @@
 
             
             <div>
-              <a href="">
+              <a href="/register/ipk/tambah">
               <button
                 class="btn_tambah"
               >
@@ -79,40 +79,42 @@
             <table>
               <thead>
                 <tr>
-                  <th>Tanggal Surat Roya</th>                  
-                  <th>Nama Debitur</th>                 
-                  <th>Kantor BPN</th>                
-                  <th>Jenis Agunan / Keterangan</th>
-                  <th>Diterima Tanggal</th>  
-                  <th>Diterima Oleh</th>              
+                  <th>No. IPK</th>                  
+                  <th>Nama Debitur</th>
+                  <th>Tanggal Realisasi</th>                 
+                  <th>Tanggal Jatuh Tempo</th>                                   
+                  <th>No. Permohonan</th>
+                  <th>No. Putusan</th>
+                  <th>No. Rekening</th>
+                  <th>Masa Fix/Rate</th>
+                  <th>Keterangan</th>
                   <th>edit</th>
                   
                 </tr>
               </thead>
               <tbody>
+                {% for ipk in ipk %}
                 <tr>
-                  <td>14/09/2006</td>
-                  <td>PT. Karya Graha Mandiri </td>
-                  <td>Kantor Bandar LampungI</td>
-                  <td>Kavling Blok bxxx</td>
-                  <td> 28/09/2006</td>
-                  <td>Adi w</td>
-                                
-                           
-                                    
+                  <td>{{ ipk['NoIPK'] }}</td>
+                  <td>{{ ipk['NamaDebitur'] }}</td>
+                  <td>{{ ipk['TanggalRealisasi'] }}</td>
+                  <td>{{ ipk['TanggalJatuhTempo'] }}</td>
+                  <td>{{ ipk['NoPermohonan'] }}</td>
+                  <td>{{ ipk['NoPutusan'] }}</td>
+                  <td>{{ ipk['NoRekening'] }}</td>
+                  <td>{{ ipk['MasaFixRate'] }}</td>
+                  <td>{{ ipk['Keterangan'] }}</td>
                   <td>
-                    <a href="" >
+                    <a href="/register/ipk/edit/{{ ipk['NoIPK'] }}" >
                        
                       <img
                         src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
                       />                      
                     </a>  
                  </td>
-
-
                 </tr>
+                {% endfor %}
               </tbody>
-              
             </table>
           </div>
         </div>

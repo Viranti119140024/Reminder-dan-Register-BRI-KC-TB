@@ -494,6 +494,8 @@ def register():
             return redirect(url_for('asskerugian'))
         elif select == 'register5':
             return redirect(url_for('blokirkecil'))
+        elif select == 'register6':
+            return redirect(url_for('ipk'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -968,6 +970,107 @@ def editblokirkecil(NoRekening):
                 conn.commit()
                 
             return redirect(url_for('blokirkecil'))
+    return redirect(url_for('login'))
+
+@app.route('/register/ipk', methods=['GET', 'POST'])
+def ipk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM register_ipk')
+        ipk = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register IPK/detail_RegisterIPK.html', ipk=ipk)  
+    return redirect(url_for('login'))
+
+@app.route('/register/ipk/tambah', methods=['GET', 'POST'])
+def tambahipk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register IPK/tambah_RegisterIPK.html', username=session['username'])
+        else:
+            IPK= request.form['IPK']
+            Debitur = request.form['Debitur']
+            Tanggal_Realisasi = request.form['Tanggal Realisasi']
+            Tanggal_Jatuh_Tempo = request.form['Tanggal Jatuh Tempo']
+            Permohonan= request.form['Permohonan']
+            Putusan = request.form["Putusan"]
+            Rekening = request.form["Rekening"]
+            Fix_Rate = request.form["Fix/Rate"]
+            keterangan = request.form['keterangan']
+
+            
+            cursor.execute('''INSERT INTO register_ipk VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(IPK, Debitur, Tanggal_Realisasi, Tanggal_Jatuh_Tempo, Permohonan, Putusan, Rekening, Fix_Rate, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ipk'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/ipk/edit/<NoIPK>', methods=['GET', 'POST'])
+def editipk(NoIPK):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM register_ipk WHERE NoIPK = %s', (NoIPK,))
+            editipk = cursor.fetchone()
+            return render_template('./Register IPK/edit_RegisterIPK.html', editipk=editipk)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['IPK'] == '':
+                new_IPK = request.form['IPK']
+                cursor.execute('UPDATE IGNORE register_ipk SET NoIPK = %s WHERE NoIPK = %s', (new_IPK, NoIPK))
+                conn.commit()
+                
+            if not request.form['Debitur'] == '':
+                new_Debitur = request.form['Debitur']
+                cursor.execute('UPDATE IGNORE register_ipk SET NamaDebitur = %s WHERE NoIPK = %s', (new_Debitur, NoIPK))
+                conn.commit()
+                
+            if not request.form['Tanggal Realisasi'] == '':
+                new_Tanggal_Realisasi = request.form['Tanggal Realisasi']
+                cursor.execute('UPDATE IGNORE register_ipk SET TanggalRealisasi = %s WHERE NoIPK = %s', (new_Tanggal_Realisasi, NoIPK))
+                conn.commit()
+            
+            if not request.form['Tanggal Jatuh Tempo'] == '':
+                new_Tanggal_Jatuh_Tempo = request.form['Tanggal Jatuh Tempo']
+                cursor.execute('UPDATE IGNORE register_ipk SET TanggalJatuhTempo = %s WHERE NoIPK = %s', (new_Tanggal_Jatuh_Tempo, NoIPK))
+                conn.commit()
+
+            if not request.form['Permohonan'] == '':
+                new_Permohonan = request.form['Permohonan']
+                cursor.execute('UPDATE IGNORE register_ipk SET NoPermohonan = %s WHERE NoIPK = %s', (new_Permohonan, NoIPK))
+                conn.commit()
+            
+            if not request.form['Putusan'] == '':
+                new_Putusan = request.form['Putusan']
+                cursor.execute('UPDATE IGNORE register_ipk SET NoPutusan = %s WHERE NoIPK = %s', (new_Putusan, NoIPK))
+                conn.commit()
+            
+            if not request.form['Rekening'] == '':
+                new_Rekening = request.form['Rekening']
+                cursor.execute('UPDATE IGNORE register_ipk SET NoRekening = %s WHERE NoIPK = %s', (new_Rekening, NoIPK))
+                conn.commit()
+            
+            if not request.form['Fix/Rate'] == '':
+                new_Fix_Rate = request.form['Fix/Rate']
+                cursor.execute('UPDATE IGNORE register_ipk SET MasaFixRate = %s WHERE NoIPK = %s', (new_Fix_Rate, NoIPK))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE register_ipk SET Keterangan = %s WHERE NoIPK = %s', (new_keterangan, NoIPK))
+                conn.commit()
+                
+            return redirect(url_for('ipk'))
     return redirect(url_for('login'))
 
 @app.route('/logout')
