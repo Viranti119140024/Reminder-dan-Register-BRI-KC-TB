@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./tambah_PTK Restruk 2 Penyelesaian.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='PTK Restruk 2 Penyelesaian/edit_PTK Restruk 2 Penyelesaian.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -47,10 +47,11 @@
         </li>
       </ul>
     </div>
+    
     <div class="head">
       <div class="wrap-bagianAtas">
         <div class="bagianAtas">
-          <h2>Form Tambah Data Debitur (PTK Restruk 2 Penyelesaian)</h2>
+          <h2>Edit Data Debitur (PTK Restruk 2 Penyelesaian)</h2>
         </div>
       </div>
   
@@ -61,13 +62,13 @@
                   <label htmlfor="No. PTK" class="label-input">
                    No. PTK
                   </label>
-                  <input type="text" name="No. PTK" id="No. PTK"  class="input-field" >
+                  <input type="text" name="No. PTK" id="No. PTK"  class="input-field" value="{{ editptkrestruk2penyelesaian['NoPTK'] }}" >
                 </div>
                 <div class="wrap-input">
                     <label htmlfor="Nama Debitur" class="label-input">
                     Nama Debitur
                     </label>
-                    <input type="text" name="Nama Debitur" id="Nama Debitur"  class="input-field" >
+                    <input type="text" name="Nama Debitur" id="Nama Debitur"  class="input-field" value="{{ editptkrestruk2penyelesaian['NamaDebitur'] }}" >
                   </div>
               </div>
                      
@@ -76,13 +77,13 @@
                 <label htmlfor=" Tanggal Putusan" class="label-input">
                   Tanggal Putusan
                 </label>
-                <input type="date" class="input-field" name=" Tanggal Putusan" value=""/>
+                <input type="date" class="input-field" name="Tanggal Putusan" value="{{ editptkrestruk2penyelesaian['TanggalPutusan'] }}">
               </div>
             <div class="wrap-input">
-                <label htmlfor=" Nama Pemutus" class="label-input">
+                <label htmlfor="Nama Pemutus" class="label-input">
                   Nama Pemutus
                 </label>
-                <input type="text" name=" Nama Pemutus" id=" Nama Pemutus"  class="input-field" >
+                <input type="text" name="Nama Pemutus" id=" Nama Pemutus"  class="input-field"  value="{{ editptkrestruk2penyelesaian['NamaPemutus'] }}">
               </div>
           </div>
          
@@ -92,7 +93,7 @@
               <label htmlfor="Jabatan" class="label-input">
                Jabatan
               </label>
-              <input type="text" name="Jabatan" id="Jabatan"  class="input-field" >
+              <input type="text" name="Jabatan" id="Jabatan"  class="input-field" value="{{ editptkrestruk2penyelesaian['Jabatan'] }}" >
             </div>
             
             
@@ -100,14 +101,14 @@
             <label htmlfor="Rp" class="label-input">
                 Rp.
               </label>
-              <input type="text" name="Rp" id="" cols="30" rows="10" class="input-field">
+              <input type="text" name="Rp" id="" cols="30" rows="10" class="input-field" value="{{ editptkrestruk2penyelesaian['Rp'] }}">
             </div>
           </div>
           <div class="wrap-input">
             <label htmlfor="keterangan" class="label-input">
                 Keterangan
               </label>
-              <textarea name="keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+              <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ editptkrestruk2penyelesaian['keterangan'] }}</textarea>
             </div>
             <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
         </form>
