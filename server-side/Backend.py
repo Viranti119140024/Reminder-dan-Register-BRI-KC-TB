@@ -500,6 +500,8 @@ def register():
             return redirect(url_for('jasakonsultasi'))
         elif select == 'register8':
             return redirect(url_for('bpkbpinjam'))
+        elif select == 'register9':
+            return redirect(url_for('angkringan'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1258,6 +1260,101 @@ def editbpkbpinjam(NoBPKB):
                 conn.commit()
         
             return redirect(url_for('bpkbpinjam'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/angkringan', methods=['GET', 'POST'])
+def angkringan():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_kkb_cop_angkr')
+        angkringan = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register KKB & COP ANGKRINGAN/detail_Register_KKB_&_COP_ANGKRINGAN.html', angkringan=angkringan)  
+    return redirect(url_for('login'))
+
+@app.route('/register/angkringan/tambah', methods=['GET', 'POST'])
+def tambahangkringan():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register KKB & COP ANGKRINGAN/tambah_Register_KKB_&_COP_ANGKRINGAN.html', username=session['username'])
+        else:
+            Debitur= request.form['Debitur']
+            tanggal = request.form['tanggal']
+            Plafond = request.form['Plafond']
+            Waktu = request.form['Waktu']
+            Angsuran_Pokok= request.form['Angsuran Pokok']
+            Angsuran_Bunga = request.form["Angsuran Bunga"]
+            No_Rekening = request.form["No Rekening"]
+            keterangan = request.form["keterangan"]
+
+            cursor.execute('''INSERT INTO reg_kkb_cop_angkr VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Debitur, tanggal, Plafond, Waktu, Angsuran_Pokok, Angsuran_Bunga, No_Rekening, keterangan  ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('angkringan'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/angkringan/edit/<NoRekening>', methods=['GET', 'POST'])
+def editangkringan(NoRekening):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_kkb_cop_angkr WHERE NoRekening = %s', (NoRekening,))
+            editangkringan = cursor.fetchone()
+            return render_template('./Register KKB & COP ANGKRINGAN/edit_Register_KKB_&_COP_ANGKRINGAN.html', editangkringan=editangkringan)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Debitur'] == '':
+                new_Debitur = request.form['Debitur']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET NamaDebitur = %s WHERE NoRekening = %s', (new_Debitur, NoRekening))
+                conn.commit()
+                
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET TanggalRealisasi = %s WHERE NoRekening = %s', (new_tanggal, NoRekening))
+                conn.commit()
+                
+            if not request.form['Plafond'] == '':
+                new_Plafond = request.form['Plafond']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET Plafond(RP) = %s WHERE NoRekening = %s', (new_Plafond, NoRekening))
+                conn.commit()
+            
+            if not request.form['Waktu'] == '':
+                new_Waktu = request.form['Waktu']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET JangkaWaktu(Tahun) = %s WHERE NoRekening = %s', (new_Waktu, NoRekening))
+                conn.commit()
+
+            if not request.form['Angsuran Pokok'] == '':
+                new_Angsuran_Pokok = request.form['Angsuran Pokok']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET AngsuranPokok = %s WHERE NoRekening = %s', (new_Angsuran_Pokok, NoRekening))
+                conn.commit()
+            
+            if not request.form['Angsuran Bunga'] == '':
+                new_Angsuran_Bunga = request.form['Angsuran Bunga']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET AngsuranBunga = %s WHERE NoRekening = %s', (new_Angsuran_Bunga, NoRekening))
+                conn.commit()
+            
+            if not request.form['No Rekening'] == '':
+                new_No_Rekening = request.form['No Rekening']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET NoRekening = %s WHERE NoRekening = %s', (new_No_Rekening, NoRekening))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET Keterangan = %s WHERE NoRekening = %s', (new_keterangan, NoRekening))
+                conn.commit()
+        
+            return redirect(url_for('angkringan'))
 
     return redirect(url_for('login'))
 
