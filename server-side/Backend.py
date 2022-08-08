@@ -496,6 +496,8 @@ def register():
             return redirect(url_for('blokirkecil'))
         elif select == 'register6':
             return redirect(url_for('ipk'))
+        elif select == 'register7':
+            return redirect(url_for('jasakonsultasi'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1072,6 +1074,102 @@ def editipk(NoIPK):
                 
             return redirect(url_for('ipk'))
     return redirect(url_for('login'))
+
+@app.route('/register/jasakonsultasi', methods=['GET', 'POST'])
+def jasakonsultasi():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_jasa_konsul')
+        jasakonsultasi = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Jasa Konsultasi/detail_Register Jasa Konsultasi.html', jasakonsultasi=jasakonsultasi)  
+    return redirect(url_for('login'))
+
+@app.route('/register/jasakonsultasi/tambah', methods=['GET', 'POST'])
+def tambahjasakonsultasi():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Jasa Konsultasi/tambah_Register Jasa Konsultasi.html', username=session['username'])
+        else:
+            Nama_No_Rekening= request.form['Nama + No. Rekening']
+            Jasa_Sesuai_PTK = request.form['Jasa Sesuai PTK']
+            Tanggal_Setor = request.form['Tanggal Setor']
+            Jumlah_yang_disetor = request.form['Jumlah yang disetor']
+            NPWP= request.form['NPWP']
+            PPN = request.form["PPN"]
+            PPN2 = request.form["PPN"]
+            DPP = request.form["DPP"]
+
+
+            cursor.execute('''INSERT INTO reg_jasa_konsul VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Nama_No_Rekening, Jasa_Sesuai_PTK, Tanggal_Setor, Jumlah_yang_disetor, NPWP, PPN, PPN2, DPP ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('jasakonsultasi'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/jasakonsultasi/edit/<NPWP>', methods=['GET', 'POST'])
+def editjasakonsultasi(NPWP):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_jasa_konsul WHERE NPWP = %s', (NPWP,))
+            editjasakonsultasi = cursor.fetchone()
+            return render_template('./Register Jasa Konsultasi/edit_Register Jasa Konsultasi.html', editjasakonsultasi=editjasakonsultasi)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama + No. Rekening'] == '':
+                new_Nama_No_Rekening = request.form['Nama + No. Rekening']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET Nama+NoRekening = %s WHERE NPWP = %s', (new_Nama_No_Rekening, NPWP))
+                conn.commit()
+                
+            if not request.form['Jasa Sesuai PTK'] == '':
+                new_Jasa_Sesuai_PTK = request.form['Jasa Sesuai PTK']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET JasaSesuaiPTK = %s WHERE NPWP = %s', (new_Jasa_Sesuai_PTK, NPWP))
+                conn.commit()
+                
+            if not request.form['Tanggal Setor'] == '':
+                new_Tanggal_Setor = request.form['Tanggal Setor']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET TanggalSetor = %s WHERE NPWP = %s', (new_Tanggal_Setor, NPWP))
+                conn.commit()
+            
+            if not request.form['Jumlah yang disetor'] == '':
+                new_Jumlah_yang_disetor = request.form['Jumlah yang disetor']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET JumlahyangDiterima = %s WHERE NPWP = %s', (new_Jumlah_yang_disetor, NPWP))
+                conn.commit()
+
+            if not request.form['NPWP'] == '':
+                new_NPWP = request.form['NPWP']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET NPWP = %s WHERE NPWP = %s', (new_NPWP, NPWP))
+                conn.commit()
+            
+            if not request.form['PPN'] == '':
+                new_PPN = request.form['PPN']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET PPN = %s WHERE NPWP = %s', (new_PPN, NPWP))
+                conn.commit()
+            
+            if not request.form['PPN'] == '':
+                new_Rekening = request.form['PPN']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET PPN_ = %s WHERE NPWP = %s', (new_Rekening, NPWP))
+                conn.commit()
+            
+            if not request.form['DPP'] == '':
+                new_DPP = request.form['DPP']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET DPP = %s WHERE NPWP = %s', (new_DPP, NPWP))
+                conn.commit()
+            return redirect(url_for('jasakonsultasi'))
+
+    return redirect(url_for('login'))
+
 
 @app.route('/logout')
 def logout():
