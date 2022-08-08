@@ -498,6 +498,8 @@ def register():
             return redirect(url_for('ipk'))
         elif select == 'register7':
             return redirect(url_for('jasakonsultasi'))
+        elif select == 'register8':
+            return redirect(url_for('bkpbpinjam'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1167,6 +1169,95 @@ def editjasakonsultasi(NPWP):
                 cursor.execute('UPDATE IGNORE reg_jasa_konsul SET DPP = %s WHERE NPWP = %s', (new_DPP, NPWP))
                 conn.commit()
             return redirect(url_for('jasakonsultasi'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/bpkbpinjam', methods=['GET', 'POST'])
+def bpkbpinjam():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_bpkb_pinjam')
+        bpkbpinjam = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register BKPB yang dipinjam/detail_egister BKPB yang dipinjam.html', bpkbpinjam=bpkbpinjam)  
+    return redirect(url_for('login'))
+
+@app.route('/register/bpkbpinjam/tambah', methods=['GET', 'POST'])
+def tambahbpkbpinjam():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register BKPB yang dipinjam/tambah_egister BKPB yang dipinjam.html', username=session['username'])
+        else:
+            Nama= request.form['Nama']
+            Rekening = request.form['Rekening']
+            Kredit = request.form['Kredit']
+            BPKB = request.form['BPKB']
+            VIA= request.form['VIA']
+            Tanggal_Keluar = request.form["Tanggal_Keluar"]
+            Tanggal_Kembali = request.form["Tanggal_Kembali"]
+
+            cursor.execute('''INSERT INTO reg_bpkb_pinjam VALUES(%s,%s,%s,%s,%s,%s,%s)''',(Nama, Rekening, Kredit, BPKB, VIA, Tanggal_Keluar, Tanggal_Kembali ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('bpkbpinjam'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/bpkbpinjam/edit/<NoBPKB>', methods=['GET', 'POST'])
+def editbpkbpinjam(NoBPKB):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_bpkb_pinjam WHERE NoBPKB = %s', (NoBPKB,))
+            editbpkbpinjam = cursor.fetchone()
+            return render_template('./Register BPKB yang dipinjam/edit_Register BPKB yang dipinjam.html', editbpkbpinjam=editbpkbpinjam)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama'] == '':
+                new_Nama = request.form['Nama']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET NamaDebitur = %s WHERE NoBPKB = %s', (new_Nama, NoBPKB))
+                conn.commit()
+                
+            if not request.form['Rekening'] == '':
+                new_Rekening = request.form['Rekening']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET NoRekening = %s WHERE NoBPKB = %s', (new_Rekening, NoBPKB))
+                conn.commit()
+                
+            if not request.form['Kredit'] == '':
+                new_Kredit = request.form['Kredit']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET JenisKredit = %s WHERE NoBPKB = %s', (new_Kredit, NoBPKB))
+                conn.commit()
+            
+            if not request.form['BPKB'] == '':
+                new_BPKB = request.form['BPKB']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET NoBPKB = %s WHERE NoBPKB = %s', (new_BPKB, NoBPKB))
+                conn.commit()
+
+            if not request.form['VIA'] == '':
+                new_VIA = request.form['VIA']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET ProsesVIA = %s WHERE NoBPKB = %s', (new_VIA, NoBPKB))
+                conn.commit()
+            
+            if not request.form['Tanggal_Keluar'] == '':
+                new_Tanggal_Keluar = request.form['Tanggal_Keluar']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET PPN = %s WHERE TanggalKeluar = %s', (new_Tanggal_Keluar, NoBPKB))
+                conn.commit()
+            
+            if not request.form['Tanggal_Kembali'] == '':
+                new_Tanggal_Kembali = request.form['Tanggal_Kembali']
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET TanggalKembali = %s WHERE NoBPKB = %s', (new_Tanggal_Kembali, NoBPKB))
+                conn.commit()
+        
+            return redirect(url_for('bpkbpinjam'))
 
     return redirect(url_for('login'))
 

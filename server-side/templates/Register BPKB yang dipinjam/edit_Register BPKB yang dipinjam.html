@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register BPKB yang dipinjam/edit_Register BPKB yang dipinjam.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register BPKB yang dipinjam</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Edit Data Debitur (Register Register BPKB yang dipinjam)</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form">
+            
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Nama" class="label-input">
+               Nama
+              </label>
+              <input type="text" class="input-field"  name="Nama" value="{{ editbpkbpinjam['NamaDebitur'] }}"/>
+            </div>
+            
+            <div class="wrap-input">
+              <label htmlfor="Rekening" class="label-input">
+               Nomor Rekening
+              </label>
+              <input type="text" class="input-field"  name="Rekening" value="{{ editbpkbpinjam['NoRekening'] }}"/>
+            </div>
+          </div>
+            
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Kredit" class="label-input">
+              Jenis Kredit
+              </label>
+              <input type="text" name="Kredit" id="Kredit"  class="input-field" value="{{ editbpkbpinjam['JenisKredit'] }}" >
+            </div>
+
+            <div class="wrap-input">
+                <label htmlfor="BPKB" class="label-input">
+                No. BPKB
+                </label>
+                <input type="text" name="BPKB" id="BPKB"  class="input-field" value="{{ editbpkbpinjam['NoBPKB'] }}" >
+              </div>
+              </div>
+              
+              <div class="wrap-input">
+                <label htmlfor="VIA" class="label-input">
+                Proses VIA   
+                </label>
+                <input type="text" name="VIA" id="VIA"  class="input-field"  value="{{ editbpkbpinjam['ProsesVIA'] }}">
+              </div>
+
+              <div class="flex-input">
+                <div class="wrap-input">
+                    <label htmlfor="Tanggal_Keluar" class="label-input">
+                        Tanggal Keluar
+                        </label>
+                    <input type="date" class="input-field" name="Tanggal_Keluar" value="{{ editbpkbpinjam['TanggalKeluar'] }}"/>
+                </div>
+                <div class="wrap-input">
+                    <label htmlfor="Tanggal_Kembali" class="label-input">
+                        Tanggal Kembali
+                        </label>
+                    <input type="date" class="input-field" name="Tanggal_Kembali" value="{{ editbpkbpinjam['TanggalKembali'] }}"/>
+                </div>
+              </div>
+            
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

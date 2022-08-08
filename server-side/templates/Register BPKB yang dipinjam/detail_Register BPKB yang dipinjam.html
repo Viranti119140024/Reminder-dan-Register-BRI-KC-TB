@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register BPKB yang dipinjam/detail_Register BPKB yang dipinjam.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title> Register BPKB yang dipinjam</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">Register BPKB yang dipinjam</h2>
+            <label htmlfor="cari" class="label-input"></label> 
+            <div class="wrap-input">    
+              <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
+            </div>
+          </div>
+            
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/register/bpkbpinjam/tambah">
+              <button
+                class="btn_tambah"
+              >
+                Tambah Data Debitur
+              </button>
+              </a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nama Debitur</th>
+                  <th>No Rekening</th>                                                 
+                  <th>Jenis Kredit </th>
+                  <th>No. BPKB</th>
+                  <th>Proses VIA</th>
+                  <th>Tanggal Keluar</th>
+                  <th>Tanggal Kembali</th>        
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for bpkbpinjam in bpkbpinjam %}
+                <tr>
+                  <td>{{ bpkbpinjam['NamaDebitur'] }}</td>
+                  <td>{{ bpkbpinjam['NoRekening'] }}</td>
+                  <td>{{ bpkbpinjam['JenisKredit'] }}</td>
+                  <td>{{ bpkbpinjam['NoBPKB'] }}</td>
+                  <td>{{ bpkbpinjam['ProsesVIA'] }}</td>
+                  <td>{{ bpkbpinjam['TanggalKeluar'] }}</td>
+                  <td>{{ bpkbpinjam['TanggalKembali'] }}</td>   
+                  
+                  <td>
+                    <a href="" >
+                       
+                      <img
+                        src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
+                      />                      
+                    </a>  
+                 </td>
+
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
