@@ -490,6 +490,10 @@ def register():
             return redirect(url_for('ppnd'))
         elif select == 'register3':
             return redirect(url_for('ptkrestruk2penyelesaian'))
+        elif select == 'register4':
+            return redirect(url_for('asskerugian'))
+        elif select == 'register5':
+            return redirect(url_for('blokirkecil'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -780,6 +784,190 @@ def editptkrestruk2penyelesaian(NoPTK):
                 conn.commit()
                 
             return redirect(url_for('ptkrestruk2penyelesaian'))
+    return redirect(url_for('login'))
+
+@app.route('/register/asskerugian', methods=['GET', 'POST'])
+def asskerugian():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_ass_kerugian')
+        asskerugian = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register ASS Kerugian/detail_Register ASS Kerugian.html', asskerugian=asskerugian)  
+    return redirect(url_for('login'))
+
+@app.route('/register/asskerugian/tambah', methods=['GET', 'POST'])
+def tambahasskerugian():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register ASS Kerugian/tambah_Register ASS Kerugian.html', username=session['username'])
+        else:
+            Tanggal= request.form['tanggal']
+            Nama_Debitur = request.form['Nama Debitur']
+            CAD_Premi = request.form['Premi']
+            Jumlah_Agunan = request.form['Agunan']
+            No_Polis= request.form['Polis']
+            Tanggal_OB = request.form["Tanggal"]
+            Premi= request.form["Premi"]
+            keterangan = request.form['keterangan']
+
+            
+            cursor.execute('''INSERT INTO reg_ass_kerugian VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Tanggal, Nama_Debitur, CAD_Premi, Jumlah_Agunan, No_Polis, Tanggal_OB, Premi, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('asskerugian'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/asskerugian/edit/<NoPolis>', methods=['GET', 'POST'])
+def editasskerugian(NoPolis):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_ass_kerugian WHERE NoPolis = %s', (NoPolis,))
+            editasskerugian = cursor.fetchone()
+            return render_template('./Register ASS Kerugian/edit_Register ASS Kerugian.html', editasskerugian=editasskerugian)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET Tanggal = %s WHERE NoPolis = %s', (new_tanggal, NoPolis))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET NamaDebitur = %s WHERE NoPolis = %s', (new_Nama_Debitur, NoPolis))
+                conn.commit()
+                
+            if not request.form['Premi'] == '':
+                new_Premi = request.form['Premi']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET CADPremi = %s WHERE NoPolis = %s', (new_Premi, NoPolis))
+                conn.commit()
+            
+            if not request.form['Agunan'] == '':
+                new_Agunan = request.form['Agunan']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET JumlahAgunan = %s WHERE NoPolis = %s', (new_Agunan, NoPolis))
+                conn.commit()
+
+            if not request.form['Polis'] == '':
+                new_Polis = request.form['Polis']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET NoPolis = %s WHERE NoPolis = %s', (new_Polis, NoPolis))
+                conn.commit()
+            
+            if not request.form['Tanggal'] == '':
+                new_Tanggal = request.form['Tanggal']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET TanggalOB = %s WHERE NoPolis = %s', (new_Tanggal, NoPolis))
+                conn.commit()
+            
+            if not request.form['Premi'] == '':
+                new_Premi = request.form['Premi']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET Premi = %s WHERE NoPolis = %s', (new_Premi, NoPolis))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_ass_kerugian SET Keterangan = %s WHERE NoPolis = %s', (new_keterangan, NoPolis))
+                conn.commit()
+                
+            return redirect(url_for('asskerugian'))
+    return redirect(url_for('login'))
+
+@app.route('/register/blokirkecil', methods=['GET', 'POST'])
+def blokirkecil():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_blok_kecil_program')
+        blokirkecil = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Blokir Kecil-Program/detail_Register Blokir Kecil-Program.html', blokirkecil=blokirkecil)  
+    return redirect(url_for('login'))
+
+@app.route('/register/blokirkecil/tambah', methods=['GET', 'POST'])
+def tambahblokirkecil():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Blokir Kecil-Program/tambah_Register Blokir Kecil-Program.html', username=session['username'])
+        else:
+            Nama= request.form['Nama']
+            Rekening = request.form['Rekening']
+            Jumlah = request.form['Jumlah']
+            Tanggal = request.form['Tanggal']
+            Buka= request.form['Buka']
+            Paraf = request.form["Paraf"]
+            keterangan = request.form['keterangan']
+
+            
+            cursor.execute('''INSERT INTO reg_blok_kecil_program VALUES(%s,%s,%s,%s,%s,%s,%s)''',(Nama, Rekening, Jumlah, Tanggal, Buka, Paraf, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('blokirkecil'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/blokirkecil/edit/<NoRekening>', methods=['GET', 'POST'])
+def editblokirkecil(NoRekening):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_blok_kecil_program WHERE NoRekening = %s', (NoRekening,))
+            editblokirkecil = cursor.fetchone()
+            return render_template('./Register Blokir Kecil-Program/edit_Register Blokir Kecil-Program.html', editblokirkecil=editblokirkecil)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama'] == '':
+                new_Nama = request.form['Nama']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET NamaDebitur = %s WHERE NoRekening = %s', (new_Nama, NoRekening))
+                conn.commit()
+                
+            if not request.form['Rekening'] == '':
+                new_Rekening = request.form['Rekening']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET NoRekening = %s WHERE NoRekening = %s', (new_Rekening, NoRekening))
+                conn.commit()
+                
+            if not request.form['Jumlah'] == '':
+                new_Jumlah = request.form['Jumlah']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Jumlah = %s WHERE NoRekening = %s', (new_Jumlah, NoRekening))
+                conn.commit()
+            
+            if not request.form['Tanggal'] == '':
+                new_Tanggal = request.form['Tanggal']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Tanggal = %s WHERE NoRekening = %s', (new_Tanggal, NoRekening))
+                conn.commit()
+
+            if not request.form['Buka'] == '':
+                new_Buka = request.form['Buka']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Buka = %s WHERE NoRekening = %s', (new_Buka, NoRekening))
+                conn.commit()
+            
+            if not request.form['Paraf'] == '':
+                new_Paraf = request.form['Paraf']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Paraf = %s WHERE NoRekening = %s', (new_Paraf, NoRekening))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Keterangan = %s WHERE NoRekening = %s', (new_keterangan, NoRekening))
+                conn.commit()
+                
+            return redirect(url_for('blokirkecil'))
     return redirect(url_for('login'))
 
 @app.route('/logout')
