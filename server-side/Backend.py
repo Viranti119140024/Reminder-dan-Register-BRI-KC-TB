@@ -499,7 +499,7 @@ def register():
         elif select == 'register7':
             return redirect(url_for('jasakonsultasi'))
         elif select == 'register8':
-            return redirect(url_for('bkpbpinjam'))
+            return redirect(url_for('bpkbpinjam'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1183,7 +1183,7 @@ def bpkbpinjam():
         bpkbpinjam = cursor.fetchall()
         conn.commit()
         cursor.close()
-        return render_template('./Register BKPB yang dipinjam/detail_egister BKPB yang dipinjam.html', bpkbpinjam=bpkbpinjam)  
+        return render_template('./Register BPKB yang dipinjam/detail_Register BPKB yang dipinjam.html', bpkbpinjam=bpkbpinjam)  
     return redirect(url_for('login'))
 
 @app.route('/register/bpkbpinjam/tambah', methods=['GET', 'POST'])
@@ -1192,7 +1192,7 @@ def tambahbpkbpinjam():
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     if 'loggedin' in session:
         if request.method == 'GET':
-            return render_template('./Register BKPB yang dipinjam/tambah_egister BKPB yang dipinjam.html', username=session['username'])
+            return render_template('./Register BPKB yang dipinjam/tambah_Register BPKB yang dipinjam.html', username=session['username'])
         else:
             Nama= request.form['Nama']
             Rekening = request.form['Rekening']
@@ -1249,7 +1249,7 @@ def editbpkbpinjam(NoBPKB):
             
             if not request.form['Tanggal_Keluar'] == '':
                 new_Tanggal_Keluar = request.form['Tanggal_Keluar']
-                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET PPN = %s WHERE TanggalKeluar = %s', (new_Tanggal_Keluar, NoBPKB))
+                cursor.execute('UPDATE IGNORE reg_bpkb_pinjam SET TanggalKeluar = %s WHERE NoBPKB = %s', (new_Tanggal_Keluar, NoBPKB))
                 conn.commit()
             
             if not request.form['Tanggal_Kembali'] == '':
