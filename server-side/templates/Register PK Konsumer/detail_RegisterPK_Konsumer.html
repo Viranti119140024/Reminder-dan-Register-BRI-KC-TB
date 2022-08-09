@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register PK Konsumer/detail_RegisterPK_Konsumer.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register PK (Putusan Kredit) Konsumer</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">Register PK (Putusan Kredit) Konsumer</h2>
+            <label htmlfor="cari" class="label-input"></label> 
+            <div class="wrap-input">    
+              <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
+            </div>
+          </div>
+            
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/register/pkkonsumer/tambah">
+              <button
+                class="btn_tambah"
+              >
+                Tambah Data Debitur
+              </button>
+              </a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>No. Putusan</th>                  
+                  <th>Tanggal Putusan</th>
+                  <th>Nama Debitur</th>  
+                  <th>Nama Pemutus</th>               
+                  <th>Jabatan Pemutus</th>
+                  <th>Keterangan</th>                          
+                  <th>edit</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for pkkonsumer in pkkonsumer %}
+                <tr>
+                  <td>{{ pkkonsumer['NoPutusan'] }}</td>
+                  <td>{{ pkkonsumer['TanggalPutusan'] }}</td>
+                  <td>{{ pkkonsumer['NamaDebitur'] }}</td>
+                  <td>{{ pkkonsumer['NamaPemutus'] }}</td>
+                  <td>{{ pkkonsumer['JabatanPemutus'] }}</td>
+                  <td>{{ pkkonsumer['Keterangan'] }}</td>        
+                  <td>
+                    <a href="/register/pkkonsumer/edit/{{ pkkonsumer['NoPutusan'] }}" >
+                       
+                      <img
+                        src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
+                      />                      
+                    </a>  
+                 </td>
+
+
+                </tr>
+                {% endfor %}
+              </tbody>
+              
+             
+                  
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
