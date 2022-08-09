@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='Register Jasa Konsultasi/detail_Register Jasa Konsultasi.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register KMK_WA/detail_RegisterKMK_WA.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Register Jasa Konsultasi</title>
+  <title>Register Register KMK WA</title>
     
 </head>
 
@@ -54,7 +54,7 @@
         <div class="bagianAtas">
           <div class="inline">
             
-            <h2 class="jadwal">Register Jasa Konsultasi</h2>
+            <h2 class="jadwal">Register Register KMK WA</h2>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
               <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
@@ -68,7 +68,7 @@
 
             
             <div>
-              <a href="/register/jasakonsultasi/tambah">
+              <a href="/register/kmkwa/tambah">
               <button
                 class="btn_tambah"
               >
@@ -79,32 +79,42 @@
             <table>
               <thead>
                 <tr>
-                  <th>Nama + No. Rekening</th>                  
-                  <th>Jasa Sesuai PTK</th>
-                  <th>Tanggal Setor</th>                 
-                  <th>Jumlah yang diterima</th>                                   
-                  <th>NPWP</th>
-                  <th>PPN</th>
-                  <th>PPN</th>
-                  <th>DPP</th>                  
+                  <th>SPK/PO/Kontrak Kerja</th>                  
+                  <th>Nilai Proyek</th>
+                  <th>Plafond (Rp.)</th>                 
+                  <th>Os Awal</th>                                   
+                  <th>Tanggal Pencairan</th>
+                  <th>Dok. Sumber Pencairan</th>
+                  <th>Nilai Pencairan</th>
+                  <th>Dok. Sumber Pembayaran</th>
+                  <th>Nilai Pembayaran</th>
+                  <th>OS Setelah Pembayaran</th>
+                  <th>OS Brinets</th>
+                  <th>Sisa Tagihan</th>
+                  <th>Keterangan</th>                  
                   <th>edit</th>
                   
                 </tr>
               </thead>
               <tbody>
-                {% for jasakonsultasi in jasakonsultasi %}
+                {% for kmkwa in kmkwa %}
                 <tr>
-                  <td>{{ jasakonsultasi['NamaNoRekening'] }}</td>
-                  <td>{{ jasakonsultasi['JasaSesuaiPTK'] }}</td>
-                  <td>{{ jasakonsultasi['TanggalSetor'] }}</td>
-                  <td>{{ jasakonsultasi['JumlahyangDiterima'] }}</td>
-                  <td>{{ jasakonsultasi['NPWP'] }}</td>
-                  <td>{{ jasakonsultasi['PPN'] }}</td>
-                  <td>{{ jasakonsultasi['PPN_'] }}</td>
-                  <td>{{ jasakonsultasi['DPP'] }}</td>             
-         
+                  <td>{{ kmkwa['SPK_PO_KontrakKerja'] }}</td>
+                  <td>{{ kmkwa['NilaiProyek'] }}</td>
+                  <td>{{ kmkwa['Plafond(Rp)'] }}</td>
+                  <td>{{ kmkwa['osAwal'] }}</td>
+                  <td>{{ kmkwa['TanggalPencairan'] }}</td>
+                  <td>{{ kmkwa['DokSumberPencairan'] }}</td>
+                  <td>{{ kmkwa['NilaiPencairan'] }}</td>  
+                  <td>{{ kmkwa['DokSumberPembayaran'] }}</td> 
+                  <td>{{ kmkwa['NilaiPembayaran'] }}</td> 
+                  <td>{{ kmkwa['OSSetelahPembayaran'] }}</td> 
+                  <td>{{ kmkwa['OSBrinets'] }}</td> 
+                  <td>{{ kmkwa['SisaTagihan'] }}</td> 
+                  <td>{{ kmkwa['Keterangan'] }}</td>  
+                  
                   <td>
-                    <a href="/register/jasakonsultasi/edit/{{ jasakonsultasi['NPWP'] }}" >
+                    <a href="/register/kmkwa/edit/{{ kmkwa['SPK_PO_KontrakKerja'] }}" >
                        
                       <img
                         src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"

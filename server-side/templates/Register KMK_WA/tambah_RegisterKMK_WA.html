@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./tambah_RegisterKMK_WA.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register KMK_WA/tambah_RegisterKMK_WA.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -106,10 +106,11 @@
 
           <div class="flex-input">  
             <div class="wrap-input">
-                <label htmlfor="Nilai Pembayaran" class="label-input">
-                  Nilai Pembayaran
+                <label htmlfor="Pencairan" class="label-input">
+                  Nilai Pencairan
                 </label>
-                <input type="text" class="input-field"  name="Nilai Pembayaran" value=""/>
+                <input type="text" class="input-field"  name="Pencairan" value=""/>
+              </div> 
           </div>
 
           <div class="flex-input">
@@ -129,10 +130,10 @@
 
           <div class="flex-input">
             <div class="wrap-input">
-                <label htmlfor=" OS Setelah Pembayaran" class="label-input">
+                <label htmlfor="OS Setelah Pembayaran" class="label-input">
                   OS Setelah Pembayaran
                 </label>
-                <input type="text" class="input-field"  name=" OS Setelah Pembayaran" value=""/>
+                <input type="text" class="input-field"  name="OS Setelah Pembayaran" value=""/>
               </div> 
               <div class="wrap-input">
                 <label htmlfor="OS Brinets" class="label-input">

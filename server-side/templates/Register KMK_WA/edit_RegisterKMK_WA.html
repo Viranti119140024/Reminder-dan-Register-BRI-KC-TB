@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./tambah_RegisterKMK_WA.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register KMK_WA/edit_RegisterKMK_WA.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
     <div class="head">
       <div class="wrap-bagianAtas">
         <div class="bagianAtas">
-          <h2>Form Penambahan Data Debitur ( Register KMK WA )</h2>
+          <h2>Edit Data Debitur ( Register KMK WA )</h2>
         </div>
       </div>
   
@@ -62,13 +62,13 @@
                     <label htmlfor="keterangan" class="label-input">
                         SPK/PO/Kontrak Kerja
                       </label>
-                      <textarea name="keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+                      <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['	SPK_PO_KontrakKerja'] }}</textarea>
                     </div>
                     <div class="wrap-input">
                         <label htmlfor="rp" class="label-input">
                           Nilai Proyek
                         </label>
-                        <input type="text" class="input-field"  name="rp" value=""/>
+                        <input type="text" class="input-field"  name="rp" value="{{ editkmkwa['	NilaiProyek'] }}"/>
                       </div>
                 
             </div>
@@ -78,13 +78,13 @@
                 <label htmlfor="Plafond" class="label-input">
                   Plafond (Rp.)
                 </label>
-                <input type="text" class="input-field"  name="Plafond" value=""/>
+                <input type="text" class="input-field"  name="Plafond" value="{{ editkmkwa['	Plafond(Rp)'] }}"/>
               </div> 
               <div class="wrap-input">
                 <label htmlfor=" Os Awal" class="label-input">
                   Os Awal
                 </label>
-                <input type="text" class="input-field"  name=" Os Awal" value=""/>
+                <input type="text" class="input-field"  name=" Os Awal" value="{{ editkmkwa['	osAwal'] }}"/>
               </div> 
           </div>
 
@@ -93,23 +93,24 @@
               <label htmlfor="tanggal" class="label-input">
                 Tanggal Pencairan
               </label>
-              <input type="date" class="input-field" name="tanggal" value=""/>
+              <input type="date" class="input-field" name="tanggal" value="{{ editkmkwa['	TanggalPencairan'] }}"/>
             </div>   
             
               <div class="wrap-input">
                 <label htmlfor="Sumber Pencairan" class="label-input">
                   Dok. Sumber Pencairan
                 </label>
-                <textarea name="keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+                <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['	DokSumberPencairan'] }}</textarea>
               </div> 
           </div>
 
           <div class="flex-input">  
             <div class="wrap-input">
-                <label htmlfor="Nilai Pembayaran" class="label-input">
-                  Nilai Pembayaran
+                <label htmlfor="Pencairan" class="label-input">
+                  Nilai Pencairan
                 </label>
-                <input type="text" class="input-field"  name="Nilai Pembayaran" value=""/>
+                <input type="text" class="input-field"  name="Pencairan" value="{{ editkmkwa['	NilaiPencairan'] }}"/>
+              </div> 
           </div>
 
           <div class="flex-input">
@@ -117,13 +118,13 @@
                 <label htmlfor="sumber_Pembayaran" class="label-input">
                   Dok Sumber Pembayaran
                 </label>
-                <textarea name="keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+                <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['	DokSumberPembayaran'] }}</textarea>
               </div> 
               <div class="wrap-input">
                 <label htmlfor="Nilai Pembayaran" class="label-input">
                   Nilai Pembayaran
                 </label>
-                <input type="text" class="input-field"  name="Nilai Pembayaran" value=""/>
+                <input type="text" class="input-field"  name="Nilai Pembayaran" value="{{ editkmkwa['	NilaiPembayaran'] }}"/>
               </div> 
           </div>
 
@@ -132,13 +133,13 @@
                 <label htmlfor=" OS Setelah Pembayaran" class="label-input">
                   OS Setelah Pembayaran
                 </label>
-                <input type="text" class="input-field"  name=" OS Setelah Pembayaran" value=""/>
+                <input type="text" class="input-field"  name=" OS Setelah Pembayaran" value="{{ editkmkwa['	OSSetelahPembayaran'] }}"/>
               </div> 
               <div class="wrap-input">
                 <label htmlfor="OS Brinets" class="label-input">
                   OS Brinets
                 </label>
-                <input type="text" class="input-field"  name="OS Brinets" value=""/>
+                <input type="text" class="input-field"  name="OS Brinets" value="{{ editkmkwa['	OSBrinets'] }}"/>
               </div> 
           </div>
 
@@ -147,13 +148,13 @@
                 <label htmlfor=" Sisa Tagihan" class="label-input">
                   Sisa Tagihan
                 </label>
-                <input type="text" class="input-field"  name=" Sisa Tagihan" value=""/>
+                <input type="text" class="input-field"  name=" Sisa Tagihan" value="{{ editkmkwa['	SisaTagihan'] }}"/>
               </div> 
               <div class="wrap-input">
                 <label htmlfor="Keterangan" class="label-input">
                   Keterangan
                 </label>
-                <input type="text" class="input-field"  name="Keterangan" value=""/>
+                <input type="text" class="input-field"  name="Keterangan" value="{{ editkmkwa['	Keterangan'] }}"/>
               </div> 
           </div>
           

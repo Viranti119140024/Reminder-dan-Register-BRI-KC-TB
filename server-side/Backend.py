@@ -502,6 +502,8 @@ def register():
             return redirect(url_for('bpkbpinjam'))
         elif select == 'register9':
             return redirect(url_for('angkringan'))
+        elif select == 'register10':
+            return redirect(url_for('kmkwa'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1107,7 +1109,7 @@ def tambahjasakonsultasi():
             Jumlah_yang_disetor = request.form['Jumlah yang disetor']
             NPWP= request.form['NPWP']
             PPN = request.form["PPN"]
-            PPN2 = request.form["PPN"]
+            PPN2 = request.form['PPN2']
             DPP = request.form["DPP"]
 
 
@@ -1133,7 +1135,7 @@ def editjasakonsultasi(NPWP):
                 
             if not request.form['Nama + No. Rekening'] == '':
                 new_Nama_No_Rekening = request.form['Nama + No. Rekening']
-                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET Nama+NoRekening = %s WHERE NPWP = %s', (new_Nama_No_Rekening, NPWP))
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET NamaNoRekening = %s WHERE NPWP = %s', (new_Nama_No_Rekening, NPWP))
                 conn.commit()
                 
             if not request.form['Jasa Sesuai PTK'] == '':
@@ -1161,9 +1163,9 @@ def editjasakonsultasi(NPWP):
                 cursor.execute('UPDATE IGNORE reg_jasa_konsul SET PPN = %s WHERE NPWP = %s', (new_PPN, NPWP))
                 conn.commit()
             
-            if not request.form['PPN'] == '':
-                new_Rekening = request.form['PPN']
-                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET PPN_ = %s WHERE NPWP = %s', (new_Rekening, NPWP))
+            if not request.form['PPN2'] == '':
+                new_PPN2 = request.form['PPN2']
+                cursor.execute('UPDATE IGNORE reg_jasa_konsul SET PPN_ = %s WHERE NPWP = %s', (new_PPN2, NPWP))
                 conn.commit()
             
             if not request.form['DPP'] == '':
@@ -1355,6 +1357,131 @@ def editangkringan(NoRekening):
                 conn.commit()
         
             return redirect(url_for('angkringan'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/kmkwa', methods=['GET', 'POST'])
+def kmkwa():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_kmk_wa')
+        kmkwa = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register KMK_WA/detail_RegisterKMK_WA.html', kmkwa=kmkwa)  
+    return redirect(url_for('login'))
+
+@app.route('/register/kmkwa/tambah', methods=['GET', 'POST'])
+def tambahkmkwa():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register KMK_WA/tambah_RegisterKMK_WA.html', username=session['username'])
+        else:
+            keterangan= request.form['keterangan']
+            rp = request.form['rp']
+            Plafond = request.form['Plafond']
+            Os_Awal = request.form['Os Awal']
+            tanggal= request.form['tanggal']
+            keterangan = request.form["keterangan"]
+            Pencairan = request.form["Pencairan"]
+            keterangan = request.form["keterangan"]
+            Nilai_Pembayaran = request.form["Nilai Pembayaran"]
+            OS_Setelah_Pembayaran = request.form["OS Setelah Pembayaran"]
+            OS_Brinets = request.form["OS Brinets"]
+            Sisa_Tagihan = request.form["Sisa Tagihan"]
+            Keterangan = request.form["Keterangan"]
+
+            cursor.execute('''INSERT INTO reg_kmk_wa VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(keterangan, rp, Plafond, Os_Awal, tanggal, keterangan, Pencairan, keterangan, Nilai_Pembayaran, OS_Setelah_Pembayaran, OS_Brinets, Sisa_Tagihan, Keterangan  ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('kmkwa'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/kmkwa/edit/<SPK_PO_Kontrak_Kerja>', methods=['GET', 'POST'])
+def editkmkwa(SPK_PO_Kontrak_Kerja):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_kmk_wa WHERE SPK_PO_Kontrak_Kerja = %s', (SPK_PO_Kontrak_Kerja))
+            editkmkwa = cursor.fetchone()
+            return render_template('./Register KMK_WA/edit_RegisterKMK_WA.html', editkmkwa=editkmkwa)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['keterangan'] == '':
+                new_keterangan= request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SPK_PO_KontrakKerja = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+                
+            if not request.form['rp'] == '':
+                new_rp = request.form['rp']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiProyek = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_rp, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+                
+            if not request.form['Plafond'] == '':
+                new_Plafond = request.form['Plafond']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET Plafond(RP) = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Plafond, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['Os Awal'] == '':
+                new_Os_Awal = request.form['Os Awal']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET osAwal(Tahun) = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Os_Awal, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET TanggalPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_tanggal, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['Pencairan'] == '':
+                new_Pencairan = request.form['Pencairan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Pencairan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['Nilai Pembayaran'] == '':
+                new_Nilai_Pembayaran = request.form['Nilai Pembayaran']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Nilai_Pembayaran, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['OS Setelah Pembayaran'] == '':
+                new_OS_Setelah_Pembayaran = request.form['OS Setelah Pembayaran']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSSetelahPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_OS_Setelah_Pembayaran, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['OS Brinets'] == '':
+                new_OS_Brinets = request.form['OS Brinets']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSBrinets = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_OS_Brinets, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+            
+            if not request.form['Sisa Tagihan'] == '':
+                new_Sisa_Tagihan = request.form['Sisa Tagihan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SisaTagihan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Sisa_Tagihan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+
+            if not request.form['Keterangan'] == '':
+                new_Keterangan = request.form['Keterangan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET Keterangan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Keterangan, SPK_PO_Kontrak_Kerja))
+                conn.commit()
+        
+            return redirect(url_for('kmkwa'))
 
     return redirect(url_for('login'))
 
