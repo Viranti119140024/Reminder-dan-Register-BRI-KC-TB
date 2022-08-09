@@ -504,6 +504,8 @@ def register():
             return redirect(url_for('angkringan'))
         elif select == 'register10':
             return redirect(url_for('kmkwa'))
+        elif select == 'register11':
+            return redirect(url_for('kprbangun'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1482,6 +1484,101 @@ def editkmkwa(SPK_PO_Kontrak_Kerja):
                 conn.commit()
         
             return redirect(url_for('kmkwa'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/kprbangun', methods=['GET', 'POST'])
+def kprbangun():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_kpr_bangun')
+        kprbangun = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register KPR Bangun/detail_RegisterKPRBangun.html', kprbangun=kprbangun)  
+    return redirect(url_for('login'))
+
+@app.route('/register/kprbangun/tambah', methods=['GET', 'POST'])
+def tambahkprbangun():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register KPR Bangun/tambah_RegisterKPRBangunhtml', username=session['username'])
+        else:
+            np= request.form['np']
+            tanggal = request.form['tanggal']
+            Nama_Debitur = request.form['Nama Debitur']
+            Jabatan_Pemutus = request.form['Jabatan Pemutus']
+            Nama_Pemutus= request.form['Nama Pemutus']
+            keterangan = request.form["keterangan"]
+            keterangan = request.form["keterangan"]
+            tanggal = request.form["tanggal"]
+
+            cursor.execute('''INSERT INTO reg_kpr_bangun VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(np, tanggal, Nama_Debitur, Jabatan_Pemutus, Nama_Pemutus, keterangan, keterangan, keterangan, tanggal ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('kprbangun'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/kprbangun/edit/<NoPutusan>', methods=['GET', 'POST'])
+def editkprbangun(NoPutusan):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_kpr_bangun WHERE NoPutusan = %s', (NoPutusan))
+            editkprbangun = cursor.fetchone()
+            return render_template('./Register KPR Bangun/edit_RegisterKPRBangun.html', editkprbangun=editkprbangun)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['np'] == '':
+                new_np= request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NoPutusan = %s WHERE NoPutusan = %s', (new_np, NoPutusan))
+                conn.commit()
+                
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['rp']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET TanggalPutusan = %s WHERE NoPutusan = %s', (new_tanggal, NoPutusan))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Plafond']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NamaDebitur = %s WHERE NoPutusan = %s', (new_Nama_Debitur, NoPutusan))
+                conn.commit()
+            
+            if not request.form['Jabatan Pemutus'] == '':
+                new_Jabatan_Pemutus = request.form['Os Awal']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET JabatanPemutus = %s WHERE NoPutusan = %s', (new_Jabatan_Pemutus, NoPutusan))
+                conn.commit()
+
+            if not request.form['Nama Pemutus'] == '':
+                new_Nama_Pemutus = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NamaPemutus = %s WHERE NoPutusan = %s', (new_Nama_Pemutus, NoPutusan))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NamaPemutus = %s WHERE NoPutusan = %s', (new_keterangan, NoPutusan))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET Keterangan = %s WHERE NoPutusan = %s', (new_keterangan, NoPutusan))
+                conn.commit()
+            
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET TanggalOB = %s WHERE NoPutusan = %s', (new_tanggal, NoPutusan))
+                conn.commit()
+            
+            return redirect(url_for('kprbangun'))
 
     return redirect(url_for('login'))
 
