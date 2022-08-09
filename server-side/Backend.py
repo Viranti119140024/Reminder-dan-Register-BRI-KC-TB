@@ -1797,7 +1797,7 @@ def tambahpdt():
             Nama_Debitur= request.form['Nama Debitur']
             No_Rekening = request.form['No. Rekening']
             Plafond = request.form['Plafond']
-            Tanggal = request.form['Tanggal']
+            Tanggal = request.form['tanggal']
             Nama_Developer = request.form['Nama Developer']
             Nominal= request.form['Nominal']
             Tanggal_di_Buku = request.form["Tanggal di Buku"]
@@ -1838,8 +1838,8 @@ def editpdt(NoRekening):
                 cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET Plafond = %s WHERE NoRekening = %s', (new_Plafond, NoRekening))
                 conn.commit()
             
-            if not request.form['Tanggal'] == '':
-                new_Tanggal = request.form['Tanggal']
+            if not request.form['tanggal'] == '':
+                new_Tanggal = request.form['tanggal']
                 cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET TanggalAkad = %s WHERE NoRekening = %s', (new_Tanggal, NoRekening))
                 conn.commit()
 
