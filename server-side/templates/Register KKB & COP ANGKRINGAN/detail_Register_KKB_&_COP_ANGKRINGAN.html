@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='Register KKB & COP ANGKRINGAN/detail_Register_KKB_&_COP_ANGKRINGAN.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register KKB & COP ANGKRINGAN/detail_Register_KKB_&_COP_ANGKRINGAN.css')}}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -96,11 +96,11 @@
                   <td>{{ angkringan['NamaDebitur'] }}</td>
                   <td>{{ angkringan['TanggalRealisasi'] }}</td>
                   <td>{{ angkringan['Plafond(RP)'] }}</td>
-                  <td>{{ angkringan['JangkaWaktu(Tahun)'] }}</td>
+                  <td>{{ angkringan['Plafond(RP)'] }}</td>
                   <td>{{ angkringan['AngsuranPokok'] }}</td>
                   <td>{{ angkringan['AngsuranBunga'] }}</td>
                   <td>{{ angkringan['NoRekening'] }}</td>
-                  <td>{{ angkringan['Keterangan'] }}</td>
+                  <td>{{ angkringan['Keterangan'] }}</td>   
                   <td>
   
                     <a href="/register/angkringan/edit/{{ angkringan['NoRekening'] }}" >
