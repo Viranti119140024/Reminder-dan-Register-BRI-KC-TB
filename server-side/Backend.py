@@ -508,6 +508,8 @@ def register():
             return redirect(url_for('kprbangun'))
         elif select == 'register12':
             return redirect(url_for('ndb'))
+        elif select == 'register13':
+            return redirect(url_for('pb1'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1664,6 +1666,107 @@ def editndb(RekeningGiro):
                 conn.commit()
             
             return redirect(url_for('ndb'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/pb1', methods=['GET', 'POST'])
+def pb1():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_peminjam_berkas1')
+        pb1 = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Peminjaman Berkas 1/detail_Register Peminjaman Berkas 1.html', pb1=pb1)  
+    return redirect(url_for('login'))
+
+@app.route('/register/pb1/tambah', methods=['GET', 'POST'])
+def tambahpb1():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Peminjaman Berkas 1/tambah_Register Peminjaman Berkas 1.html', username=session['username'])
+        else:
+            tanggal= request.form['tanggal']
+            Nama_Debitur = request.form['Nama Debitur']
+            Dok_yag_dipinjam = request.form['Dok yag dipinjam']
+            Nama_Peminjam = request.form['Nama Peminjam']
+            Keperluan= request.form['Keperluan']
+            tanggal = request.form["tanggal"]
+            Kelengkapan_Dok = request.form['Kelengkapan Dok']
+            Pinjam = request.form['Pinjam']
+            Kembali = request.form['Kembali']
+
+            cursor.execute('''INSERT INTO reg_peminjam_berkas1 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(tanggal, Nama_Debitur, Dok_yag_dipinjam, Nama_Peminjam, Keperluan, tanggal, Kelengkapan_Dok, Pinjam, Kembali ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('pb1'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/pb1/edit/<NamaDebitur>', methods=['GET', 'POST'])
+def editpb1(NamaDebitur):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_peminjam_berkas1 WHERE NamaDebitur = %s', (NamaDebitur))
+            editpb1 = cursor.fetchone()
+            return render_template('./Register Peminjaman Berkas 1/edit_Register Peminjaman Berkas 1.html', editpb1=editpb1)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Tanggal = %s WHERE NamaDebitur = %s', (new_tanggal, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET NamaDebitur = %s WHERE NamaDebitur = %s', (new_Nama_Debitur, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['Dok yag dipinjam'] == '':
+                new_Dok_yag_dipinjam = request.form['Dok yag dipinjam']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET DokyangDipinjam = %s WHERE NamaDebitur = %s', (new_Dok_yag_dipinjam, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Nama Peminjam'] == '':
+                new_Nama_Peminjam = request.form['Nama Peminjam']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET NamaPeminjam = %s WHERE NamaDebitur = %s', (new_Nama_Peminjam, NamaDebitur))
+                conn.commit()
+
+            if not request.form['Keperluan'] == '':
+                new_Keperluan = request.form['Keperluan']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Keperluan = %s WHERE NamaDebitur = %s', (new_Keperluan, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET TanggalKembali = %s WHERE NamaDebitur = %s', (new_tanggal, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Kelengkapan Dok'] == '':
+                new_Kelengkapan_Dok = request.form['Kelengkapan Dok']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET KelengkapanDokumen = %s WHERE NamaDebitur = %s', (new_Kelengkapan_Dok, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Pinjam'] == '':
+                new_Pinjam = request.form['Pinjam']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Pinjam(paraf) = %s WHERE NamaDebitur = %s', (new_Pinjam, NamaDebitur))
+                conn.commit()
+
+            if not request.form['Kembali'] == '':
+                new_Kembali = request.form['Kembali']
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Kembali(paraf) = %s WHERE NamaDebitur = %s', (new_Kembali, NamaDebitur))
+                conn.commit()
+            
+            return redirect(url_for('pb1'))
 
     return redirect(url_for('login'))
 
