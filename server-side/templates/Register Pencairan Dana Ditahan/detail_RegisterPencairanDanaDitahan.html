@@ -97,13 +97,13 @@
                   <td>{{ pdt['NoRekening'] }}</td>
                   <td>{{ pdt['Plafond'] }}</td>
                   <td>{{ pdt['TanggalAkad'] }}</td>
-                  <td>{{ pdt['NamaDeveloper/Penjual'] }}</td>
+                  <td>{{ pdt['NamaDeveloper_Penjual'] }}</td>
                   <td>{{ pdt['Nominal'] }}</td>
                   <td>{{ pdt['TanggaldiBuku'] }}</td>
                   <td>{{ pdt['Keterangan'] }}</td>             
          
                   <td>
-                    <a href="/register/pdt/edit/<NoRekening>" >
+                    <a href="/register/pdt/edit/{{ pdt['NoRekening'] }}" >
                        
                       <img
                         src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"

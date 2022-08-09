@@ -1858,7 +1858,7 @@ def editpdt(NoRekening):
 
             if not request.form['Nama Developer'] == '':
                 new_Nama_Developer = request.form['Nama Developer']
-                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET NamaDeveloper/Penjual = %s WHERE NoRekening = %s', (new_Nama_Developer, NoRekening))
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET NamaDeveloper_Penjual = %s WHERE NoRekening = %s', (new_Nama_Developer, NoRekening))
                 conn.commit()
             
             if not request.form['Nominal'] == '':
@@ -1912,6 +1912,53 @@ def tambahpkkonsumer():
             cursor.execute('''INSERT INTO reg_ptk_konsumer VALUES(%s,%s,%s,%s,%s,%s)''',(Putusan, tanggal, Nama_Debitur, Pemutus, Jabatan_Pemutus, keterangan ))
             conn.commit()
             cursor.close()
+            return redirect(url_for('pkkonsumer'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/pkkonsumer/edit/<NoPutusan>', methods=['GET', 'POST'])
+def editpkkonsumer(NoPutusan):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_ptk_konsumer WHERE NoPutusan = %s', (NoPutusan))
+            editpkkonsumer = cursor.fetchone()
+            return render_template('./Register PK Konsumer/edit_RegisterPK_Konsumer.html', editpkkonsumer=editpkkonsumer)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Putusan'] == '':
+                new_Putusan = request.form['Putusan']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET NoPutusan = %s WHERE NoPutusan = %s', (new_Putusan, NoPutusan))
+                conn.commit()
+            
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET TanggalPutusan = %s WHERE NoPutusan = %s', (new_tanggal, NoPutusan))
+                conn.commit()
+
+            if not request.form['Nama Debitur'] == '':
+                new_NamaDebitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET NamaDebitur = %s WHERE NoPutusan = %s', (new_NamaDebitur, NoPutusan))
+                conn.commit()
+
+            if not request.form['Pemutus'] == '':
+                new_Pemutus = request.form['Pemutus']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET NamaPemutus = %s WHERE NoPutusan = %s', (new_Pemutus, NoPutusan))
+                conn.commit()
+
+            if not request.form['Jabatan Pemutus'] == '':
+                new_JabatanPemutus = request.form['Jabatan Pemutus']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET JabatanPemutus = %s WHERE NoPutusan = %s', (new_JabatanPemutus, NoPutusan))
+                conn.commit()                
+
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_ptk_konsumer SET Keterangan = %s WHERE NoPutusan = %s', (new_keterangan, NoPutusan))
+                conn.commit()
+            
             return redirect(url_for('pkkonsumer'))
 
     return redirect(url_for('login'))
@@ -2075,8 +2122,8 @@ def editptk(NoPutusan):
                 cursor.execute('UPDATE IGNORE reg_ptk SET NamaPemutus = %s WHERE NoPutusan = %s', (new_Nama_Pemutus_AO_Pemrakarsa, NoPutusan))
                 conn.commit()
 
-            if not request.form['Jabatan Pemutus'] == '':
-                new_Jabatan_Pemutus = request.form['Jabatan Pemutus']
+            if not request.form['JabatanPemutus'] == '':
+                new_Jabatan_Pemutus = request.form['JabatanPemutus']
                 cursor.execute('UPDATE IGNORE reg_ptk SET JabatanPemutus = %s WHERE NoPutusan = %s', (new_Jabatan_Pemutus, NoPutusan))
                 conn.commit()
             
@@ -2128,7 +2175,7 @@ def tambahflpp():
     return redirect(url_for('login'))
 
 @app.route('/register/flpp/edit/<NoPutusan>', methods=['GET', 'POST'])
-def flpp(NoPutusan):
+def editflpp(NoPutusan):
     if 'loggedin' in session:
         if request.method == 'GET':
             conn = mysql.connect()
