@@ -1338,12 +1338,12 @@ def editangkringan(NoRekening):
                 
             if not request.form['Plafond'] == '':
                 new_Plafond = request.form['Plafond']
-                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET Plafond(RP) = %s WHERE NoRekening = %s', (new_Plafond, NoRekening))
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET PlafondRP = %s WHERE NoRekening = %s', (new_Plafond, NoRekening))
                 conn.commit()
             
             if not request.form['Waktu'] == '':
                 new_Waktu = request.form['Waktu']
-                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET JangkaWaktu(Tahun) = %s WHERE NoRekening = %s', (new_Waktu, NoRekening))
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET JangkaWaktuTahun = %s WHERE NoRekening = %s', (new_Waktu, NoRekening))
                 conn.commit()
 
             if not request.form['Angsuran Pokok'] == '':
@@ -1419,76 +1419,76 @@ def editkmkwa(SPK_PO_Kontrak_Kerja):
         if request.method == 'GET':
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            cursor.execute('SELECT * FROM reg_kmk_wa WHERE SPK_PO_Kontrak_Kerja = %s', (SPK_PO_Kontrak_Kerja))
+            cursor.execute('SELECT * FROM reg_kmk_wa WHERE SPK_PO_KontrakKerja = %s', (SPK_PO_Kontrak_Kerja))
             editkmkwa = cursor.fetchone()
             return render_template('./Register KMK_WA/edit_RegisterKMK_WA.html', editkmkwa=editkmkwa)
         elif request.method == 'POST':
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
                 
-            if not request.form['keterangan'] == '':
-                new_keterangan= request.form['keterangan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SPK_PO_KontrakKerja = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+            if not request.form['SPK/PO/Kontrak Kerja'] == '':
+                new_keterangan= request.form['SPK/PO/Kontrak Kerja']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SPK_PO_KontrakKerja = %s WHERE SPK_PO_KontrakKerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
                 
             if not request.form['rp'] == '':
                 new_rp = request.form['rp']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiProyek = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_rp, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiProyek = %s WHERE SPK_PO_KontrakKerja = %s', (new_rp, SPK_PO_Kontrak_Kerja))
                 conn.commit()
                 
-            if not request.form['Plafond'] == '':
-                new_Plafond = request.form['Plafond']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET Plafond(RP) = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Plafond, SPK_PO_Kontrak_Kerja))
+            if not request.form['PlafondRp'] == '':
+                new_Plafond = request.form['PlafondRp']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET PlafondRP = %s WHERE SPK_PO_KontrakKerja = %s', (new_Plafond, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['Os Awal'] == '':
                 new_Os_Awal = request.form['Os Awal']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET osAwal(Tahun) = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Os_Awal, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET osAwal = %s WHERE SPK_PO_KontrakKerja = %s', (new_Os_Awal, SPK_PO_Kontrak_Kerja))
                 conn.commit()
 
             if not request.form['tanggal'] == '':
                 new_tanggal = request.form['tanggal']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET TanggalPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_tanggal, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET TanggalPencairan = %s WHERE SPK_PO_KontrakKerja = %s', (new_tanggal, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
-            if not request.form['keterangan'] == '':
-                new_keterangan = request.form['keterangan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+            if not request.form['Pencairan'] == '':
+                new_keterangan = request.form['Pencairan']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPencairan = %s WHERE SPK_PO_KontrakKerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['Pencairan'] == '':
                 new_Pencairan = request.form['Pencairan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPencairan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Pencairan, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPencairan = %s WHERE SPK_PO_KontrakKerja = %s', (new_Pencairan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
-            if not request.form['keterangan'] == '':
-                new_keterangan = request.form['keterangan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
+            if not request.form['sumber_Pembayaran'] == '':
+                new_keterangan = request.form['sumber_Pembayaran']
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET DokSumberPembayaran = %s WHERE SPK_PO_KontrakKerja = %s', (new_keterangan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['Nilai Pembayaran'] == '':
                 new_Nilai_Pembayaran = request.form['Nilai Pembayaran']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Nilai_Pembayaran, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET NilaiPembayaran = %s WHERE SPK_PO_KontrakKerja = %s', (new_Nilai_Pembayaran, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['OS Setelah Pembayaran'] == '':
                 new_OS_Setelah_Pembayaran = request.form['OS Setelah Pembayaran']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSSetelahPembayaran = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_OS_Setelah_Pembayaran, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSSetelahPembayaran = %s WHERE SPK_PO_KontrakKerja = %s', (new_OS_Setelah_Pembayaran, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['OS Brinets'] == '':
                 new_OS_Brinets = request.form['OS Brinets']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSBrinets = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_OS_Brinets, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET OSBrinets = %s WHERE SPK_PO_KontrakKerja = %s', (new_OS_Brinets, SPK_PO_Kontrak_Kerja))
                 conn.commit()
             
             if not request.form['Sisa Tagihan'] == '':
                 new_Sisa_Tagihan = request.form['Sisa Tagihan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SisaTagihan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Sisa_Tagihan, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET SisaTagihan = %s WHERE SPK_PO_KontrakKerja = %s', (new_Sisa_Tagihan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
 
             if not request.form['Keterangan'] == '':
                 new_Keterangan = request.form['Keterangan']
-                cursor.execute('UPDATE IGNORE reg_kmk_wa SET Keterangan = %s WHERE SPK_PO_Kontrak_Kerja = %s', (new_Keterangan, SPK_PO_Kontrak_Kerja))
+                cursor.execute('UPDATE IGNORE reg_kmk_wa SET Keterangan = %s WHERE SPK_PO_KontrakKerja = %s', (new_Keterangan, SPK_PO_Kontrak_Kerja))
                 conn.commit()
         
             return redirect(url_for('kmkwa'))
@@ -1569,6 +1569,11 @@ def editkprbangun(NoPutusan):
             if not request.form['Nama Pemutus'] == '':
                 new_Nama_Pemutus = request.form['Nama Pemutus']
                 cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NamaPemutus = %s WHERE NoPutusan = %s', (new_Nama_Pemutus, NoPutusan))
+                conn.commit()
+
+            if not request.form['Nama Perumahan'] == '':
+                new_Nama_Perumahan = request.form['Nama Perumahan']
+                cursor.execute('UPDATE IGNORE reg_kpr_bangun SET NamaPerumahan = %s WHERE NoPutusan = %s', (new_Nama_Perumahan, NoPutusan))
                 conn.commit()
             
             if not request.form['keterangan'] == '':
@@ -1661,7 +1666,7 @@ def editndb(RekeningGiro):
 
             if not request.form['NAS / Bridyna'] == '':
                 new_NAS_Bridyna = request.form['NAS / Bridyna']
-                cursor.execute('UPDATE IGNORE reg_nas_bridyna SET Nas/Bridyna = %s WHERE RekeningGiro = %s', (new_NAS_Bridyna, RekeningGiro))
+                cursor.execute('UPDATE IGNORE reg_nas_bridyna SET NasBridyna = %s WHERE RekeningGiro = %s', (new_NAS_Bridyna, RekeningGiro))
                 conn.commit()
             
             if not request.form['Keterangan'] == '':
@@ -1762,12 +1767,12 @@ def editpb1(NamaDebitur):
             
             if not request.form['Pinjam'] == '':
                 new_Pinjam = request.form['Pinjam']
-                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Pinjam(paraf) = %s WHERE NamaDebitur = %s', (new_Pinjam, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Pinjamparaf = %s WHERE NamaDebitur = %s', (new_Pinjam, NamaDebitur))
                 conn.commit()
 
             if not request.form['Kembali'] == '':
                 new_Kembali = request.form['Kembali']
-                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Kembali(paraf) = %s WHERE NamaDebitur = %s', (new_Kembali, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_peminjam_berkas1 SET Kembaliparaf = %s WHERE NamaDebitur = %s', (new_Kembali, NamaDebitur))
                 conn.commit()
             
             return redirect(url_for('pb1'))
