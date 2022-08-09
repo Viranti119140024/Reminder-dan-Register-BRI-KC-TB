@@ -510,6 +510,8 @@ def register():
             return redirect(url_for('ndb'))
         elif select == 'register13':
             return redirect(url_for('pb1'))
+        elif select == 'register14':
+            return redirect(url_for('pdt'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -1770,7 +1772,100 @@ def editpb1(NamaDebitur):
 
     return redirect(url_for('login'))
 
+@app.route('/register/pdt', methods=['GET', 'POST'])
+def pdt():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_pencair_dana_ditahan')
+        pdt = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Pencairan Dana Ditahan/detail_RegisterPencairanDanaDitahan.html', pdt=pdt)  
+    return redirect(url_for('login'))
 
+@app.route('/register/pdt/tambah', methods=['GET', 'POST'])
+def tambahpdt():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Pencairan Dana Ditahan/tambah_RegisterPencairanDanaDitahan.html', username=session['username'])
+        else:
+            Nama_Debitur= request.form['Nama Debitur']
+            No_Rekening = request.form['No. Rekening']
+            Plafond = request.form['Plafond']
+            Tanggal = request.form['Tanggal']
+            Nama_Developer = request.form['Nama Developer']
+            Nominal= request.form['Nominal']
+            Tanggal_di_Buku = request.form["Tanggal di Buku"]
+            keterangan = request.form['keterangan']
+
+            cursor.execute('''INSERT INTO reg_pencair_dana_ditahan VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Nama_Debitur, No_Rekening, Plafond, Tanggal, Nama_Developer, Nominal, Tanggal_di_Buku, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('pdt'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/pdt/edit/<NoRekening>', methods=['GET', 'POST'])
+def editpdt(NoRekening):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_pencair_dana_ditahan WHERE NoRekening = %s', (NoRekening))
+            editpdt = cursor.fetchone()
+            return render_template('./Register Pencairan Dana Ditahan/edit_RegisterPencairanDanaDitahan.html', editpdt=editpdt)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET NamaDebitur = %s WHERE NoRekening = %s', (new_Nama_Debitur, NoRekening))
+                conn.commit()
+                
+            if not request.form['No. Rekening'] == '':
+                new_No_Rekening = request.form['No. Rekening']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET NoRekening = %s WHERE NoRekening = %s', (new_No_Rekening, NoRekening))
+                conn.commit()
+                
+            if not request.form['Plafond'] == '':
+                new_Plafond = request.form['Plafond']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET Plafond = %s WHERE NoRekening = %s', (new_Plafond, NoRekening))
+                conn.commit()
+            
+            if not request.form['Tanggal'] == '':
+                new_Tanggal = request.form['Tanggal']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET TanggalAkad = %s WHERE NoRekening = %s', (new_Tanggal, NoRekening))
+                conn.commit()
+
+            if not request.form['Nama Developer'] == '':
+                new_Nama_Developer = request.form['Nama Developer']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET NamaDeveloper/Penjual = %s WHERE NoRekening = %s', (new_Nama_Developer, NoRekening))
+                conn.commit()
+            
+            if not request.form['Nominal'] == '':
+                new_Nominal = request.form['Nominal']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET Nominal = %s WHERE NoRekening = %s', (new_Nominal, NoRekening))
+                conn.commit()
+            
+            if not request.form['Tanggal di Buku'] == '':
+                new_Tanggal_di_Buku = request.form['Tanggal di Buku']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET TanggaldiBuku = %s WHERE NoRekening = %s', (new_Tanggal_di_Buku, NoRekening))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_pencair_dana_ditahan SET Keterangan = %s WHERE NoRekening = %s', (new_keterangan, NoRekening))
+                conn.commit()
+            
+            return redirect(url_for('pdt'))
+
+    return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
