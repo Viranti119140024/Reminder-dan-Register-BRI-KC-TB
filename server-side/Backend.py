@@ -518,6 +518,8 @@ def register():
             return redirect(url_for('ppnd2'))
         elif select == 'register17':
             return redirect(url_for('ptk'))
+        elif select == 'register18':
+            return redirect(url_for('flpp'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2084,6 +2086,102 @@ def editptk(NoPutusan):
                 conn.commit()
             
             return redirect(url_for('ptk'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/flpp', methods=['GET', 'POST'])
+def flpp():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_ptk_flpp')
+        flpp = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register PTK (Putusan Kredit) FLPP/detail_RegisterPTK (Putusan Kredit)FLPP.html', flpp=flpp)  
+    return redirect(url_for('login'))
+
+@app.route('/register/flpp/tambah', methods=['GET', 'POST'])
+def tambahflpp():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register PTK (Putusan Kredit) FLPP/tambah_RegisterPTK (Putusan Kredit)FLPP.html', username=session['username'])
+        else:
+            Nomer_Putusan= request.form['Nomer Putusan']
+            tanggal = request.form['tanggal']
+            Nama_Debitur = request.form['Nama Debitur']
+            Jabatan_Pemutus = request.form['Jabatan Pemutus']
+            Nama_Pemutus = request.form['Nama Pemutus']
+            Plafond_Rp= request.form['Plafond(Rp)']
+            Nama_Perumahan = request.form['Nama Perumahan']
+            keterangan = request.form['keterangan']
+        
+            cursor.execute('''INSERT INTO reg_ptk_flpp VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Nomer_Putusan, tanggal, Nama_Debitur, Jabatan_Pemutus, Nama_Pemutus, Plafond_Rp, Nama_Perumahan, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('flpp'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/flpp/edit/<NoPutusan>', methods=['GET', 'POST'])
+def flpp(NoPutusan):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_ptk_flpp WHERE NoPutusan = %s', (NoPutusan))
+            editflpp = cursor.fetchone()
+            return render_template('./Register PTK (Putusan Kredit) FLPP/edit_RegisterPTK (Putusan Kredit)FLPP.html', editflpp=editflpp)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nomer Putusan'] == '':
+                new_Nomer_Putusan = request.form['Nomer Putusan']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET NoPutusan = %s WHERE NoPutusan = %s', (new_Nomer_Putusan, NoPutusan))
+                conn.commit()
+            
+            if not request.form['tanggal'] == '':
+                new_tanggal = request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET TanggalPutusan = %s WHERE NoPutusan = %s', (new_tanggal, NoPutusan))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET NamaDebitur = %s WHERE NoPutusan = %s', (new_Nama_Debitur, NoPutusan))
+                conn.commit()
+                
+            
+            if not request.form['Jabatan Pemutus'] == '':
+                new_Jabatan_Pemutus = request.form['Jabatan Pemutus']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET JabatanPemutus = %s WHERE NoPutusan = %s', (new_Jabatan_Pemutus, NoPutusan))
+                conn.commit()
+
+            if not request.form['Nama Pemutus'] == '':
+                new_Nama_Pemutus = request.form['Nama Pemutus']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET NamaPemutus = %s WHERE NoPutusan = %s', (new_Nama_Pemutus, NoPutusan))
+                conn.commit()
+            
+            if not request.form['Plafond(Rp)'] == '':
+                new_Plafond_Rp = request.form['Plafond(Rp)']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET PlafondRp = %s WHERE NoPutusan = %s', (new_Plafond_Rp, NoPutusan))
+                conn.commit()
+            
+            if not request.form['Nama Perumahan'] == '':
+                new_Nama_Perumahan = request.form['Nama Perumahan']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET NamaPerumahan = %s WHERE NoPutusan = %s', (new_Nama_Perumahan, NoPutusan))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_ptk_flpp SET Keterangan = %s WHERE NoPutusan = %s', (new_keterangan, NoPutusan))
+                conn.commit()
+            
+            return redirect(url_for('flpp'))
 
     return redirect(url_for('login'))
 
