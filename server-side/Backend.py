@@ -1649,7 +1649,7 @@ def editndb(RekeningGiro):
                 conn.commit()
             
             if not request.form['Rekening Giro'] == '':
-                new_Rekening_Giro = request.form['RekeningGiro']
+                new_Rekening_Giro = request.form['Rekening Giro']
                 cursor.execute('UPDATE IGNORE reg_nas_bridyna SET RekeningGiro = %s WHERE RekeningGiro = %s', (new_Rekening_Giro, RekeningGiro))
                 conn.commit()
 
