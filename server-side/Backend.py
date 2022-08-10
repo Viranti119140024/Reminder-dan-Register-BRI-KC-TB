@@ -532,6 +532,8 @@ def register():
             return redirect(url_for('tbnk'))
         elif select == 'register24':
             return redirect(url_for('ttsn'))
+        elif select == 'register25':
+            return redirect(url_for('verbek'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2784,6 +2786,101 @@ def editttsn(NoSHM_SHGB):
                 conn.commit()
         
             return redirect(url_for('ttsn'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/verbek', methods=['GET', 'POST'])
+def verbek():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_verbek')
+        verbek = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Verifikasi Berkas/detail_RegisterVerifikasiBerkas.html', verbek=verbek)  
+    return redirect(url_for('login'))
+
+@app.route('/register/verbek/tambah', methods=['GET', 'POST'])
+def tambahverbek():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Verifikasi Berkas/tambah_RegisterVerifikasiBerkas.html', username=session['username'])
+        else:
+            Nama_Debitur= request.form['Nama Debitur']
+            RM_Pengelola = request.form['RM Pengelola']
+            Fasilitas = request.form['Fasilitas']
+            Tanggal_Berkas_Diserahkan = request.form['Tanggal Berkas Diserahkan']
+            Jam_Berkas_Diserahkan = request.form['Jam Berkas Diserahkan']
+            Yang_Menyerahkan = request.form['Yang Menyerahkan']
+            Paraf = request.form['Paraf']
+            Tanggal_Penyerahan = request.form['Tanggal Kembali Setelah Diputus']
+        
+            cursor.execute('''INSERT INTO reg_verbek VALUES(%s,%s,%s,%s,%s,%s,%s,%s)''',(Nama_Debitur, RM_Pengelola, Fasilitas, Tanggal_Berkas_Diserahkan, Jam_Berkas_Diserahkan, Yang_Menyerahkan, Paraf, Tanggal_Penyerahan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('verbek'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/verbek/edit/<NamaDebitur>', methods=['GET', 'POST'])
+def editverbek(NamaDebitur):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_verbek WHERE NamaDebitur = %s', (NamaDebitur))
+            editverbek = cursor.fetchone()
+            return render_template('./Register Verifikasi Berkas/edit_RegisterVerifikasiBerkas.html', editverbek=editverbek)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur= request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_verbek SET NamaDebitur = %s WHERE NamaDebitur = %s', (new_Nama_Debitur, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['RM Pengelola'] == '':
+                new_RM_Pengelola = request.form['RM Pengelola']
+                cursor.execute('UPDATE IGNORE reg_verbek SET RMPengelola = %s WHERE NamaDebitur = %s', (new_RM_Pengelola, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Fasilitas'] == '':
+                new_Fasilitas = request.form['Fasilitas']
+                cursor.execute('UPDATE IGNORE reg_verbek SET Fasilitas = %s WHERE NamaDebitur = %s', (new_Fasilitas, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['Tanggal Berkas Diserahkan'] == '':
+                new_Tanggal_Berkas_Diserahkan = request.form['Tanggal Berkas Diserahkan']
+                cursor.execute('UPDATE IGNORE reg_verbek SET TanggalBerkasDiserahkan = %s WHERE NamaDebitur = %s', (new_Tanggal_Berkas_Diserahkan, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['Jam Berkas Diserahkan'] == '':
+                new_Jam_Berkas_Diserahkan = request.form['Jam Berkas Diserahkan']
+                cursor.execute('UPDATE IGNORE reg_verbek SET JamBerkasDiserahkan = %s WHERE NamaDebitur = %s', (new_Jam_Berkas_Diserahkan, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Yang Menyerahkan'] == '':
+                new_Yang_Menyerahkan = request.form['Yang Menyerahkan']
+                cursor.execute('UPDATE IGNORE reg_verbek SET YangMenyerahkan = %s WHERE NamaDebitur = %s', (new_Yang_Menyerahkan, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Paraf'] == '':
+                new_Paraf = request.form['Paraf']
+                cursor.execute('UPDATE IGNORE reg_verbek SET Paraf = %s WHERE NamaDebitur = %s', (new_Paraf, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Tanggal Kembali Setelah Diputus'] == '':
+                new_Tanggal_Kembali_Setelah_Diputus = request.form['Tanggal Kembali Setelah Diputus']
+                cursor.execute('UPDATE IGNORE reg_verbek SET TanggalKembaliSetelah Diputus = %s WHERE NamaDebitur = %s', (new_Tanggal_Kembali_Setelah_Diputus, NamaDebitur))
+                conn.commit()
+            
+            return redirect(url_for('verbek'))
 
     return redirect(url_for('login'))
 

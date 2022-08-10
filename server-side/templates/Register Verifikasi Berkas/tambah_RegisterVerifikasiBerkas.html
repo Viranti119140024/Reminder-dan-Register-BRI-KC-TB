@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register Verifikasi Berkas/tambah_RegisterVerifikasiBerkas.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register Verifikasi Berkas</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Form Penambahan Data Debitur (Register Verifikasi Berkas)</h2>
+        </div>
+      </div>
+  
+    
+      <div class="wrap-table">
+        <form action="" method="POST" id="form">
+            <div class="wrap-input">
+                <label htmlfor="Nama Debitur" class="label-input">
+                  Nama Debitur
+                </label>
+                <input type="text" class="input-field"  name="Nama Debitur" value=""/>
+              </div>
+          
+            <div class="wrap-input">
+            <label htmlfor="RM Pengelola" class="label-input">
+              RM Pengelola
+            </label>
+            <input type="text" class="input-field"  name="RM Pengelola" value=""/>
+          </div>
+          <div class="wrap-input">
+            <label htmlfor="Fasilitas" class="label-input">
+              Fasilitas
+            </label>
+            <input type="text" class="input-field"  name="Fasilitas" value=""/>
+          </div>          
+          
+          
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor="Tanggal Berkas Diserahkan" class="label-input">
+                  Tanggal Berkas Diserahkan
+                </label>
+                <input type="date" class="input-field" name="Tanggal Berkas Diserahkan" value=""/>
+              </div>
+            <div class="wrap-input">
+                <label htmlfor="Jam Berkas Diserahkan" class="label-input">
+                  Jam Berkas Diserahkan
+                </label>
+                <input type="time" class="input-field" name="Jam Berkas Diserahkan" value=""/>
+              </div>
+          </div>
+            
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Yang Menyerahkan" class="label-input">
+               Yang Menyerahkan
+              </label>
+              <input type="text" name="Yang Menyerahkan" id="Yang Menyerahkan"  class="input-field" >
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="Paraf" class="label-input">
+                 Paraf
+                </label>
+                <input type="text" name="Paraf" id="Paraf"  class="input-field" >
+              </div>
+          </div>
+
+         
+            <div class="wrap-input">
+              <label htmlfor="Tanggal Kembali Setelah Diputus" class="label-input">
+                Tanggal Kembali Setelah Diputus
+              </label>
+              <input type="date" class="input-field" name="Tanggal Kembali Setelah Diputus" value=""/>
+              
+            </div>
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
