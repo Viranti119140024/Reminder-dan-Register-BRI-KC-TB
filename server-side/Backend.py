@@ -522,6 +522,8 @@ def register():
             return redirect(url_for('flpp'))
         elif select == 'register19':
             return redirect(url_for('roya'))
+        elif select == 'register20':
+            return redirect(url_for('royakkb'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2315,6 +2317,90 @@ def editroya(NamaDebitur):
                 conn.commit()
             
             return redirect(url_for('roya'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/royakkb', methods=['GET', 'POST'])
+def royakkb():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_roya_kkb')
+        royakkb = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Roya&KKB/detail_Roya&KKB.html', royakkb=royakkb)  
+    return redirect(url_for('login'))
+
+@app.route('/register/royakkb/tambah', methods=['GET', 'POST'])
+def tambahroyakkb():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Roya&KKB/tambah_Roya&KKB.html', username=session['username'])
+        else:
+            Tanggal_Surat_Roya= request.form['tgl_surat_roya']
+            Nama_Debitur = request.form['Nama_debitur']
+            Kantor_BPN = request.form['kantor_bpn']
+            Diterima_tgl = request.form['diterima_tgl']
+            Diterima_oleh= request.form['diterima_oleh']
+            Jenis_Agunan = request.form['jenis_agunan']
+        
+            cursor.execute('''INSERT INTO reg_roya_kkb VALUES(%s,%s,%s,%s,%s,%s)''',(Tanggal_Surat_Roya, Nama_Debitur, Kantor_BPN, Diterima_tgl, Diterima_oleh, Jenis_Agunan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('royakkb'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/royakkb/edit/<NamaDebitur>', methods=['GET', 'POST'])
+def editroyakkb(NamaDebitur):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_roya_kkb WHERE NamaDebitur = %s', (NamaDebitur))
+            editroyakkb = cursor.fetchone()
+            return render_template('./Register Roya&KKB/edit_Roya&KKB.html', editroyakkb=editroyakkb)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['tgl_surat_roya'] == '':
+                new_tgl_surat_roya= request.form['tgl_surat_roya']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET TanggalSuratRoya = %s WHERE NamaDebitur = %s', (new_tgl_surat_roya, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Nama_debitur'] == '':
+                new_Nama_debitur = request.form['Nama_debitur']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET NamaDebitur = %s WHERE NamaDebitur = %s', (new_Nama_debitur, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['kantor_bpn'] == '':
+                new_kantor_bpn = request.form['kantor_bpn']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET KantorBPN = %s WHERE NamaDebitur = %s', (new_kantor_bpn, NamaDebitur))
+                conn.commit()
+                
+            
+            if not request.form['diterima_tgl'] == '':
+                new_diterima_tgl = request.form['diterima_tgl']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebitur(Tanggal)	 = %s WHERE NamaDebitur = %s', (new_diterima_tgl, NamaDebitur))
+                conn.commit()
+
+            if not request.form['diterima_oleh'] == '':
+                new_diterima_oleh = request.form['diterima_oleh']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebitur(oleh) = %s WHERE NamaDebitur = %s', (new_diterima_oleh, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['jenis_agunan'] == '':
+                new_jenis_agunan = request.form['jenis_agunan']
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET new_jenis_agunan = %s WHERE NamaDebitur = %s', (new_jenis_agunan, NamaDebitur))
+                conn.commit()
+            
+            return redirect(url_for('royakkb'))
 
     return redirect(url_for('login'))
 
