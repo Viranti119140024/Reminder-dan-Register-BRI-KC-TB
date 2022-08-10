@@ -195,7 +195,7 @@ def tambahdebitur():
             akad = request.form["akad"]
             keterangan = request.form['keterangan']
 
-            if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not jadwal_pokok or not jadwal_jatuh_tempo or not akad or not keterangan:
+            if not nama_debitur or not no_rekening or not jenis_kredit or not baki_debet or not rm or not jangkawaktu or not jadwal_pokok or not akad or not keterangan:
                 msg = 'Please fill out the form!'
             cursor.execute('''INSERT INTO datadebitur VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,0,%s,%s,0,0,0,0,"B","B","B")''',(id, nama_debitur, no_rekening, jenis_kredit, baki_debet, rm, jangkawaktu, jadwal_pokok, sbaw1, sbak1, sbp1, sbaw2, sbak2, sbp2, sbaw3, sbak3, sbp3, akad, keterangan))
             cursor.execute("UPDATE datadebitur SET jadwaltempo = DATE_ADD(akad, INTERVAL %s MONTH) WHERE norek = %s", (jangkawaktu, no_rekening,))
@@ -633,6 +633,18 @@ def editipkrestruk(norek):
             return redirect(url_for('ipkrestruk'))
     return redirect(url_for('login'))
 
+@app.route('/register/ipkrestruk/hapus/<norek>', methods=['GET', 'POST'])
+def hapusipkrestruk(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM ipkrestruk WHERE norek = %s', (norek,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ipkrestruk'))
+    return redirect(url_for('login'))
+
 @app.route('/register/ppnd', methods=['GET', 'POST'])
 def ppnd():
     conn = mysql.connect()
@@ -739,6 +751,18 @@ def editppnd(NoPPNdanTanggalPPN):
             return redirect(url_for('ppnd'))
     return redirect(url_for('login'))
 
+@app.route('/register/ppnd/hapus/<NoPPNdanTanggalPPN>', methods=['GET', 'POST'])
+def hapusppnd(NoPPNdanTanggalPPN):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM ppnd WHERE NoPPNdanTanggalPPN = %s', (NoPPNdanTanggalPPN,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ppnd'))
+    return redirect(url_for('login'))
+
 @app.route('/register/ptkrestruk2penyelesaian', methods=['GET', 'POST'])
 def ptkrestruk2penyelesaian():
     conn = mysql.connect()
@@ -825,6 +849,18 @@ def editptkrestruk2penyelesaian(NoPTK):
                 cursor.execute('UPDATE IGNORE ptk_restruk2_penyelesaian SET Keterangan = %s WHERE NoPTK = %s', (new_keterangan, NoPTK))
                 conn.commit()
                 
+            return redirect(url_for('ptkrestruk2penyelesaian'))
+    return redirect(url_for('login'))
+    
+@app.route('/register/ptkrestruk2penyelesaian/hapus/<NoPTK>', methods=['GET', 'POST'])
+def hapusptkrestruk2penyelesaian(NoPTK):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM ptk_restruk2_penyelesaian WHERE NoPTK = %s', (NoPTK,))
+            conn.commit()
+            cursor.close()
             return redirect(url_for('ptkrestruk2penyelesaian'))
     return redirect(url_for('login'))
 
@@ -923,6 +959,18 @@ def editasskerugian(NoPolis):
             return redirect(url_for('asskerugian'))
     return redirect(url_for('login'))
 
+@app.route('/register/asskerugian/hapus/<NoPolis>', methods=['GET', 'POST'])
+def hapusasskerugian(NoPolis):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_ass_kerugian WHERE NoPolis = %s', (NoPolis,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('asskerugian'))
+    return redirect(url_for('login'))
+
 @app.route('/register/blokirkecil', methods=['GET', 'POST'])
 def blokirkecil():
     conn = mysql.connect()
@@ -1009,6 +1057,18 @@ def editblokirkecil(NoRekening):
                 cursor.execute('UPDATE IGNORE reg_blok_kecil_program SET Keterangan = %s WHERE NoRekening = %s', (new_keterangan, NoRekening))
                 conn.commit()
                 
+            return redirect(url_for('blokirkecil'))
+    return redirect(url_for('login'))
+
+@app.route('/register/blokirkecil/hapus/<NoRekening>', methods=['GET', 'POST'])
+def hapusblokirkecil(NoRekening):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_blok_kecil_program WHERE NoRekening = %s', (NoRekening,))
+            conn.commit()
+            cursor.close()
             return redirect(url_for('blokirkecil'))
     return redirect(url_for('login'))
 
@@ -1113,6 +1173,18 @@ def editipk(NoIPK):
             return redirect(url_for('ipk'))
     return redirect(url_for('login'))
 
+@app.route('/register/ipk/hapus/<NoIPK>', methods=['GET', 'POST'])
+def hapusipk(NoIPK):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM register_ipk WHERE NoIPK = %s', (NoIPK,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ipk'))
+    return redirect(url_for('login'))
+
 @app.route('/register/jasakonsultasi', methods=['GET', 'POST'])
 def jasakonsultasi():
     conn = mysql.connect()
@@ -1208,6 +1280,18 @@ def editjasakonsultasi(NPWP):
 
     return redirect(url_for('login'))
 
+@app.route('/register/jasakonsultasi/hapus/<NPWP>', methods=['GET', 'POST'])
+def hapujasakonsultasi(NPWP):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_jasa_konsul WHERE NPWP = %s', (NPWP,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('jasakonsultasi'))
+    return redirect(url_for('login'))
+
 @app.route('/register/bpkbpinjam', methods=['GET', 'POST'])
 def bpkbpinjam():
     conn = mysql.connect()
@@ -1295,6 +1379,18 @@ def editbpkbpinjam(NoBPKB):
         
             return redirect(url_for('bpkbpinjam'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/bpkbpinjam/hapus/<NoBPKB>', methods=['GET', 'POST'])
+def hapusbpkbpinjam(NoBPKB):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_bpkb_pinjam WHERE NoBPKB = %s', (NoBPKB,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('bpkbpinjam'))
     return redirect(url_for('login'))
 
 @app.route('/register/angkringan', methods=['GET', 'POST'])
@@ -1390,6 +1486,18 @@ def editangkringan(NoRekening):
         
             return redirect(url_for('angkringan'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/angkringan/hapus/<NoRekening>', methods=['GET', 'POST'])
+def hapusangkringan(NoRekening):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_kkb_cop_angkr WHERE NoRekening = %s', (NoRekening,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('angkringan'))
     return redirect(url_for('login'))
 
 @app.route('/register/kmkwa', methods=['GET', 'POST'])
@@ -1517,6 +1625,18 @@ def editkmkwa(SPK_PO_Kontrak_Kerja):
 
     return redirect(url_for('login'))
 
+@app.route('/register/kmkwa/hapus/<SPK_PO_Kontrak_Kerja>', methods=['GET', 'POST'])
+def hapuskmkwa(SPK_PO_Kontrak_Kerja):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_kmk_wa WHERE SPK_PO_KontrakKerja = %s', (SPK_PO_Kontrak_Kerja,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('kmkwa'))
+    return redirect(url_for('login'))
+
 @app.route('/register/kprbangun', methods=['GET', 'POST'])
 def kprbangun():
     conn = mysql.connect()
@@ -1617,6 +1737,18 @@ def editkprbangun(NoPutusan):
 
     return redirect(url_for('login'))
 
+@app.route('/register/kprbangun/hapus/<NoPutusan>', methods=['GET', 'POST'])
+def hapuskprbangun(NoPutusan):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_kpr_bangun WHERE NoPutusan = %s', (NoPutusan,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('kprbangun'))
+    return redirect(url_for('login'))
+
 @app.route('/register/ndb', methods=['GET', 'POST'])
 def ndb():
     conn = mysql.connect()
@@ -1698,6 +1830,18 @@ def editndb(RekeningGiro):
             
             return redirect(url_for('ndb'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/ndb/hapus/<RekeningGiro>', methods=['GET', 'POST'])
+def hapusndb(RekeningGiro):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_nas_bridyna WHERE RekeningGiro = %s', (RekeningGiro,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ndb'))
     return redirect(url_for('login'))
 
 @app.route('/register/pb1', methods=['GET', 'POST'])
@@ -1801,6 +1945,18 @@ def editpb1(NamaDebitur):
 
     return redirect(url_for('login'))
 
+@app.route('/register/pb1/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapuspb1(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_peminjam_berkas1 WHERE NamaDebitur = %s', (NamaDebitur,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('pb1'))
+    return redirect(url_for('login'))
+
 @app.route('/register/pdt', methods=['GET', 'POST'])
 def pdt():
     conn = mysql.connect()
@@ -1896,6 +2052,18 @@ def editpdt(NoRekening):
 
     return redirect(url_for('login'))
 
+@app.route('/register/pdt/hapus/<NoRekening>', methods=['GET', 'POST'])
+def hapuspdt(NoRekening):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_pencair_dana_ditahan WHERE NoRekening = %s', (NoRekening,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('pdt'))
+    return redirect(url_for('login'))
+
 @app.route('/register/pkkonsumer', methods=['GET', 'POST'])
 def pkkonsumer():
     conn = mysql.connect()
@@ -1977,6 +2145,18 @@ def editpkkonsumer(NoPutusan):
             
             return redirect(url_for('pkkonsumer'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/pkkonsumer/hapus/<NoPutusan>', methods=['GET', 'POST'])
+def hapuspkkonsumer(NoPutusan):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_ptk_konsumer WHERE NoPutusan = %s', (NoPutusan,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('pkkonsumer'))
     return redirect(url_for('login'))
 
 @app.route('/register/ppnd2', methods=['GET', 'POST'])
@@ -2068,6 +2248,18 @@ def editppnd2(NoPPND):
 
     return redirect(url_for('login'))
 
+@app.route('/register/ppnd2/hapus/<NoPPND>', methods=['GET', 'POST'])
+def hapusppnd2(NoPPND):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_ppnd WHERE NoPPND = %s', (NoPPND,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ppnd2'))
+    return redirect(url_for('login'))
+
 @app.route('/register/ptk', methods=['GET', 'POST'])
 def ptk():
     conn = mysql.connect()
@@ -2150,6 +2342,18 @@ def editptk(NoPutusan):
             
             return redirect(url_for('ptk'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/ptk/hapus/<NoPutusan>', methods=['GET', 'POST'])
+def hapusptk(NoPutusan):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_ptk WHERE NoPutusan = %s', (NoPutusan,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ptk'))
     return redirect(url_for('login'))
 
 @app.route('/register/flpp', methods=['GET', 'POST'])
@@ -2248,6 +2452,18 @@ def editflpp(NoPutusan):
 
     return redirect(url_for('login'))
 
+@app.route('/register/flpp/hapus/<NoPutusan>', methods=['GET', 'POST'])
+def hapusflpp(NoPutusan):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_ptk_flpp WHERE NoPutusan = %s', (NoPutusan,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('flpp'))
+    return redirect(url_for('login'))
+
 @app.route('/register/roya', methods=['GET', 'POST'])
 def roya():
     conn = mysql.connect()
@@ -2331,6 +2547,19 @@ def editroya(NamaDebitur):
             return redirect(url_for('roya'))
 
     return redirect(url_for('login'))
+
+@app.route('/register/roya/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapusroya(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_roya WHERE NamaDebitur = %s', (NamaDebitur,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('roya'))
+    return redirect(url_for('login'))
+
 
 @app.route('/register/royakkb', methods=['GET', 'POST'])
 def royakkb():
@@ -2416,6 +2645,19 @@ def editroyakkb(NamaDebitur):
 
     return redirect(url_for('login'))
 
+@app.route('/register/royakkb/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapusroyakkb(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_roya_kkb WHERE NamaDebitur = %s', (NamaDebitur,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('royakkb'))
+    return redirect(url_for('login'))
+    
+
 @app.route('/register/slik', methods=['GET', 'POST'])
 def slik():
     conn = mysql.connect()
@@ -2498,6 +2740,18 @@ def editslik(NamaDebitur):
             
             return redirect(url_for('slik'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/slik/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapusslik(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_slik WHERE NamaDebitur = %s', (NamaDebitur,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('slik'))
     return redirect(url_for('login'))
 
 @app.route('/register/spph', methods=['GET', 'POST'])
@@ -2601,6 +2855,18 @@ def editspph(premi):
 
     return redirect(url_for('login'))
 
+@app.route('/register/spph/hapus/<premi>', methods=['GET', 'POST'])
+def hapusspph(premi):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_spph WHERE premi = %s', (premi,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('spph'))
+    return redirect(url_for('login'))
+
 @app.route('/register/tbnk', methods=['GET', 'POST'])
 def tbnk():
     conn = mysql.connect()
@@ -2688,6 +2954,18 @@ def edittbnk(NamaDebitur):
         
             return redirect(url_for('tbnk'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/tbnk/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapustbnk(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_titipan_biaya_notaris WHERE NamaDebitur = %s', (NamaDebitur))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('tbnk'))
     return redirect(url_for('login'))
 
 @app.route('/register/ttsn', methods=['GET', 'POST'])
@@ -2791,6 +3069,18 @@ def editttsn(NoSHM_SHGB):
 
     return redirect(url_for('login'))
 
+@app.route('/register/ttsn/hapus/<NoSHM_SHGB>', methods=['GET', 'POST'])
+def hapusttsn(NoSHM_SHGB):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_tandaterima_sertif_kenotaris WHERE NoSHM_SHGB = %s', (NoSHM_SHGB))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ttsn'))
+    return redirect(url_for('login'))
+
 @app.route('/register/verbek', methods=['GET', 'POST'])
 def verbek():
     conn = mysql.connect()
@@ -2886,6 +3176,18 @@ def editverbek(NamaDebitur):
 
     return redirect(url_for('login'))
 
+@app.route('/register/verbek/hapus/<NamaDebitur>', methods=['GET', 'POST'])
+def hapusverbek(NamaDebitur):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_verbek WHERE NamaDebitur = %s', (NamaDebitur))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('verbek'))
+    return redirect(url_for('login'))
+
 @app.route('/register/adk', methods=['GET', 'POST'])
 def adk():
     conn = mysql.connect()
@@ -2967,6 +3269,18 @@ def editadk(Keterangan):
             
             return redirect(url_for('adk'))
 
+    return redirect(url_for('login'))
+
+@app.route('/register/adk/hapus/<Keterangan>', methods=['GET', 'POST'])
+def hapusadk(Keterangan):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            cursor.execute('DELETE IGNORE FROM reg_persekot_internadk WHERE Keterangan = %s', (Keterangan))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('adk'))
     return redirect(url_for('login'))
 
 @app.route('/logout')
