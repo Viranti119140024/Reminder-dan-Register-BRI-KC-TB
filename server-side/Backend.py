@@ -534,6 +534,8 @@ def register():
             return redirect(url_for('ttsn'))
         elif select == 'register25':
             return redirect(url_for('verbek'))
+        elif select == 'register26':
+            return redirect(url_for('adk'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2397,17 +2399,17 @@ def editroyakkb(NamaDebitur):
             
             if not request.form['diterima_tgl'] == '':
                 new_diterima_tgl = request.form['diterima_tgl']
-                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebitur(Tanggal)	 = %s WHERE NamaDebitur = %s', (new_diterima_tgl, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebiturTanggal = %s WHERE NamaDebitur = %s', (new_diterima_tgl, NamaDebitur))
                 conn.commit()
 
             if not request.form['diterima_oleh'] == '':
                 new_diterima_oleh = request.form['diterima_oleh']
-                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebitur(oleh) = %s WHERE NamaDebitur = %s', (new_diterima_oleh, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET DiterimaDebituroleh = %s WHERE NamaDebitur = %s', (new_diterima_oleh, NamaDebitur))
                 conn.commit()
             
             if not request.form['jenis_agunan'] == '':
                 new_jenis_agunan = request.form['jenis_agunan']
-                cursor.execute('UPDATE IGNORE reg_roya_kkb SET new_jenis_agunan = %s WHERE NamaDebitur = %s', (new_jenis_agunan, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_roya_kkb SET JenisAgunanKeterangan = %s WHERE NamaDebitur = %s', (new_jenis_agunan, NamaDebitur))
                 conn.commit()
             
             return redirect(url_for('royakkb'))
@@ -2877,10 +2879,93 @@ def editverbek(NamaDebitur):
             
             if not request.form['Tanggal Kembali Setelah Diputus'] == '':
                 new_Tanggal_Kembali_Setelah_Diputus = request.form['Tanggal Kembali Setelah Diputus']
-                cursor.execute('UPDATE IGNORE reg_verbek SET TanggalKembaliSetelah Diputus = %s WHERE NamaDebitur = %s', (new_Tanggal_Kembali_Setelah_Diputus, NamaDebitur))
+                cursor.execute('UPDATE IGNORE reg_verbek SET TanggalKembaliSetelahDiputus = %s WHERE NamaDebitur = %s', (new_Tanggal_Kembali_Setelah_Diputus, NamaDebitur))
                 conn.commit()
             
             return redirect(url_for('verbek'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/adk', methods=['GET', 'POST'])
+def adk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_persekot_internadk')
+        adk = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./RegisterPersekotInteren/detail_RegisterPersekotInteren.html', adk=adk)  
+    return redirect(url_for('login'))
+
+@app.route('/register/adk/tambah', methods=['GET', 'POST'])
+def tambahadk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./RegisterPersekotInteren/tambah_RegisterPersekotInteren.html', username=session['username'])
+        else:
+            tanggal= request.form['tanggal']
+            rp = request.form['rp']
+            Pengambilan = request.form['Pengambilan']
+            saldo_akhir = request.form['saldo_akhir']
+            Tanggal_Pengambilan = request.form['Tanggal Pengambilan']
+            keterangan = request.form['keterangan']
+           
+            cursor.execute('''INSERT INTO reg_persekot_internadk VALUES(%s,%s,%s,%s,%s,%s)''',(tanggal, keterangan, rp, Pengambilan, Tanggal_Pengambilan, saldo_akhir))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('adk'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/adk/edit/<Keterangan>', methods=['GET', 'POST'])
+def editadk(Keterangan):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_persekot_internadk WHERE Keterangan = %s', (Keterangan))
+            editadk = cursor.fetchone()
+            return render_template('./RegisterPersekotInteren/edit_RegisterPersekotInteren.html', editadk=editadk)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['tanggal'] == '':
+                new_tanggal= request.form['tanggal']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET Tanggal = %s WHERE Keterangan = %s', (new_tanggal, Keterangan))
+                conn.commit()
+            
+            if not request.form['rp'] == '':
+                new_rp = request.form['rp']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET Rp = %s WHERE Keterangan = %s', (new_rp, Keterangan))
+                conn.commit()
+            
+            if not request.form['Pengambilan'] == '':
+                new_Pengambilan = request.form['Pengambilan']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET Pengambilan = %s WHERE Keterangan = %s', (new_Pengambilan, Keterangan))
+                conn.commit()
+                
+            if not request.form['saldo_akhir'] == '':
+                new_saldo_akhir = request.form['saldo_akhir']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET SaldoAkhir = %s WHERE Keterangan = %s', (new_saldo_akhir, Keterangan))
+                conn.commit()
+                
+            if not request.form['Tanggal Pengambilan'] == '':
+                new_Tanggal_Pengambilan = request.form['Tanggal Pengambilan']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET TanggalPengambilan = %s WHERE Keterangan = %s', (new_Tanggal_Pengambilan, Keterangan))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_persekot_internadk SET Keterangan = %s WHERE Keterangan = %s', (new_keterangan, Keterangan))
+                conn.commit()
+            
+            return redirect(url_for('adk'))
 
     return redirect(url_for('login'))
 

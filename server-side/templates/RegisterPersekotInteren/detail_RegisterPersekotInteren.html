@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='Register Verifikasi Berkas/detail_RegisterVerifikasiBerkas.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='RegisterPersekotInteren/detail_RegisterPersekotInteren.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Register Verifikasi Berkas</title>
+  <title>Register Persekot Interen Khusus ADK</title>
     
 </head>
 
@@ -54,7 +54,7 @@
         <div class="bagianAtas">
           <div class="inline">
             
-            <h2 class="jadwal">Register Verifikasi Berkas</h2>
+            <h2 class="jadwal">Register Persekot Interen Khusus ADK</h2>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
               <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
@@ -68,7 +68,7 @@
 
             
             <div>
-              <a href="/register/verbek/tambah">
+              <a href="/register/adk/tambah">
               <button
                 class="btn_tambah"
               >
@@ -79,32 +79,27 @@
             <table>
               <thead>
                 <tr>
-                  <th>Nama Debitur</th>                  
-                  <th>RM Pengelola</th>
-                  <th>Fasilitas</th>                 
-                  <th>Tanggal Berkas Diserahkan</th>                                   
-                  <th>Jam Berkas Diserahkan</th>
-                  <th>Yang Menyerahkan</th>
-                  <th>Paraf</th>
-                  <th>Tanggal Kembali Setelah Diputus</th>
-                  <th>edit</th>
-                  
+                  <th>Tanggal</th>
+                  <th>Keterangan</th>                 
+                  <th>Rp</th>                                   
+                  <th>Pengambilan</th>
+                  <th>Tanggal Pengambilan</th>
+                  <th>Saldo Akhir</th>
+                  <th>Edit</th>
                 </tr>
               </thead>
               <tbody>
-                {% for verbek in verbek %}
+                {% for adk in adk %}
                 <tr>
-                  <td>{{ verbek['NamaDebitur'] }}</td>
-                  <td>{{ verbek['RMPengelola'] }}</td>
-                  <td>{{ verbek['Fasilitas'] }}</td>
-                  <td>{{ verbek['TanggalBerkasDiserahkan'] }}</td>
-                  <td>{{ verbek['JamBerkasDiserahkan'] }}</td>
-                  <td>{{ verbek['YangMenyerahkan'] }}</td>
-                  <td>{{ verbek['Paraf'] }}</td>     
-                  <td>{{ verbek['TanggalKembaliSetelahDiputus'] }}</td> 
+                  <td>{{ adk['Tanggal'] }}</td>
+                  <td>{{ adk['Keterangan'] }}</td>
+                  <td>{{ adk['Rp'] }}</td>
+                  <td>{{ adk['Pengambilan'] }}</td>
+                  <td>{{ adk['TanggalPengambilan'] }}</td>
+                  <td>{{ adk['SaldoAkhir'] }}</td> 
                   
                   <td>
-                    <a href="/register/verbek/edit/{{ verbek['NamaDebitur'] }}" >
+                    <a href="/register/adk/edit/{{ adk['Keterangan'] }}" >
                        
                       <img
                         src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
