@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./tambahdata_titipbiayanotaris.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register TBNK/edit_titipbiayanotaris.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
     <div class="head">
       <div class="wrap-bagianAtas">
         <div class="bagianAtas">
-          <h2>Form Penambahan Data Debitur (Register Titipan Biaya Notaris)</h2>
+          <h2>Edit Data Debitur (Register Titipan Biaya Notaris)</h2>
         </div>
       </div>
   
@@ -61,21 +61,21 @@
             <label htmlfor="nama_debitur" class="label-input">
               Nama Debitur
             </label>
-            <input type="text" class="input-field" name="nama_debitur" value=""/>
+            <input type="text" class="input-field" name="nama_debitur" value="{{ edittbnk['NamaDebitur'] }}"/>
           </div>
           <div class="flex-input">
             <div class="wrap-input">
               <label htmlfor="rp" class="label-input">
                 Rp. 
               </label>
-              <input type="text" class="input-field"  name="rp" value=""/>
+              <input type="text" class="input-field"  name="rp" value="{{ edittbnk['Rp'] }}"/>
             </div>
             
             <div class="wrap-input">
               <label htmlfor="nama_notaris" class="label-input">
                 Nama Notaris
               </label>
-              <input type="text" class="input-field"  name="nama_notaris" value=""/>
+              <input type="text" class="input-field"  name="nama_notaris" value="{{ edittbnk['TanggalSetor'] }}"/>
             </div>
 
           </div>
@@ -87,14 +87,14 @@
               <label htmlfor="tanggal_ob" class="label-input">
               Tanggal di OB
               </label>
-              <input type="date" class="input-field" name="tanggal_ob" value=""/>
+              <input type="date" class="input-field" name="tanggal_ob" value="{{ edittbnk['NamaNotaris'] }}"/>
               
             </div>
             <div class="wrap-input">
               <label htmlfor="tanggal_setor" class="label-input">
                 Tanggal setor
               </label>
-              <input type="date" class="input-field" name="tanggal_setor" value=""/>
+              <input type="date" class="input-field" name="tanggal_setor" value="{{ edittbnk['TanggaldiOB'] }}"/>
             </div>
           </div>
             
@@ -102,13 +102,13 @@
               <label htmlfor="ob" class="label-input">
                 Rp. OB
               </label>
-              <input type="text" name="ob" id="ob"  class="input-field" >
+              <input type="text" name="ob" id="ob"  class="input-field" value="{{ edittbnk['RpOB'] }}" >
             </div>
             <div class="wrap-input">
               <label htmlfor="keterangan" class="label-input">
                 Keterangan
               </label>
-              <textarea name="keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+              <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ edittbnk['Keterangan'] }}</textarea>
             </div>
           
             <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>

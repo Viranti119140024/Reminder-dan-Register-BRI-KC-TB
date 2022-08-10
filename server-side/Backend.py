@@ -528,6 +528,8 @@ def register():
             return redirect(url_for('slik'))
         elif select == 'register22':
             return redirect(url_for('spph'))
+        elif select == 'register23':
+            return redirect(url_for('tbnk'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2590,6 +2592,95 @@ def editspph(premi):
                 conn.commit()
             
             return redirect(url_for('spph'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/tbnk', methods=['GET', 'POST'])
+def tbnk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_titipan_biaya_notaris')
+        tbnk = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register TBNK/detail_titipbiayanotaris.html', tbnk=tbnk)  
+    return redirect(url_for('login'))
+
+@app.route('/register/tbnk/tambah', methods=['GET', 'POST'])
+def tambahtbnk():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register TBNK/tambahdata_titipbiayanotaris.html', username=session['username'])
+        else:
+            Nama_Debitur= request.form['nama_debitur']
+            rp = request.form['rp']
+            Tanggal_Setor = request.form['tanggal_setor']
+            nama_notaris = request.form['nama_notaris']
+            tanggal_ob = request.form['tanggal_ob']
+            OB = request.form['ob']
+            keterangan = request.form['keterangan']
+        
+            cursor.execute('''INSERT INTO reg_titipan_biaya_notaris VALUES(%s,%s,%s,%s,%s,%s,%s)''',(Nama_Debitur, rp, Tanggal_Setor, nama_notaris, tanggal_ob, OB, keterangan ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('tbnk'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/tbnk/edit/<NamaDebitur>', methods=['GET', 'POST'])
+def edittbnk(NamaDebitur):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_titipan_biaya_notaris WHERE NamaDebitur = %s', (NamaDebitur))
+            edittbnk = cursor.fetchone()
+            return render_template('./Register TBNK/edit_titipbiayanotaris.html', edittbnk=edittbnk)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['nama_debitur'] == '':
+                new_nama_debitur= request.form['nama_debitur']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET NamaDebitur = %s WHERE NamaDebitur = %s', (new_nama_debitur, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['rp'] == '':
+                new_rp = request.form['rp']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET Rp = %s WHERE NamaDebitur = %s', (new_rp, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['tanggal_setor'] == '':
+                new_tanggal_setor = request.form['tanggal_setor']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET TanggalSetor = %s WHERE NamaDebitur = %s', (new_tanggal_setor, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['nama_notaris'] == '':
+                new_nama_notaris = request.form['nama_notaris']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET NamaNotaris = %s WHERE NamaDebitur = %s', (new_nama_notaris, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['tanggal_ob'] == '':
+                new_tanggal_ob = request.form['tanggal_ob']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET TanggaldiOB = %s WHERE NamaDebitur = %s', (new_tanggal_ob, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['ob'] == '':
+                new_ob= request.form['ob']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET RpOB = %s WHERE NamaDebitur = %s', (new_ob, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['keterangan'] == '':
+                new_keterangan = request.form['keterangan']
+                cursor.execute('UPDATE IGNORE reg_titipan_biaya_notaris SET Keterangan = %s WHERE NamaDebitur = %s', (new_keterangan, NamaDebitur))
+                conn.commit()
+        
+            return redirect(url_for('tbnk'))
 
     return redirect(url_for('login'))
 
