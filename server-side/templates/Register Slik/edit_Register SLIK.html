@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./edit_Register SLIK.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register Slik/edit_Register SLIK.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -61,21 +61,21 @@
                 <label htmlfor="Tanggal" class="label-input">
                   Tanggal
                 </label>
-                <input type="date" class="input-field" name="Tanggal" value=""/>
+                <input type="date" class="input-field" name="Tanggal" value="{{ editslik['Tanggal'] }}"/>
               </div>
           <div class="flex-input">
             <div class="wrap-input">
               <label htmlfor="Nama Pemohon" class="label-input">
                Nama Pemohon
               </label>
-              <input type="text" class="input-field"  name="Nama Pemohon" value=""/>
+              <input type="text" class="input-field"  name="Nama Pemohon" value="{{ editslik['NamaPemohon'] }}"/>
             </div>
             
             <div class="wrap-input">
               <label htmlfor="Nama Debitur" class="label-input">
                Nama Debitur
               </label>
-              <input type="text" class="input-field"  name="Nama Debitur" value=""/>
+              <input type="text" class="input-field"  name="Nama Debitur" value="{{ editslik['NamaDebitur'] }}"/>
             </div>
           </div>
             
@@ -84,14 +84,14 @@
                 <label htmlfor="Tanggal1" class="label-input">
                   Tanggal
                 </label>
-                <input type="date" class="input-field" name="Tanggal1" value=""/>
+                <input type="date" class="input-field" name="Tanggal1" value="{{ editslik['Tanggal_'] }}"/>
               </div>
 
             <div class="wrap-input">
                 <label htmlfor="Nama" class="label-input">
                 Nama
                 </label>
-                <input type="text" name="Nama" id="Nama"  class="input-field" >
+                <input type="text" name="Nama" id="Nama"  class="input-field" value="{{ editslik['Nama'] }}" >
               </div>
               </div>
               
@@ -99,7 +99,7 @@
                 <label htmlfor="Debitur" class="label-input">
                 Debitur   
                 </label>
-                <input type="text" name="Debitur" id="Debitur"  class="input-field" >
+                <input type="text" name="Debitur" id="Debitur"  class="input-field" value="{{ editslik['Debitur'] }}" >
               </div>
 
             <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>

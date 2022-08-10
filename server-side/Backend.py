@@ -524,6 +524,8 @@ def register():
             return redirect(url_for('roya'))
         elif select == 'register20':
             return redirect(url_for('royakkb'))
+        elif select == 'register21':
+            return redirect(url_for('slik'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2401,6 +2403,90 @@ def editroyakkb(NamaDebitur):
                 conn.commit()
             
             return redirect(url_for('royakkb'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/slik', methods=['GET', 'POST'])
+def slik():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_slik')
+        slik = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register Slik/detail_Register SLIK.html', slik=slik)  
+    return redirect(url_for('login'))
+
+@app.route('/register/slik/tambah', methods=['GET', 'POST'])
+def tambahslik():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register Slik/tambah_Register SLIK.html', username=session['username'])
+        else:
+            Tanggal= request.form['Tanggal']
+            Nama_Pemohon = request.form['Nama Pemohon']
+            Nama_Debitur = request.form['Nama Debitur']
+            Tanggal1 = request.form['Tanggal1']
+            Nama = request.form['Nama']
+            Debitur = request.form['Debitur']
+        
+            cursor.execute('''INSERT INTO reg_slik VALUES(%s,%s,%s,%s,%s,%s)''',(Tanggal, Nama_Pemohon, Nama_Debitur, Tanggal1, Nama, Debitur ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('slik'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/slik/edit/<NamaDebitur>', methods=['GET', 'POST'])
+def editslik(NamaDebitur):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_slik WHERE NamaDebitur = %s', (NamaDebitur))
+            editslik = cursor.fetchone()
+            return render_template('./Register Slik/edit_Register SLIK.html', editslik=editslik)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Tanggal'] == '':
+                new_Tanggal= request.form['Tanggal']
+                cursor.execute('UPDATE IGNORE reg_slik SET Tanggal = %s WHERE NamaDebitur = %s', (new_Tanggal, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Nama Pemohon'] == '':
+                new_Nama_Pemohon = request.form['Nama Pemohon']
+                cursor.execute('UPDATE IGNORE reg_slik SET NamaPemohon = %s WHERE NamaDebitur = %s', (new_Nama_Pemohon, NamaDebitur))
+                conn.commit()
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur = request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_slik SET NamaDebitur = %s WHERE NamaDebitur = %s', (new_Nama_Debitur, NamaDebitur))
+                conn.commit()
+                
+            
+            if not request.form['Tanggal1'] == '':
+                new_Tanggal1 = request.form['Tanggal1']
+                cursor.execute('UPDATE IGNORE reg_slik SET Tanggal_ = %s WHERE NamaDebitur = %s', (new_Tanggal1, NamaDebitur))
+                conn.commit()
+
+            if not request.form['Nama'] == '':
+                new_Nama = request.form['Nama']
+                cursor.execute('UPDATE IGNORE reg_slik SET Nama = %s WHERE NamaDebitur = %s', (new_Nama, NamaDebitur))
+                conn.commit()
+            
+            if not request.form['Debitur'] == '':
+                new_Debitur = request.form['Debitur']
+                cursor.execute('UPDATE IGNORE reg_slik SET Debitur = %s WHERE NamaDebitur = %s', (new_Debitur, NamaDebitur))
+                conn.commit()
+            
+            return redirect(url_for('slik'))
 
     return redirect(url_for('login'))
 
