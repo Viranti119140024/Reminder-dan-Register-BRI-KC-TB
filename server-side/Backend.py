@@ -530,6 +530,8 @@ def register():
             return redirect(url_for('spph'))
         elif select == 'register23':
             return redirect(url_for('tbnk'))
+        elif select == 'register24':
+            return redirect(url_for('ttsn'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2681,6 +2683,107 @@ def edittbnk(NamaDebitur):
                 conn.commit()
         
             return redirect(url_for('tbnk'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/ttsn', methods=['GET', 'POST'])
+def ttsn():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_tandaterima_sertif_kenotaris')
+        ttsn = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register TTS Notaris/detail_RegisterTTSNotaris.html', ttsn=ttsn)  
+    return redirect(url_for('login'))
+
+@app.route('/register/ttsn/tambah', methods=['GET', 'POST'])
+def tambahttsn():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register TTS Notaris/tambah_RegisterTTSNotaris.html', username=session['username'])
+        else:
+            Nama_Debitur= request.form['Nama Debitur']
+            No_SHM_SHGB = request.form['No. SHM / SHGB']
+            Tanggal_Sertifikat = request.form['Tanggal Sertifikat']
+            Nomor_Surat_Ukur = request.form['Nomor Surat Ukur']
+            Tanggal_Surat_Ukur = request.form['Tanggal Surat Ukur']
+            Luas_m = request.form['Luas(m)']
+            Nama_Pemilik_SHM_SHGB = request.form['Nama Pemilik SHM/SHGB']
+            Tanggal_Penyerahan = request.form['Tanggal Penyerahan']
+            Tanda_Tangan_Nama = request.form['Tanda Tangan / Nama']
+        
+            cursor.execute('''INSERT INTO reg_tandaterima_sertif_kenotaris VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(Nama_Debitur, No_SHM_SHGB, Tanggal_Sertifikat, Nomor_Surat_Ukur, Tanggal_Surat_Ukur, Luas_m, Nama_Pemilik_SHM_SHGB, Tanggal_Penyerahan, Tanda_Tangan_Nama ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('ttsn'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/ttsn/edit/<NoSHM_SHGB>', methods=['GET', 'POST'])
+def editttsn(NoSHM_SHGB):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_tandaterima_sertif_kenotaris WHERE NoSHM_SHGB = %s', (NoSHM_SHGB))
+            editttsn = cursor.fetchone()
+            return render_template('./Register TTS Notaris/edit_RegisterTTSNotaris.html', editttsn=editttsn)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur= request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET NamaDebitur = %s WHERE NoSHM_SHGB = %s', (new_Nama_Debitur, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['No. SHM / SHGB'] == '':
+                new_No_SHM_SHGB = request.form['No. SHM / SHGB']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET NoSHM_SHGB = %s WHERE NoSHM_SHGB = %s', (new_No_SHM_SHGB, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['Tanggal Sertifikat'] == '':
+                new_Tanggal_Sertifikat = request.form['Tanggal Sertifikat']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET TanggalSertifikat = %s WHERE NoSHM_SHGB = %s', (new_Tanggal_Sertifikat, NoSHM_SHGB))
+                conn.commit()
+                
+            if not request.form['Nomor Surat Ukur'] == '':
+                new_Nomor_Surat_Ukur = request.form['Nomor Surat Ukur']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET NomorSuratUkur = %s WHERE NoSHM_SHGB = %s', (new_Nomor_Surat_Ukur, NoSHM_SHGB))
+                conn.commit()
+                
+            if not request.form['Tanggal Surat Ukur'] == '':
+                new_Tanggal_Surat_Ukur = request.form['Tanggal Surat Ukur']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET TanggalSuratUkur = %s WHERE NoSHM_SHGB = %s', (new_Tanggal_Surat_Ukur, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['Luas(m)'] == '':
+                new_Luas_= request.form['Luas(m)']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET Luas = %s WHERE NoSHM_SHGB = %s', (new_Luas_, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['Nama Pemilik SHM/SHGB'] == '':
+                new_Nama_Pemilik_SHM_SHGB = request.form['Nama Pemilik SHM/SHGB']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET NamaPemilikSHM_SHGB = %s WHERE NoSHM_SHGB = %s', (new_Nama_Pemilik_SHM_SHGB, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['Tanggal Penyerahan'] == '':
+                new_Tanggal_Penyerahan = request.form['Tanggal Penyerahan']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET TanggalPenyerahan = %s WHERE NoSHM_SHGB = %s', (new_Tanggal_Penyerahan, NoSHM_SHGB))
+                conn.commit()
+            
+            if not request.form['Tanda Tangan / Nama'] == '':
+                new_Tanda_Tangan_Nama = request.form['Tanda Tangan / Nama']
+                cursor.execute('UPDATE IGNORE reg_tandaterima_sertif_kenotaris SET TTD_Nama = %s WHERE NoSHM_SHGB = %s', (new_Tanda_Tangan_Nama, NoSHM_SHGB))
+                conn.commit()
+        
+            return redirect(url_for('ttsn'))
 
     return redirect(url_for('login'))
 

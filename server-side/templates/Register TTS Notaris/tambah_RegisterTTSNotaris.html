@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register TTS Notaris/tambah_RegisterTTSNotaris.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register Tanda Terima Sertifikat ke Notaris</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header">BRI-Minder</header>
+      <ul class="ul">
+        
+        <li>
+          <a href="" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href=""class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Form Penambahan Data Debitur (Register Tanda Terima Sertifikat ke Notaris)</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form">
+            <div class="wrap-input">
+                <label htmlfor="Nama Debitur" class="label-input">
+                  Nama Debitur
+                </label>
+                <input type="text" class="input-field"  name="Nama Debitur" value=""/>
+              </div>
+          
+            <div class="wrap-input">
+            <label htmlfor="No. SHM / SHGB" class="label-input">
+              No. SHM / SHGB
+            </label>
+            <input type="text" class="input-field"  name="No. SHM / SHGB" value=""/>
+          </div>
+          <div class="wrap-input">
+            <label htmlfor="Tanggal Sertifikat" class="label-input">
+              Tanggal Sertifikat
+            </label>
+            <input type="date" class="input-field" name="Tanggal Sertifikat" value=""/>
+          </div>
+          
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Nomor Surat Ukur" class="label-input">
+                Nomor Surat Ukur
+              </label>
+              <input type="text" class="input-field"  name="Nomor Surat Ukur" value=""/>
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="Tanggal Surat Ukur" class="label-input">
+                  Tanggal Surat Ukur
+                </label>
+                <input type="date" class="input-field" name="Tanggal Surat Ukur" value=""/>
+              </div>
+          </div>
+            
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Luas(m)" class="label-input">
+               Luas(m)
+              </label>
+              <input type="text" name="Luas(m)" id="Luas(m)"  class="input-field" >
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="Nama Pemilik SHM/SHGB" class="label-input">
+                 Nama Pemilik SHM/SHGB
+                </label>
+                <input type="text" name="Nama Pemilik SHM/SHGB" id="Nama Pemilik SHM/SHGB"  class="input-field" >
+              </div>
+          </div>
+
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="Tanggal Penyerahan" class="label-input">
+                Tanggal Penyerahan
+              </label>
+              <input type="date" class="input-field" name="Tanggal Penyerahan" value=""/>
+              
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="Tanda Tangan / Nama" class="label-input">
+                  Tanda Tangan / Nama
+                </label>
+                <input type="text" class="input-field"  name="Tanda Tangan / Nama" value=""/>
+              </div>
+          </div>
+            
+            <input type="submit" class="btn-ubah" value="Tambah Data" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
