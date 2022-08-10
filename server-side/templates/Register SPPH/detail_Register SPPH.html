@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./detail_Register SPPH.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register SPPH/detail_Register SPPH.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
@@ -68,7 +68,7 @@
 
             
             <div>
-              <a href="">
+              <a href="/register/spph/tambah">
               <button
                 class="btn_tambah"
               >
@@ -80,8 +80,8 @@
               <thead>
                 <tr>
                   <th>Nama Debitur</th>
-                  <th>Nomor SPPA</th>    
-                  <th>Nomor Premi</th>                                                
+                  <th>Nomor SPPA </th>  
+                  <th>Nomor Premi</th>                                                 
                   <th>Jenis Pertanggungan </th>
                   <th>Nilai Pertanggungan</th>
                   <th>Jangka Waktu</th>
@@ -92,20 +92,20 @@
                 </tr>
               </thead>
               <tbody>
+                {% for spph in spph %}
                 <tr>
-                  <td>Odah</td>
-                  <td>Jl. Raden Intan No. 78B </td>                 
-                  <td>Rumah Tinggal</td>
-                  <td>200.000.000</td>                  
-                  <td>09/06/2010 - 09/06/2010</td>
-                  <td>BSAM</td>
-                  <td>16/10/2010</td>
-                  <td> </td>
-                  
-                  
-                  
+                  <td>{{ spph['NamaDebitur'] }}</td>
+                  <td>{{ spph['NomorSPPA'] }}</td>
+                  <td>{{ spph['premi'] }}</td>
+                  <td>{{ spph['JenisPertanggungan'] }}</td>
+                  <td>{{ spph['NilaiPertanggungan'] }}</td>
+                  <td>{{ spph['JangkaWaktu'] }}</td>       
+                  <td>{{ spph['SetorRp'] }}</td> 
+                  <td>{{ spph['SetorTanggal'] }}</td> 
+                  <td>{{ spph['Paraf'] }}</td>      
+         
                   <td>
-                    <a href="" >
+                    <a href="/register/spph/edit/{{ spph['premi'] }}" >
                        
                       <img
                         src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
@@ -115,6 +115,7 @@
 
 
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

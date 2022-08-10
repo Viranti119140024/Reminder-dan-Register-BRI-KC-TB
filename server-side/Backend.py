@@ -526,6 +526,8 @@ def register():
             return redirect(url_for('royakkb'))
         elif select == 'register21':
             return redirect(url_for('slik'))
+        elif select == 'register22':
+            return redirect(url_for('spph'))
         return render_template('daftarregister.html')
     return redirect(url_for('login'))
 
@@ -2421,7 +2423,7 @@ def slik():
     return redirect(url_for('login'))
 
 @app.route('/register/slik/tambah', methods=['GET', 'POST'])
-def tambahslik():
+def tambahs():
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     if 'loggedin' in session:
@@ -2487,6 +2489,107 @@ def editslik(NamaDebitur):
                 conn.commit()
             
             return redirect(url_for('slik'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/spph', methods=['GET', 'POST'])
+def spph():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM reg_spph')
+        spph = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('./Register SPPH/detail_Register SPPH.html', spph=spph)  
+    return redirect(url_for('login'))
+
+@app.route('/register/spph/tambah', methods=['GET', 'POST'])
+def tambahspph():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            return render_template('./Register SPPH/tambah_Register SPPH.html', username=session['username'])
+        else:
+            Nama_Debitur= request.form['Nama Debitur']
+            Nomer_SPPA = request.form['Nomer SPPA']
+            Nomor_Premi = request.form['Nomor Premi']
+            Jenis_Pertanggungan = request.form['Jenis Pertanggungan']
+            Nilai_Pertanggungann = request.form['Nilai Pertanggungann']
+            Jangka_Waktu = request.form['Jangka Waktu']
+            Setor_Rp = request.form['Setor Rp.']
+            Tanggal_Setor = request.form['Tanggal Setor.']
+            Paraf = request.form['Paraf']
+        
+            cursor.execute('''INSERT INTO reg_spph VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(Nama_Debitur, Nomer_SPPA, Nomor_Premi, Jenis_Pertanggungan, Nilai_Pertanggungann, Jangka_Waktu, Setor_Rp, Tanggal_Setor, Paraf ))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('spph'))
+
+    return redirect(url_for('login'))
+
+@app.route('/register/spph/edit/<premi>', methods=['GET', 'POST'])
+def editspph(premi):
+    if 'loggedin' in session:
+        if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM reg_spph WHERE premi = %s', (premi))
+            editspph = cursor.fetchone()
+            return render_template('./Register SPPH/edit_Register SPPH.html', editspph=editspph)
+        elif request.method == 'POST':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+                
+            if not request.form['Nama Debitur'] == '':
+                new_Nama_Debitur= request.form['Nama Debitur']
+                cursor.execute('UPDATE IGNORE reg_spph SET NamaDebitur = %s WHERE premi = %s', (new_Nama_Debitur, premi))
+                conn.commit()
+            
+            if not request.form['Nomer SPPA'] == '':
+                new_Nomer_SPPA = request.form['Nomer SPPA']
+                cursor.execute('UPDATE IGNORE reg_spph SET NomorSPPA = %s WHERE premi = %s', (new_Nomer_SPPA, premi))
+                conn.commit()
+                
+            if not request.form['Nomor Premi'] == '':
+                new_Nomor_Premi = request.form['Nomor Premi']
+                cursor.execute('UPDATE IGNORE reg_spph SET premi = %s WHERE premi = %s', (new_Nomor_Premi, premi))
+                conn.commit()
+                
+            if not request.form['Jenis Pertanggungan'] == '':
+                new_Jenis_Pertanggungan = request.form['Jenis Pertanggungan']
+                cursor.execute('UPDATE IGNORE reg_spph SET JenisPertanggungan = %s WHERE premi = %s', (new_Jenis_Pertanggungan, premi))
+                conn.commit()
+
+            if not request.form['Nilai Pertanggungann'] == '':
+                new_Nilai_Pertanggungann = request.form['Nilai Pertanggungann']
+                cursor.execute('UPDATE IGNORE reg_spph SET NilaiPertanggungan = %s WHERE premi = %s', (new_Nilai_Pertanggungann, premi))
+                conn.commit()
+            
+            if not request.form['Jangka Waktu'] == '':
+                new_Jangka_Waktu = request.form['Jangka Waktu']
+                cursor.execute('UPDATE IGNORE reg_spph SET JangkaWaktu = %s WHERE premi = %s', (new_Jangka_Waktu, premi))
+                conn.commit()
+            
+            if not request.form['Setor Rp.'] == '':
+                new_Setor_Rp = request.form['Setor Rp.']
+                cursor.execute('UPDATE IGNORE reg_spph SET SetorRp = %s WHERE premi = %s', (new_Setor_Rp, premi))
+                conn.commit()
+            
+            if not request.form['Tanggal Setor.'] == '':
+                new_Tanggal_Setor = request.form['Tanggal Setor.']
+                cursor.execute('UPDATE IGNORE reg_spph SET SetorTanggal = %s WHERE premi = %s', (new_Tanggal_Setor, premi))
+                conn.commit()
+            
+            if not request.form['Paraf'] == '':
+                new_Paraf = request.form['Paraf']
+                cursor.execute('UPDATE IGNORE reg_spph SET Paraf = %s WHERE premi = %s', (new_Paraf, premi))
+                conn.commit()
+            
+            return redirect(url_for('spph'))
 
     return redirect(url_for('login'))
 
