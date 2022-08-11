@@ -88,14 +88,11 @@
                     <td>{{ kenaikansukubunga['akad'] }}</td>
                     <td>
                       <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}" >
-                        <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/20/102d81/external-view-multimedia-kiranshastry-lineal-color-kiranshastry.png"/>
+                        <img src="{{ url_for('static', filename='icon/detail.png') }}"/>
                       </a>
                       <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
-                          <img src="https://img.icons8.com/ios-filled/20/102d81/checkmark--v1.png"/>
+                          <img src="{{ url_for('static', filename='icon/done.png') }}"/>
                       </a>
-                      <!-- <a href="/restrukturisasi/notifikasi/viewnotif/editdebitur/{{ kenaikansukubunga['norek'] }}">
-                        <img src="https://img.icons8.com/ios-filled/20/102d81/edit--v1.png"/>
-                      </a> -->
                     </td>
                   </tr>
                 {% endfor %}

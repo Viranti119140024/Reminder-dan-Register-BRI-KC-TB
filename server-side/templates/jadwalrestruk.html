@@ -53,7 +53,7 @@
             <h2 class="jadwal">Jadwal Restrukturisasi</h2>
             <a href="/notifikasi" >
               <button type="button" class="icon-button" href>
-                <img src="https://img.icons8.com/fluency/30/bell.png"/>
+                <img src="{{ url_for('static', filename='icon/lonceng.png') }}"/>
                 <span class="icon-button__badge">{{notif}}</span>
               </button>
             </a>
@@ -110,21 +110,19 @@
                       {{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }} % <br>
                       {{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }} %
                     </td>
-                    <!-- <td>{{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }}</td>
-                    <td>{{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }}</td> -->
                     <td>{{ datadebitur['jadwalpokok'] }}</td>
                     <td>{{ datadebitur['jadwaltempo'] }}</td>
                     <td>{{ datadebitur['akad'] }}</td>
                     <td>{{ datadebitur['bap'] }}</td>
                     <td>
                       <a href="/restrukturisasi/detail/{{ datadebitur['norek'] }}" >
-                      <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/20/102d81/external-view-multimedia-kiranshastry-lineal-color-kiranshastry.png"/>
+                      <img src="{{ url_for('static', filename='icon/detail.png') }}"/>
                       </a>
                       <a href="/restrukturisasi/debiturhapus/{{ datadebitur['norek'] }}">
-                      <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                      <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
                       </a>
                       <a href="/restrukturisasi/editdebitur/{{ datadebitur['norek'] }}">
-                      <img src="https://img.icons8.com/ios-filled/20/102d81/edit--v1.png"/>
+                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>
                       </a>
                     </td>
                   </tr>

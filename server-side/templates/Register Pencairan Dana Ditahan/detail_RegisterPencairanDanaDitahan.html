@@ -57,7 +57,7 @@
             <h2 class="jadwal">Register Pencairan Dana Ditahan</h2>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
-              <input type="text" class="input-field" name="cari" placeholder="Cari Debitur" form="form"></input>
+              <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
             </div>
           </div>
             
@@ -76,7 +76,7 @@
               </button>
               </a>
             </div>
-            <table>
+            <table id="myTable">
               <thead>
                 <tr>
                   <th>Nama Debitur</th>                  
@@ -106,11 +106,11 @@
                     <a href="/register/pdt/edit/{{ pdt['NoRekening'] }}" >
                        
                       <img
-                        src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"
+                        src="{{ url_for('static', filename='icon/edit.png') }}"
                       />                      
                     </a>
                     <a href="/register/pdt/hapus/{{ pdt['NoRekening'] }}">
-                      <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                      <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
                     </a>   
                  </td>
 
@@ -124,4 +124,27 @@
       </div>
     </div>
 </body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
 </html>

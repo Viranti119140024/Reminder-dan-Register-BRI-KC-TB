@@ -101,10 +101,10 @@
                     <td>{{ ipkrestruk['keterangan'] }}</td>   
                     <td>
                       <a href="/register/ipkrestruk/edit/{{ ipkrestruk['norek'] }}" >
-                      <img src="https://img.icons8.com/material-sharp/20/102d81/edit--v1.png"/>                      
+                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
                       </a>  
                       <a href="/register/ipkrestruk/hapus/{{ ipkrestruk['norek'] }}">
-                        <img src="https://img.icons8.com/pix/20/102d81/experimental-delete-pix.png"/>
+                        <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
                       </a>
                   </td>
                   </tr>
