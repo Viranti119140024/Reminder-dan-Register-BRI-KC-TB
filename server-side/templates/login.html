@@ -12,17 +12,17 @@
 <body>
     <div class="container">
       <div class="wrap-gambar">
-        <img class="gambar" src="{{ url_for('static', filename='backlogin.jpg') }}">
+        <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}">
       <div class="login">
         <div class="div2">
           <h1>LOGIN</h1>
           <form action="{{ url_for('login') }}" method="post">
             <div class="wrap-input">
-              <label htmlfor="username" class="label-input">Username</label><br />
+              <label htmlfor="username" class="label-input">  Username</label><br />
               <input type="text" name="username" class="input" placeholder="Username" />
             </div>
             <div class="wrap-input">
-              <label htmlfor="password" class="label-input">Password</label><br />
+              <label htmlfor="password" class="label-input">  Password</label><br />
               <input type="password" name="password" class="input" placeholder="Password" />
             </div>
             <p class="msg">{{ msg }}</p>

@@ -12,17 +12,20 @@
   height: 100%;
   background: #102d81;
 }
-.body .sidebar .header {
-  font-size: 48px;
+.body .sidebar ul a {
+  display: block;
+  height: 80px;
+  width: 100%;
+  line-height: 70px;
+  font-size: 20px;
   color: white;
-  text-align: center;
-  line-height: 100px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-weight: bold;
-  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.4s;
+  padding-left: 10px;
+  border-radius: 80px;
+  list-style: none;
+  text-decoration: none;
 }
 .body .sidebar ul li {
   list-style-type: none;

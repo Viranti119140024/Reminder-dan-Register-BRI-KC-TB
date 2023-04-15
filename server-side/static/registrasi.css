@@ -16,6 +16,7 @@
   flex-direction: row;
   width: 190%;
   height: 100%;
+  background-color: #102D81;
 }
 .container .login {
   width: 100%;
@@ -23,41 +24,35 @@
   padding-top: 8%;
 }
 .container .div2 .label-input {
-  font-size: 14px;
+  font-size: 15px;
   margin-bottom: 20px;
   font-weight: bold;
-  color: #102D81;
+  color: #ffffff;
+  
 }
 .container .div2 .button {
-  background-color: #102D81;
-  border-color: #102D81;
+  background-color: #173797;
+  border-color: #8596eb;
   color: white;
   margin-top: 10px;
   padding: 10px;
   font-weight: bold;
-  border-radius: 10px;
-  width: 70%;
-}
-.container .div2 .button:hover {
-  background: #011c22;
+  width: 50%;
+  border-radius: 90px;
+
 }
 .container .div2 .input {
-  background-color: #F5F5F5;
-  height: 40px;
-  border-radius: 10px;
-  border: none;
+  background-color: #eaefff;
+  border-color: #3b4ea4;
   color: #102D81;
-  width: 70%;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  padding: 10px;
+  font-weight: bold;
+  width: 45%;
+  border-radius: 90px;
 }
 .container .gambar {
   display: flex;
   width: 100%;
   height: 100%;
-  
-}
-.container .login .div2 .msg {
-  font-size: 16px;
-  color: red;
-  width:300%;
 }

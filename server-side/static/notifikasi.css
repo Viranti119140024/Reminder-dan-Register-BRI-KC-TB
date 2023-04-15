@@ -29,14 +29,16 @@
 }
 .body .sidebar ul a {
   display: block;
-  height: 70px;
+  height: 80px;
   width: 100%;
-  line-height: 65px;
-  font-size: 22px;
+  line-height: 70px;
+  font-size: 20px;
   color: white;
   box-sizing: border-box;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: 0.4s;
+  padding-left: 10px;
+  border-radius: 80px;
   list-style: none;
   text-decoration: none;
 }

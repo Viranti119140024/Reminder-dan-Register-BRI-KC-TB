@@ -1,4 +1,5 @@
-from flask import Flask, request, session, redirect, url_for, render_template
+from flask import Flask, request, session, redirect, url_for, render_template,send_file, jsonify, make_response 
+import pdfkit
 from flaskext.mysql import MySQL
 from datetime import datetime
 import pymysql 
@@ -427,7 +428,58 @@ def detaildebitur(norek):
             conn.commit()
             cursor.close()
             return render_template('detaildebitur.html', detaildebitur=detaildebitur)
-    return redirect(url_for('login'))
+            return redirect(url_for('login'))
+
+
+ 
+@app.route('/notifikasi/vewnotif/detail/download/report/pdf')
+def download_report():
+    conn = None
+    cursor = None
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+         
+        cursor.execute("SELECT * FROM employee")
+        result = cursor.fetchall()
+ 
+        pdf = FPDF()
+        pdf.add_page()
+         
+        page_width = pdf.w - 2 * pdf.l_margin
+         
+        pdf.set_font('Times','B',14.0) 
+        pdf.cell(page_width, 0.0, 'Employee Data', align='C')
+        pdf.ln(10)
+ 
+        pdf.set_font('Courier', '', 12)
+         
+        col_width = page_width/4
+         
+        pdf.ln(1)
+         
+        th = pdf.font_size
+         
+        for row in result:
+            pdf.cell(col_width, th, str(row['id']), border=1)
+            pdf.cell(col_width, th, row['name'], border=1)
+            pdf.cell(col_width, th, row['position'], border=1)
+            pdf.cell(col_width, th, row['office'], border=1)
+            pdf.ln(th)
+         
+        pdf.ln(10)
+         
+        pdf.set_font('Times','',10.0) 
+        pdf.cell(page_width, 0.0, '- end of report -', align='C')
+         
+        return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=employee_report.pdf'})
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+         
+
 
 @app.route('/restrukturisasi/detail/<norek>', methods=['GET', 'POST'])
 def detaildebitur2(norek):
