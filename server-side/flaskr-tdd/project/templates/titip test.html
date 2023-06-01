@@ -1,0 +1,261 @@
+import pytest
+from flask import session
+from flaskext.mysql import MySQL
+from project.app import app
+
+
+
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        with app.app_context():
+            yield client
+
+
+def login(client, username, password):
+    return client.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
+
+
+def logout(client):
+    return client.get('/logout', follow_redirects=True)
+
+
+def test_login(client):
+    response = login(client, 'admin', 'password123')
+    assert response.status_code == 200
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+    with client.session_transaction() as session:
+        assert 'loggedin' in session.keys()
+        assert session['loggedin'] is True
+
+def test_logout(client):
+    response = logout(client)
+    assert response.status_code == 200
+    with client.session_transaction() as sess:
+        assert 'loggedin' not in sess
+        assert 'username' not in sess
+
+
+def test_registrasi(client):
+    response = client.post('/registrasi', data={'username': 'newuser', 'nama': 'New User', 'password': 'password123', 'level': 'user'})
+    assert response.status_code == 200
+   
+
+def test_kelolauser(client):
+    response = client.get('/kelolauser')
+    assert response.status_code == 302
+    assert response.headers['Location'].endswith('/login')
+
+def test_home_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+
+    response = client.get('/beranda')
+    assert response.status_code == 200
+    assert b'Beranda' in response.data
+    assert b'Role: admin' in response.data
+
+def test_home_route_without_logged_in_session(client):
+    response = client.get('/beranda')
+    assert response.status_code == 302
+    assert response.headers['Location'] == '/login'
+
+def test_restrukturisasi_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+
+    response = client.get('/restrukturisasi')
+    assert response.status_code == 200
+    assert b'Jadwal Restrukturisasi' in response.data
+
+def test_restrukturisasi_route_without_logged_in_session(client):
+    response = client.get('/restrukturisasi')
+    assert response.status_code == 302
+    assert response.headers['Location'] == '/login'
+
+def test_notifikasi_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+
+    response = client.get('/notifikasi')
+    assert response.status_code == 200
+    assert b'Notifikasi' in response.data
+
+def test_notifikasi_route_without_logged_in_session(client):
+    response = client.get('/notifikasi')
+    assert response.status_code == 302
+    assert response.headers['Location'] == '/login'
+
+def test_viewnotif_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+
+    response = client.get('/notifikasi/viewnotif')
+    assert response.status_code == 404
+    
+
+def test_viewnotif_route_without_logged_in_session(client):
+    response = client.get('/notifikasi/viewnotif')
+    assert response.status_code == 404
+
+def test_tambahdebitur_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+        session['username'] = 'admin'  # Pastikan kunci 'username' telah diatur dengan benar
+
+    response = client.get('/tambahdebitur')
+    assert response.status_code == 200
+    
+
+def test_tambahdebitur_route_without_logged_in_session(client):
+    response = client.get('/tambahdebitur')
+    assert response.status_code == 302
+    assert response.headers['Location'] == '/login'
+
+def test_editdebitur_route_with_logged_in_session(client):
+    with client.session_transaction() as session:
+        session['loggedin'] = True
+        session['level'] = 'admin'
+
+    # Replace '12345' with a valid debitur ID
+    response = client.get('/restrukturisasi/editdebitur/12345')
+    assert response.status_code == 200
+    
+
+def test_editdebitur_route_without_logged_in_session(client):
+    response = client.get('/restrukturisasi/editdebitur/12345')
+    assert response.status_code == 302
+    assert response.headers['Location'] == '/login'
+
+
+
+# Test register route
+def test_register_route(client):
+    response = client.get('/register')
+    assert response.status_code == 302  # Redirect to login
+
+    with client.session_transaction() as sess:
+        sess['loggedin'] = True
+
+    response = client.get('/register')
+    assert response.status_code == 200
+
+class TestTambahIpkRestructure(TestCase):
+    def create_app(self):
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        return app
+
+    def test_tambahipkrestruk_route_get(self):
+        # Simulasi pengguna yang sudah masuk
+        with self.client.session_transaction() as sess:
+            sess['loggedin'] = True
+            sess['username'] = 'test_user'
+
+        response = self.client.get('/register/ipkrestruk/tambah')
+        self.assert200(response)
+        self.assert_template_used('./IPK RESTRUK/tambah_IPK RESTRUK.html')
+        self.assertIn(b'Form Tambah Data Debitur (IPK RESTRUK)', response.data)
+
+    def test_tambahipkrestruk_route_post(self):
+        # Simulasi pengguna yang sudah masuk
+        with self.client.session_transaction() as sess:
+            sess['loggedin'] = True
+            sess['username'] = 'test_user'
+
+        data = {
+            'no_ipk': '1',
+            'nama_debitur': 'John Doe',
+            'No.PTK': 'PTK123',
+            'Akad': '2023-05-31',
+            'Jatuh_Tempo': '2023-06-30',
+            'Jangka_Waktu': '3',
+            'Rekening': '12345',
+            'keterangan': 'Test IPK Restructure'
+        }
+
+        response = self.client.post('/register/ipkrestruk/tambah', data=data, follow_redirects=True)
+        self.assert200(response)
+
+        # Verifikasi data ditambahkan ke database
+        with self.app.app_context():
+            conn = self.app.mysql.connect()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM ipkrestruk WHERE no_ipk='1'")
+            result = cursor.fetchone()
+            cursor.close()
+            conn.close()
+
+            assert result is not None
+            assert result[1] == 'John Doe'
+            assert result[2] == 'PTK123'
+            assert result[3] == '2023-05-31'
+            assert result[4] == '2023-06-30'
+            assert result[5] == 3
+            assert result[6] == '12345'
+            assert result[7] == 'Test IPK Restructure'
+
+
+# Test editipkrestruk route
+def test_editipkrestruk_route(client, mocker):
+    mock_connect = mocker.patch('mysql.connector.connect')
+    mock_cursor = mock_connect.return_value.cursor.return_value
+    mock_cursor.fetchone.return_value = {
+        'no_ipk': '1',
+        'nama_debitur': 'John Doe',
+        'No.PTK': 'PTK123',
+        'Akad': 'Akad1',
+        'Jatuh_Tempo': '2023-05-31',
+        'Jangka_Waktu': '3',
+        'Rekening': '12345',
+        'keterangan': 'Test IPK Restructure'
+    }
+
+    with client.session_transaction() as sess:
+        sess['loggedin'] = True
+
+    response = client.post('/register/ipkrestruk/struk/edit/1', data={
+        'no_ipk': '1',
+        'nama_debitur': 'John Doe',
+        'No.PTK': 'PTK123',
+        'Akad': 'Akad1',
+        'Jatuh_Tempo': '2023-05-31',
+        'Jangka_Waktu': '3',
+        'Rekening': '12345',
+        'keterangan': 'Test IPK Restructure Updated'
+    })
+    assert response.status_code == 302  # Redirect to ipkrestruk
+
+    mock_cursor.execute.assert_called_once_with(
+        "UPDATE ipkrestruk SET no_ipk=%s, nama_debitur=%s, No_PTK=%s, Akad=%s, Jatuh_Tempo=%s, Jangka_Waktu=%s, Rekening=%s, keterangan=%s WHERE id=%s",
+        ('1', 'John Doe', 'PTK123', 'Akad1', '2023-05-31', '3', '12345', 'Test IPK Restructure Updated', '1')
+    )
+
+
+# Test hapusipkrestruk route
+def test_hapusipkrestruk_route(client, mocker):
+    mock_connect = mocker.patch('mysql.connector.connect')
+    mock_cursor = mock_connect.return_value.cursor.return_value
+
+    with client.session_transaction() as sess:
+        sess['loggedin'] = True
+
+    response = client.get('/register/ipkrestruk/hapus/1')
+    assert response.status_code == 302  # Redirect to ipkrestruk
+
+    mock_cursor.execute.assert_called_once_with(
+        "DELETE FROM ipkrestruk WHERE id=%s",
+        ('1',)
+    )
+
+
+
+if __name__ == '__main__':
+    pytest.main()

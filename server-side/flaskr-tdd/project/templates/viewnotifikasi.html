@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='viewnotifikasi.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>View Notifikasi</title>
+</head>
+
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" class="active">
+            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"   />
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register" >
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+          <a href="/notifikasi"><img class="back"
+            src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png"/> 
+          </a>
+          <h2 class="jadwal">Jadwal Restrukturisasi</h2>
+          <label htmlfor="cari" class="label-input"></label> 
+          <div class="wrap-input">    
+            <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
+          </div>
+        </div>
+      
+          <div class="table">
+            
+
+            
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>Nama Debitur</th>
+                  <th>No.Rekening</th>                 
+                  <th>Baki Debet</th>
+                  <th>Jangka Waktu</th>                  
+                  <th>Periode Suku Bunga</th>
+                  <th>Persentase Bunga</th>
+                  <th>Jatuh Tempo</th>
+                  <th>Akad</th>
+                  <th>Bunga Baru</th>
+                  <th>Aksi</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for kenaikansukubunga in kenaikansukubunga %}
+                  <tr>
+                    <td>{{ kenaikansukubunga['namadebitur'] }}</td>
+                    <td>{{ kenaikansukubunga['norek'] }}</td>
+                    <td>{{ kenaikansukubunga['bakidebet']| rupiah }}</td>
+                    <td>{{ kenaikansukubunga['jangkawaktu'] }}</td>
+                    <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} </td>
+                    <td>{{ kenaikansukubunga['sukubunga'] }} % </td>
+                    <td>{{ kenaikansukubunga['jadwaljatuhtempo'] }}</td>
+                    <td>{{ kenaikansukubunga['akad'] }}</td>
+                    <td>{{ ((kenaikansukubunga['bakidebet'] * kenaikansukubunga['sukubunga']) / 100)|round|int| rupiah }}</td>
+                    <td>
+                      <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}" >
+                        <img src="{{ url_for('static', filename='icon/detail.png') }}"/>
+                      </a>
+                      <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
+                          <img src="{{ url_for('static', filename='icon/done.png') }}"/>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+</html>

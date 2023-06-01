@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register SPPH/detail_Register SPPH.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register SPPH</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register"class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">Register SPPH</h2>
+            <div class="cari">
+              <label htmlfor="cari" class="label-input"></label> 
+              <div class="wrap-input">    
+                <input type="text" class="input-field" placeholder="Cari No. SPPA" id="myInput" onkeyup="myFunction()"></input>
+              </div>
+            </div>
+          </div>
+            
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/register/spph/tambah">
+              <button
+                class="btn_tambah"
+              >
+                Tambah Data Debitur
+              </button>
+              </a>
+            </div>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>Nama Debitur</th>
+                  <th>Nomor SPPA </th>  
+                  <th>Nomor Premi</th>                                                 
+                  <th>Jenis Pertanggungan </th>
+                  <th>Nilai Pertanggungan</th>
+                  <th>Jangka Waktu</th>
+                  <th>Setor Rp.</th>
+                  <th>Setor Tanggal.</th>
+                  <th>Paraf</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for spph in spph %}
+                <tr>
+                  <td>{{ spph['NamaDebitur'] }}</td>
+                  <td>{{ spph['NomorSPPA'] }}</td>
+                  <td>{{ spph['premi'] }}</td>
+                  <td>{{ spph['JenisPertanggungan'] }}</td>
+                  <td>{{ spph['NilaiPertanggungan'] }}</td>
+                  <td>{{ spph['JangkaWaktu'] }}</td>       
+                  <td>{{ spph['SetorRp'] }}</td> 
+                  <td>{{ spph['SetorTanggal'] }}</td> 
+                  <td>{{ spph['Paraf'] }}</td>      
+         
+                  <td>
+                    <a href="/register/spph/edit/{{ spph['premi'] }}" >
+                       
+                      <img
+                        src="{{ url_for('static', filename='icon/edit.png') }}"
+                      />                      
+                    </a>  
+                    <a href="/register/spph/hapus/{{ spph['premi'] }}">
+                      <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
+                    </a>   
+                 </td>
+
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+</html>

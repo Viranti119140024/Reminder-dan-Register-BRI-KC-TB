@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register KMK_WA/edit_RegisterKMK_WA.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title> Register KMK WA </title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register/kmkwa"class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Edit Data Debitur ( Register KMK WA )</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form" class="form-style-9">
+            <div class="flex-input">
+                <div class="wrap-input">
+                    <label htmlfor="SPK/PO/Kontrak Kerja" class="label-input">
+                        SPK/PO/Kontrak Kerja
+                      </label>
+                      <textarea name="SPK/PO/Kontrak Kerja" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['SPK_PO_KontrakKerja'] }}</textarea>
+                    </div>
+                    <div class="wrap-input">
+                        <label htmlfor="rp" class="label-input">
+                          Nilai Proyek
+                        </label>
+                        <input type="text" class="input-field"  name="rp" value="{{ editkmkwa['NilaiProyek'] }}"/>
+                      </div>
+                
+            </div>
+                             
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor="PlafondRp" class="label-input">
+                  Plafond (Rp.)
+                </label>
+                <input type="text" class="input-field"  name="PlafondRp" value="{{ editkmkwa['PlafondRp'] }}"/>
+              </div> 
+              <div class="wrap-input">
+                <label htmlfor=" Os Awal" class="label-input">
+                  Os Awal
+                </label>
+                <input type="text" class="input-field"  name="Os Awal" value="{{ editkmkwa['osAwal'] }}"/>
+              </div> 
+          </div>
+
+          <div class="flex-input">  
+            <div class="wrap-input">
+              <label htmlfor="tanggal" class="label-input">
+                Tanggal Pencairan
+              </label>
+              <input type="date" class="input-field" name="tanggal" value="{{ editkmkwa['TanggalPencairan'] }}"/>
+            </div>   
+            
+              <div class="wrap-input">
+                <label htmlfor="Sumber Pencairan" class="label-input">
+                  Dok. Sumber Pencairan
+                </label>
+                <textarea name="Sumber Pencairan" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['DokSumberPencairan'] }}</textarea>
+              </div> 
+          </div>
+
+          <div class="flex-input">  
+            <div class="wrap-input">
+                <label htmlfor="Pencairan" class="label-input">
+                  Nilai Pencairan
+                </label>
+                <input type="text" class="input-field"  name="Pencairan" value="{{ editkmkwa['NilaiPencairan'] }}"/>
+              </div> 
+          </div>
+
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor="sumber_Pembayaran" class="label-input">
+                  Dok Sumber Pembayaran
+                </label>
+                <textarea name="sumber_Pembayaran" id="" cols="30" rows="10" class="input-field">{{ editkmkwa['DokSumberPembayaran'] }}</textarea>
+              </div> 
+              <div class="wrap-input">
+                <label htmlfor="Nilai Pembayaran" class="label-input">
+                  Nilai Pembayaran
+                </label>
+                <input type="text" class="input-field"  name="Nilai Pembayaran" value="{{ editkmkwa['NilaiPembayaran'] }}"/>
+              </div> 
+          </div>
+
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor=" OS Setelah Pembayaran" class="label-input">
+                  OS Setelah Pembayaran
+                </label>
+                <input type="text" class="input-field"  name="OS Setelah Pembayaran" value="{{ editkmkwa['OSSetelahPembayaran'] }}"/>
+              </div> 
+              <div class="wrap-input">
+                <label htmlfor="OS Brinets" class="label-input">
+                  OS Brinets
+                </label>
+                <input type="text" class="input-field"  name="OS Brinets" value="{{ editkmkwa['OSBrinets'] }}"/>
+              </div> 
+          </div>
+
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor=" Sisa Tagihan" class="label-input">
+                  Sisa Tagihan
+                </label>
+                <input type="text" class="input-field"  name="Sisa Tagihan" value="{{ editkmkwa['SisaTagihan'] }}"/>
+              </div> 
+              <div class="wrap-input">
+                <label htmlfor="Keterangan" class="label-input">
+                  Keterangan
+                </label>
+                <input type="text" class="input-field"  name="Keterangan" value="{{ editkmkwa['Keterangan'] }}"/>
+              </div> 
+          </div>
+          
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

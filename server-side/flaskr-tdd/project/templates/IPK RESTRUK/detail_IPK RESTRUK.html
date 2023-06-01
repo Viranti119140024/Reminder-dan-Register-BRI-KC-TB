@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='IPK RESTRUK/detail_IPK RESTRUK.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>IPK Restruk</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="{{ url_for('static', filename='icon/restrukputih.png') }}"  />
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register"class="active" >
+            <img src="{{ url_for('static', filename='icon/registerbiru.png') }}"  />
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">IPK RESTRUK</h2>
+            <div class="cari">
+            <label htmlfor="cari" class="label-input"></label> 
+            <div class="wrap-input">    
+              <input type="text" class="input-field" placeholder="Cari No.IPK" id="myInput" onkeyup="myFunction()"></input>
+            </div>
+          </div>
+            </div>
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/register/ipkrestruk/tambah">
+              <button
+                class="btn_tambah"
+              >
+                Tambah Data Debitur
+              </button>
+              </a>
+            </div>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>No. IPK</th>                  
+                  <th>Nama Debitur</th>
+                  <th>No. PTK</th>                 
+                  <th>Akad</th>                                   
+                  <th>Jatuh Tempo</th>
+                  <th>Jangka Waktu (bulan)</th>
+                  <th>No. Rekening</th>
+                  <th>Keterangan</th>                  
+                  <th>Aksi</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for ipkrestruk in ipkrestruk %}
+                  <tr>
+                    <td>{{ ipkrestruk['noipk'] }}</td>
+                    <td>{{ ipkrestruk['namadebitur'] }}</td>
+                    <td>{{ ipkrestruk['noptk'] }}</td>
+                    <td>{{ ipkrestruk['akad'] }}</td>
+                    <td>{{ ipkrestruk['jatuhtempo'] }}</td>
+                    <td>{{ ipkrestruk['jangkawaktu'] }}</td>
+                    <td>{{ ipkrestruk['norek'] }}</td>   
+                    <td>{{ ipkrestruk['keterangan'] }}</td>   
+                    <td>
+                      <a href="/register/ipkrestruk/edit/{{ ipkrestruk['norek'] }}" >
+                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
+                      </a>  
+                      <a href="/register/ipkrestruk/hapus/{{ ipkrestruk['norek'] }}">
+                        <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
+                      </a>
+                  </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+</html>

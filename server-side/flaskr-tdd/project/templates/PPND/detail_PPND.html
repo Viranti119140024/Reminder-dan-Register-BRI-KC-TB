@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='PPND/detail_PPND.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register PPND 2</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="{{ url_for('static', filename='icon/restrukputih.png') }}"  />
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register"class="active" >
+            <img src="{{ url_for('static', filename='icon/registerbiru.png') }}"  />
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">Register PPND 2</h2>
+            <div class="cari">
+              <label htmlfor="cari" class="label-input"></label> 
+              <div class="wrap-input">    
+                <input type="text" class="input-field" placeholder="Cari No. PPN" id="myInput" onkeyup="myFunction()"></input>
+              </div>
+              </div>
+          </div>
+            
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/register/ppnd/tambah">
+              <button
+                class="btn_tambah"
+              >
+                Tambah Data Debitur
+              </button>
+              </a>
+            </div>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>No. PPN dan Tanggal PPN</th>                  
+                  <th>Nama Debitur</th>
+                  <th>Alamat dan No. Telepon/HP</th>                 
+                  <th>Jenis Fasilitas Kredit</th>                                   
+                  <th>Jenis Dok Kredit yang Ditunda</th>
+                  <th>Lamanya Ditunda</th>
+                  <th>Tanggal Batas Akhir</th>
+                  <th>Pejabat Pemrakarsa</th>
+                  <th>Pejabat Pemutus</th>
+                  <th>Keterangan</th>
+                  <th>edit</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for ppnd in ppnd %}
+                  <tr>
+                    <td>{{ ppnd['NoPPNdanTanggalPPN'] }}</td>
+                    <td>{{ ppnd['NamaDebitur'] }}</td>
+                    <td>{{ ppnd['AlamatdanNoTeleponHP'] }}</td>
+                    <td>{{ ppnd['JenisFasilitasKredit'] }}</td>
+                    <td>{{ ppnd['JenisDokKredityangDitunda'] }}</td>
+                    <td>{{ ppnd['LamanyaDitunda'] }}</td>
+                    <td>{{ ppnd['TanggalBatasAkhir'] }}</td>   
+                    <td>{{ ppnd['PejabatPemrakarsa'] }}</td>                
+                    <td>{{ ppnd['PejabatPemutus'] }}</td>
+                    <td>{{ ppnd['Keterangan'] }}</td>
+                    <td>
+                      <a href="/register/ppnd/edit/{{ ppnd['NoPPNdanTanggalPPN'] }}" >
+                        
+                        <img
+                          src="{{ url_for('static', filename='icon/edit.png') }}"
+                        />                      
+                      </a>  
+                      <a href="/register/ppnd/hapus/{{ ppnd['NoPPNdanTanggalPPN'] }}">
+                        <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
+                      </a>
+                  </td>
+
+
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+</html>

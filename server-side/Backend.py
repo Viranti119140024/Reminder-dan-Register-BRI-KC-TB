@@ -481,54 +481,6 @@ def detaildebitur(norek):
 
 
  
-@app.route('/notifikasi/vewnotif/detail/download/report/pdf')
-def download_report():
-    conn = None
-    cursor = None
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-         
-        cursor.execute("SELECT * FROM employee")
-        result = cursor.fetchall()
- 
-        pdf = FPDF()
-        pdf.add_page()
-         
-        page_width = pdf.w - 2 * pdf.l_margin
-         
-        pdf.set_font('Times','B',14.0) 
-        pdf.cell(page_width, 0.0, 'Employee Data', align='C')
-        pdf.ln(10)
- 
-        pdf.set_font('Courier', '', 12)
-         
-        col_width = page_width/4
-         
-        pdf.ln(1)
-         
-        th = pdf.font_size
-         
-        for row in result:
-            pdf.cell(col_width, th, str(row['id']), border=1)
-            pdf.cell(col_width, th, row['name'], border=1)
-            pdf.cell(col_width, th, row['position'], border=1)
-            pdf.cell(col_width, th, row['office'], border=1)
-            pdf.ln(th)
-         
-        pdf.ln(10)
-         
-        pdf.set_font('Times','',10.0) 
-        pdf.cell(page_width, 0.0, '- end of report -', align='C')
-         
-        return Response(pdf.output(dest='S').encode('latin-1'), mimetype='application/pdf', headers={'Content-Disposition':'attachment;filename=employee_report.pdf'})
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close() 
-        conn.close()
-         
-
 
 @app.route('/restrukturisasi/detail/<norek>', methods=['GET', 'POST'])
 def detaildebitur2(norek):
@@ -3421,70 +3373,8 @@ def is_admin():
         return False
 
 # Halaman daftar pengguna
-@app.route('/')
-def daftar_pengguna():
-    # Membuat koneksi ke basis data
-    conn = mysql.connection
-    cursor = conn.cursor()
 
-    # Mendapatkan data pengguna dari basis data
-    cursor.execute("SELECT * FROM user")
-    users = cursor.fetchall()
 
-    # Menutup kursor dan koneksi
-    cursor.close()
-    conn.close()
-
-    return render_template('daftar_pengguna.html', users=users)
-
-# Halaman ganti password
-@app.route('/gantipassword', methods=['GET', 'POST'])
-def ganti_password():
-    if request.method == 'POST':
-        # Ambil data dari form
-        username = request.form.get('username', '')  # Menggunakan nilai default untuk menghindari KeyError
-        password_baru = request.form.get('password_baru', '')
-        konfirmasi_password = request.form.get('konfirmasi_password', '')
-
-        if username and password_baru and konfirmasi_password:
-            # Membuat koneksi ke basis data
-            conn = mysql.connection
-            cursor = conn.cursor()
-
-            # Mendapatkan data pengguna dari basis data berdasarkan username
-            cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
-            user = cursor.fetchone()
-
-            if user:
-                # Periksa apakah pengguna adalah admin
-                if user[3] == 'admin':  # asumsikan level admin berada di indeks kolom ke-3
-                    if password_baru == konfirmasi_password:
-                        # Update password pengguna di basis data
-                        cursor.execute("UPDATE user SET password = %s WHERE username = %s", (password_baru, username))
-                        conn.commit()
-                        # Menutup kursor dan koneksi
-                        cursor.close()
-                        conn.close()
-                        return 'Password telah diubah.'
-                    else:
-                        # Menutup kursor dan koneksi
-                        cursor.close()
-                        conn.close()
-                        return 'Konfirmasi password tidak cocok.'
-                else:
-                    # Menutup kursor dan koneksi
-                    cursor.close()
-                    conn.close()
-                    return 'Anda tidak memiliki izin untuk mengubah password pengguna.'
-            else:
-                # Menutup kursor dan koneksi
-                cursor.close()
-                conn.close()
-                return 'Pengguna tidak ditemukan.'
-        else:
-            return 'Harap isi semua kolom form.'
-
-    return render_template('gantipassword.html')
 
 
 

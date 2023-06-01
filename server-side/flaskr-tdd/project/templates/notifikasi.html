@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='notifikasi.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Notifikasi</title>
+</head>
+
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" class="active">
+            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"  />
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register" >
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+      
+          <div class="table">
+            <h2></h2>
+            
+          </div>
+
+            <div class="notif">
+              <h2> {{notif}} Debitur mengalami Jatuh Tempo  </h2>
+
+            <a href="/notifikasi/vewnotif">
+              
+              <button
+                class="btn_view"
+              >
+                View
+              </button>
+              </a>
+            
+            
+          </div>        
+
+          
+        
+    
+  
+        </div>
+      </div>
+    </div>
+</body>
+</html>

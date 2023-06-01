@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register PTK (Putusan Kredit) FLPP/edit_RegisterPTK (Putusan Kredit)FLPP.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register PTK (Putusan Kredit) FLPP</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register/flpp"class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Edit Data Debitur (Register PTK (Putusan Kredit) FLPP)</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form" class="form-style-9">
+            <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor="Nomer Putusan" class="label-input">
+                  Nomer Putusan
+                </label>
+                <input type="text" class="input-field"  name="Nomer Putusan" value="{{ editflpp['NoPutusan'] }}"/>
+              </div>
+              <div class="wrap-input">
+                <label htmlfor="tanggal" class="label-input">
+                  Tanggal Putusan
+                </label>
+                <input type="date" class="input-field" name="tanggal" value="{{ editflpp['TanggalPutusan'] }}"/>
+              </div>
+              </div>
+          
+            <div class="wrap-input">
+            <label htmlfor="Nama Debitur" class="label-input">
+              Nama Debitur
+            </label>
+            <input type="text" class="input-field"  name="Nama Debitur" value="{{ editflpp['NamaDebitur'] }}"/>
+          </div>
+          <div class="wrap-input">
+            <label htmlfor="Jabatan Pemutus" class="label-input">
+              Jabatan Pemutus
+            </label>
+            <input type="text" class="input-field"  name="Jabatan Pemutus" value="{{ editflpp['JabatanPemutus'] }}"/>
+          </div>          
+                     
+          
+            <div class="wrap-input">
+              <label htmlfor="Nama Pemutus" class="label-input">
+               Nama Pemutus
+              </label>
+              <input type="text" name="Nama Pemutus" id="Nama Pemutus"  class="input-field" value="{{ editflpp['NamaPemutus'] }}"/>
+            </div>
+            <div class="wrap-input">
+                <label htmlfor=" Plafond (Rp)" class="label-input">
+                 Plafond (Rp)
+                </label>
+                <input type="text" name="Plafond(Rp)" id="Plafond (Rp)"  class="input-field" value="{{ editflpp['PlafondRp'] }}"/>
+              </div>
+            <div class="wrap-input">
+                <label htmlfor="Nama Perumahan" class="label-input">
+                 Nama Perumahan
+                </label>
+                <input type="text" name="Nama Perumahan" id="Nama Perumahan"  class="input-field" value="{{ editflpp['NamaPerumahan'] }}"/>
+              </div>
+            <div class="wrap-input">
+                <label htmlfor="keterangan" class="label-input">
+                  Keterangan
+                </label>
+                <textarea name="keterangan" id="" cols="30" rows="10" class="input-field">{{ editflpp['Keterangan'] }}</textarea>
+              </div>
+          
+              
+            
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

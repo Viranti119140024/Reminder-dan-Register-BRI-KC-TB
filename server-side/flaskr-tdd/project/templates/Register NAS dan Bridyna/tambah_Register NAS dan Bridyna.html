@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Register NAS dan Bridyna/tambah_Register NAS dan Bridyna.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Register NAS dan Bridyna</title>
+</head>
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          <a href="/beranda" >
+            <img
+              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
+               />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" >
+            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register/ndb"class="active" >
+            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout" >
+            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
+            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="head">
+      <div class="wrap-bagianAtas">
+        <div class="bagianAtas">
+          <h2>Form Penambahan Data Debitur (Register NAS dan Bridyna)</h2>
+        </div>
+      </div>
+  
+      <div class="wrap-table">
+        <form action="" method="POST" id="form" class="form-style-9">
+            <div class="flex-input">
+                
+                <div class="wrap-input">
+                    <label htmlfor="Nama Debitur" class="label-input">
+                    Nama Debitur
+                    </label>
+                    <input type="text" name="Nama Debitur" id="Nama Debitur"  class="input-field" >
+                  </div>
+                  <div class="wrap-input">
+                  <label htmlfor="Rek Pinjaman" class="label-input">
+                   Rek Pinjaman
+                  </label>
+                  <input type="text" name="Rek Pinjaman" id="Rek Pinjaman"  class="input-field" >
+                </div>
+              </div>
+                     
+          <div class="flex-input">
+            <div class="wrap-input">
+                <label htmlfor="tanggal" class="label-input">
+                  Tanggal Realisasi
+                </label>
+                <input type="date" class="input-field" name="tanggal" value=""/>
+              </div>
+             
+                <div class="wrap-input">
+                  <label htmlfor="Rekening Giro" class="label-input">
+                   Rekening Giro
+                  </label>
+                  <input type="text" name="Rekening Giro" id="Rekening Giro"  class="input-field" >
+                </div>
+          </div>
+            
+          <div class="flex-input">
+            <div class="wrap-input">
+              <label htmlfor="NAS / Bridyna" class="label-input">
+              NAS / Bridyna
+              </label>
+              <input type="text" name="NAS / Bridyna" id="NAS / Bridyna"  class="input-field" >
+            </div>
+            <div class="wrap-input">
+                <label htmlfor="Keterangan" class="label-input">
+                Keterangan
+                </label>
+                <textarea name="Keterangan" id="" cols="30" rows="10" class="input-field"></textarea>
+              </div>
+          </div>
+            
+            <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
+        </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
