@@ -15,7 +15,8 @@
 
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+
       <ul class="ul">
         
         <li>
@@ -38,6 +39,7 @@
             <p>REGISTER</p>
           </a>
         </li>
+        
         <li>
           <a href="/logout" >
             <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
@@ -59,7 +61,7 @@
             </a>
             <label htmlfor="cari" class="label-input"></label> 
             <div class="wrap-input">    
-              <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
+              <input type="text" class="input-field" placeholder="Cari No. Rekening" id="myInput" onkeyup="myFunction()"></input>
             </div>
           </div>
             
@@ -78,21 +80,20 @@
               </button>
               </a>
             </div>
+                                            
             <table id="myTable">
               <thead>
                 <tr>
                   <th>Nama Debitur</th>                
                   <th>No.Rekening</th>
-                  <th>Jenis Kredit</th> 
                   <th>Baki Debet</th> 
-                  <th>RM</th>   
                   <th>Jangka Waktu</th>  
-                  <th>Suku Bunga</th>               
-                  <th>Jadwal Pokok</th>
+                  <th>Periode Suku Bunga</th>   
+                  <th>Persentase Kenaikan </th>            
                   <th>Jatuh Tempo</th>
                   <th>Akad</th>
-                  <th>BAP</th>
                   <th>Aksi</th>
+                
                   
                 </tr>
               </thead>
@@ -101,19 +102,19 @@
                   <tr>
                     <td>{{ datadebitur['namadebitur'] }}</td>
                     <td>{{ datadebitur['norek'] }}</td>
-                    <td>{{ datadebitur['jeniskredit'] }}</td>
-                    <td>{{ datadebitur['bakidebet'] }}</td>
-                    <td>{{ datadebitur['rm'] }}</td>
+                    <td>{{ datadebitur['bakidebet'] | rupiah }}</td>
                     <td>{{ datadebitur['jangkawaktu'] }}</td>
                     <td>
-                      {{ datadebitur['sbaw1'] }} - {{ datadebitur['sbak1'] }} {{ datadebitur['sbp1'] }} % <br>
-                      {{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }} {{ datadebitur['sbp2'] }} % <br>
-                      {{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} {{ datadebitur['sbp3'] }} %
+                      {{ datadebitur['sbaw1'] }} - {{ datadebitur['sbak1'] }}  <br>
+                      {{ datadebitur['sbaw2'] }} - {{ datadebitur['sbak2'] }}  <br>
+                      {{ datadebitur['sbaw3'] }} - {{ datadebitur['sbak3'] }} 
                     </td>
-                    <td>{{ datadebitur['jadwalpokok'] }}</td>
+                    <td>{{ datadebitur['sbp1'] }}   <br>
+                        {{ datadebitur['sbp2'] }}  <br>
+                        {{ datadebitur['sbp3'] }}  </td>
                     <td>{{ datadebitur['jadwaltempo'] }}</td>
                     <td>{{ datadebitur['akad'] }}</td>
-                    <td>{{ datadebitur['bap'] }}</td>
+                      
                     <td>
                       <a href="/restrukturisasi/detail/{{ datadebitur['norek'] }}" >
                       <img src="{{ url_for('static', filename='icon/detail.png') }}"/>
@@ -123,7 +124,7 @@
                       </a>
                       <a href="/restrukturisasi/editdebitur/{{ datadebitur['norek'] }}">
                       <img src="{{ url_for('static', filename='icon/edit.png') }}"/>
-                      </a>
+                      </a>                      
                     </td>
                   </tr>
                 {% endfor %}
@@ -145,7 +146,7 @@
     tr = table.getElementsByTagName("tr");
   
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[1];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {

@@ -13,7 +13,7 @@
 <body>
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
         
         <li>
@@ -36,6 +36,7 @@
             <p>REGISTER</p>
           </a>
         </li>
+        
         <li>
           <a href="/logout" >
             <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
@@ -53,7 +54,7 @@
       </div>
   
       <div class="wrap-table">
-        <form action="{{ url_for('register') }}" method="POST" id="form">
+        <form action="{{ url_for('register') }}" method="POST" id="form"><img class="gambar" src="{{ url_for('static', filename='icon/register.png') }}">
           <div class="wrap-input">
             <label htmlfor="tindakan" class="label-input">
               Daftar Register

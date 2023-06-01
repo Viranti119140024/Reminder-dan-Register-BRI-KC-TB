@@ -14,7 +14,7 @@
 <body>
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
         
         <li>
@@ -67,11 +67,13 @@
                 <tr>
                   <th>Nama Debitur</th>
                   <th>No.Rekening</th>                 
-                  <th>Jenis Kredit</th>
+                  <th>Baki Debet</th>
                   <th>Jangka Waktu</th>                  
-                  <th>Suku Bunga</th>
+                  <th>Periode Suku Bunga</th>
+                  <th>Persentase Bunga</th>
                   <th>Jatuh Tempo</th>
                   <th>Akad</th>
+                  <th>Bunga Baru</th>
                   <th>Aksi</th>
                   
                 </tr>
@@ -81,11 +83,13 @@
                   <tr>
                     <td>{{ kenaikansukubunga['namadebitur'] }}</td>
                     <td>{{ kenaikansukubunga['norek'] }}</td>
-                    <td>{{ kenaikansukubunga['jeniskredit'] }}</td>
+                    <td>{{ kenaikansukubunga['bakidebet']| rupiah }}</td>
                     <td>{{ kenaikansukubunga['jangkawaktu'] }}</td>
-                    <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} {{ kenaikansukubunga['sukubunga'] }} % </td>
+                    <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} </td>
+                    <td>{{ kenaikansukubunga['sukubunga'] }} % </td>
                     <td>{{ kenaikansukubunga['jadwaljatuhtempo'] }}</td>
                     <td>{{ kenaikansukubunga['akad'] }}</td>
+                    <td>{{ ((kenaikansukubunga['bakidebet'] * kenaikansukubunga['sukubunga']) / 100)|round|int| rupiah }}</td>
                     <td>
                       <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}" >
                         <img src="{{ url_for('static', filename='icon/detail.png') }}"/>

@@ -14,7 +14,7 @@
 <body>
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
         
         <li>
@@ -70,7 +70,7 @@
             </div>
             <div class="wrap-input">
               <label htmlfor="jenis_kredit" class="label-input">
-                Jenis Kredit
+                Plafond Awal (Bulan)
               </label>
               <input type="text" class="input-field" name="jenis_kredit" value="{{ editdebitur['jeniskredit'] }}"/>
             </div>
@@ -78,13 +78,13 @@
           <div class="flex-input">
             <div class="wrap-input">
               <label htmlfor="baki_debet" class="label-input">
-                Baki Debet
+                Baki Debet (Rp.)
               </label>
               <input type="text" name="baki_debet" id="baki_debet"  class="input-field" value="{{ editdebitur['bakidebet'] }}">
             </div>
             <div class="wrap-input">
               <label htmlfor="rm" class="label-input">
-                RM (Pengelola)
+                Jangka Waktu Awal (Bulan)
               </label>
               <input type="text" class="input-field" name="rm" value="{{ editdebitur['rm'] }}"/>
             </div>
@@ -92,21 +92,21 @@
 
           <div class="wrap-input">
             <label htmlfor="jangkawaktu" class="label-input">
-              Jangka Waktu
+              GP Restrukturisasi (Bulan)
             </label>
             <input type="text" class="input-field" name="jangkawaktu" value="{{ editdebitur['jangkawaktu'] }}"/>
           </div>
             
           <div class="wrap-input">
             <label htmlfor="jadwal_pokok" class="label-input">
-             Jadwal Pokok
+             Bunga Pokok (%)
             </label>
             <input type="text" class="input-field" name="jadwal_pokok" value="{{ editdebitur['jadwalpokok'] }}"/>
           </div>
 
           <div class="wrap-input">
             <label htmlfor="sukubunga" class="label-input">
-             Suku Bunga
+             Suku Bunga Restrukturisasi 
             </label>
             <div class="sb"> 
               <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan" value="{{ editdebitur['sbaw1'] }}"/>
@@ -135,7 +135,7 @@
 
           <div class="wrap-input">
             <label htmlfor="keterangan" class="label-input">
-              BAP
+              Angsuran Terbayar (Bulan)
             </label>
             <textarea type="text" class="input-field" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan" form="form">{{ editdebitur['bap'] }}</textarea>
           </div>

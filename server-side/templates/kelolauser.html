@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='kelolauser.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Kelola User</title>
+    
+</head>
+
+<body>
+
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        
+        <li>
+          
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Role: {{ session.level }} | {{ session.nama }}</a>
+          
+        </li>
+
+        <li>
+          <a href="/kelolauser" class="">
+            <img src="{{ url_for('static', filename='icon/usersettingputih.png') }}" />
+            <p>KELOLA USER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register" class="">
+            <img src="{{ url_for('static', filename='icon/icons8-add-administrator-48(1).png') }}" />
+            <p>ADD USER</p>
+          </a>
+        </li>
+
+        
+        <a href="/logout">
+          <img src="{{ url_for('static', filename='icon/exitputih.png') }}"
+           />
+          <p>KELUAR</p>
+        </a>
+      </ul>
+    
+
+      </ul>
+    </div>
+      <div class="head">
+        <div class="bagianAtas">
+          <div class="inline">
+            
+            <h2 class="jadwal">Kelola User</h2>
+            <div class="cari">
+            <label htmlfor="cari" class="label-input"></label> 
+            <div class="wrap-input">    
+              <input type="text" class="input-field" placeholder="Cari Username" id="myInput" onkeyup="myFunction()"></input>
+            </div>
+          </div>
+            </div>
+          
+            <div class="table">
+              <a href="" >
+                  
+
+            
+            <div>
+              <a href="/registrasi">
+              <button
+                class="btn_tambah"
+              >
+                Tambah User
+              </button>
+              </a>
+            </div>
+            <table id="myTable">
+              <thead>
+                <tr>
+                  <th>Nama</th>                  
+                  <th>Username</th>
+                  <th>Password</th>                 
+                  <th>Level</th>                                   
+                  <th>Aksi</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>                  
+                  <th></th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in user %}
+                  <tr>
+                    <td>{{ user['nama'] }}</td>
+                    <td>{{ user['username'] }}</td>
+                    <td>{{ user['password'] }}</td>
+                    <td>{{ user['level'] }}</td>
+                    
+                    <td>
+                      <a href="/gantipassword" >
+                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
+                      </a> 
+                    </td> 
+                      <td>
+                        {% if user['level'] == 'admin' %}
+                        <a href="/gantipassword?username={{ user['username'] }}">
+                          <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
+                        </a> 
+                      {% endif %}
+                  </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+</html>

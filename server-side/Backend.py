@@ -1,16 +1,27 @@
-from flask import Flask, request, session, redirect, url_for, render_template,send_file, jsonify, make_response 
-import pdfkit
+from flask import Flask, request, session, redirect, url_for, render_template, make_response, flash
+from flask_change_password.flask_change_password import ChangePassword, ChangePasswordForm
 from flaskext.mysql import MySQL
+from werkzeug.security import generate_password_hash
+import mysql.connector
 from datetime import datetime
 import pymysql 
 import re 
+import pdfkit
+import locale
+
+
  
 app = Flask(__name__)
+
  
 app.secret_key = 'cairocoders-ednalan'
  
-mysql = MySQL()
-   
+flask_change_password = ChangePassword(min_password_length=10, rules=dict(long_password_override=2))
+flask_change_password.init_app(app)
+
+mysql = MySQL(app)
+
+
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = ''
@@ -24,6 +35,15 @@ def function():
         return redirect('/login')
     return redirect(url_for('home'))
 
+# Fungsi filter untuk mengonversi nilai ke format mata uang
+def format_rupiah(value):
+    locale.setlocale(locale.LC_ALL, 'id_ID')
+    return locale.currency(value, grouping=True)
+
+# Registrasi filter ke aplikasi Flask
+app.jinja_env.filters['rupiah'] = format_rupiah
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
  # connect
@@ -36,6 +56,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         
+        
         cursor.execute('SELECT * FROM user WHERE username = %s AND password = %s', (username, password))
         
         user = cursor.fetchone()
@@ -46,11 +67,15 @@ def login():
             session['loggedin'] = True
             session['nama'] = user['nama']
             session['username'] = user['username']
+            session['level'] = user['level']
             
             return redirect(url_for('home'))
+       
         else:
             
             msg = 'Incorrect username/password!'
+        
+             
     
     return render_template('login.html', msg=msg)
  
@@ -65,8 +90,9 @@ def registrasi():
     if request.method == 'POST' and 'username' in request.form and 'nama' in request.form and 'password' in request.form:
         
         username = request.form['username']
-        nama = request.form['nama']
+        nama = request.form['nama']   
         password = request.form['password']
+        level = request.form['level']
    
         cursor.execute('SELECT * FROM user WHERE username = %s', (username))
         account = cursor.fetchone()
@@ -79,7 +105,7 @@ def registrasi():
             msg = 'Please fill out the form!'
         else:
             
-            cursor.execute('INSERT INTO user VALUES (%s, %s, %s)', (username, nama, password)) 
+            cursor.execute('INSERT INTO user VALUES ( %s, %s, %s, %s)', (username, nama, password, level)) 
             conn.commit()
    
             msg = 'You have successfully registered!'
@@ -89,12 +115,35 @@ def registrasi():
     # Show registration form with message (if any)
     return render_template('registrasi.html', msg=msg)
   
+
+@app.route('/kelolauser', methods=['GET', 'POST'])
+def kelolauser():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM user')
+        user = cursor.fetchall()
+        conn.commit()
+        cursor.close()
+        return render_template('kelolauser.html', username=session['level'], user=user)  
+
+    return redirect(url_for('login'))
+       
+   
+
 @app.route('/beranda')
 def home():
     
     if 'loggedin' in session:
-        
-        return render_template('beranda.html', username=session['username'])
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        notif = cursor.execute("SELECT * FROM kenaikansukubunga")
+        conn.commit()
+        cursor.close()
+
+        return render_template('beranda.html', username=session['level'], notif=notif)
         
     return redirect(url_for('login'))
 
@@ -161,7 +210,7 @@ def viewnotif():
     if 'loggedin' in session:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute('SELECT * FROM kenaikansukubunga ORDER BY namadebitur ASC')
+        cursor.execute('SELECT * FROM kenaikansukubunga NATURAL JOIN datadebitur ORDER BY kenaikansukubunga.namadebitur ASC')
         kenaikansukubunga = cursor.fetchall()
         conn.commit()
         cursor.close()
@@ -428,7 +477,7 @@ def detaildebitur(norek):
             conn.commit()
             cursor.close()
             return render_template('detaildebitur.html', detaildebitur=detaildebitur)
-            return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 
  
@@ -494,6 +543,27 @@ def detaildebitur2(norek):
             return render_template('detaildebitur2.html', detaildebitur=detaildebitur)
     return redirect(url_for('login'))
 
+@app.route('/cetak_pdf/<norek>', methods=['GET', 'POST'])
+def cetak_pdf(norek):
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        
+        if request.method == 'GET':
+            cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
+            detaildebitur = cursor.fetchall()
+            conn.commit()
+            cursor.close()
+
+            html = render_template("pdf.html", detaildebitur=detaildebitur, norek=norek)
+            config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+            pdf = pdfkit.from_string(html, False, configuration=config)
+
+            response = make_response(pdf)
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = 'inline; filename=laporan.pdf'
+            return response
+
 @app.route('/restrukturisasi/debiturhapus/<norek>', methods=['GET', 'POST'])
 def debiturhapus(norek):
     conn = mysql.connect()
@@ -529,6 +599,8 @@ def notifhapus(norek):
             cursor.close()
         return redirect(url_for('viewnotif'))
     return redirect(url_for('login'))
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -691,7 +763,7 @@ def hapusipkrestruk(norek):
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     if 'loggedin' in session:
         if request.method == 'GET':
-            cursor.execute('DELETE IGNORE FROM ipkrestruk WHERE norek = %s', (norek,))
+            cursor.execute('DELETE IGNORE FROM ipkrestruk WHERE norek = %s', (norek,)) 
             conn.commit()
             cursor.close()
             return redirect(url_for('ipkrestruk'))
@@ -3335,10 +3407,106 @@ def hapusadk(Keterangan):
             return redirect(url_for('adk'))
     return redirect(url_for('login'))
 
+
+
+# Fungsi untuk memeriksa apakah pengguna adalah admin
+def is_admin():
+    # Masukkan logika atau kode untuk memeriksa apakah pengguna memiliki hak admin di sini
+    # Misalnya, dapatkan informasi pengguna saat ini dari session dan periksa apakah mereka adalah admin
+    # Kembalikan True jika pengguna adalah admin, dan False jika bukan
+    # Contoh sederhana:
+    if 'level' in session and session['level'] == 'admin':
+        return True
+    else:
+        return False
+
+# Halaman daftar pengguna
+@app.route('/')
+def daftar_pengguna():
+    # Membuat koneksi ke basis data
+    conn = mysql.connection
+    cursor = conn.cursor()
+
+    # Mendapatkan data pengguna dari basis data
+    cursor.execute("SELECT * FROM user")
+    users = cursor.fetchall()
+
+    # Menutup kursor dan koneksi
+    cursor.close()
+    conn.close()
+
+    return render_template('daftar_pengguna.html', users=users)
+
+# Halaman ganti password
+@app.route('/gantipassword', methods=['GET', 'POST'])
+def ganti_password():
+    if request.method == 'POST':
+        # Ambil data dari form
+        username = request.form.get('username', '')  # Menggunakan nilai default untuk menghindari KeyError
+        password_baru = request.form.get('password_baru', '')
+        konfirmasi_password = request.form.get('konfirmasi_password', '')
+
+        if username and password_baru and konfirmasi_password:
+            # Membuat koneksi ke basis data
+            conn = mysql.connection
+            cursor = conn.cursor()
+
+            # Mendapatkan data pengguna dari basis data berdasarkan username
+            cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
+            user = cursor.fetchone()
+
+            if user:
+                # Periksa apakah pengguna adalah admin
+                if user[3] == 'admin':  # asumsikan level admin berada di indeks kolom ke-3
+                    if password_baru == konfirmasi_password:
+                        # Update password pengguna di basis data
+                        cursor.execute("UPDATE user SET password = %s WHERE username = %s", (password_baru, username))
+                        conn.commit()
+                        # Menutup kursor dan koneksi
+                        cursor.close()
+                        conn.close()
+                        return 'Password telah diubah.'
+                    else:
+                        # Menutup kursor dan koneksi
+                        cursor.close()
+                        conn.close()
+                        return 'Konfirmasi password tidak cocok.'
+                else:
+                    # Menutup kursor dan koneksi
+                    cursor.close()
+                    conn.close()
+                    return 'Anda tidak memiliki izin untuk mengubah password pengguna.'
+            else:
+                # Menutup kursor dan koneksi
+                cursor.close()
+                conn.close()
+                return 'Pengguna tidak ditemukan.'
+        else:
+            return 'Harap isi semua kolom form.'
+
+    return render_template('gantipassword.html')
+
+
+
+
+
+@app.route("/delete", methods = ['GET'])
+def delete():
+    if 'loggedin' in session :
+        deleteUserId = request.args.get('user')
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('DELETE FROM user WHERE username = %s', (deleteUserId,) )
+        mysql.connection.commit()
+        return redirect(url_for('user'))
+    return redirect(url_for('login'))
+
+
 @app.route('/logout')
 def logout():
    session.clear()
    return redirect(url_for('login'))
+
+
   
 if __name__ == '__main__':
     app.run(debug=True)

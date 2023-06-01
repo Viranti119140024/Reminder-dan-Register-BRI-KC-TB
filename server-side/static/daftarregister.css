@@ -12,18 +12,29 @@
   height: 100%;
   background: #102D81;
 }
-.body .sidebar .header {
-  font-size: 48px;
-  border-radius: 90px;
-  color: white;
-  text-align: center;
-  line-height: 100px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-weight: bold;
-  font-family: "Montserrat", sans-serif;
+
+.body .sidebar {
+  position: fixed;
+  left: 0px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background: #9cb3f7;
+  
+  
+}
+.body .sidebar .header { 
+  width: 10px;
+  height: 30px;
+  bottom: 40px;
+  
+}
+.body .sidebar .header .gambar{ 
+  width: 350px;
+  height: 350px;
+  padding-left: 20px;
+  padding-top: 420px;
+  
 }
 .body .sidebar ul li {
   list-style-type: none;
@@ -111,15 +122,7 @@
 .body .head .table-bordered thead {
   margin-right: 80%;
 }
-.body .head .table-bordered th {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #102D81;
-}
-.body .head .table-bordered tbody tr:nth-child(even) {
-  background-color: #f5f5f5;
-  
-}
+
 .body .head .wrap-table {
   padding-top: 5px;
   height: 100%;
@@ -137,8 +140,9 @@
   width: 95%;
 }
 .body .head .wrap-table img {
-  width: 50%;
-  height: 50%;
+  width: 30%;
+  height: 30%;
+  padding-right: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -150,20 +154,22 @@
 }
 .body .head .wrap-table .wrap-input .label-input {
   font-size: 25px;
-  margin-left: 20px;
+  margin-left: 455px;
   margin-bottom: 10px;
   font-weight: bold;
   color: #102D81;
+
+
 }
 .body .head .wrap-table .wrap-input .input-field {
-  font-size: 15px;
+  font-size: 13px;
   background-color: #F5F5F5;
-  height: 50px;
-  border-radius: 10px;
+  height: 30px;
+  border-radius: 20px;
   border: none;
-  color: #102D81;
-  width: 90%;
-  margin-left: 20px;
+  color: #6c6d6b;
+  width: 30%;
+  margin-left: 370px;
   margin-right: 20px;
   padding-left: 10px;
 }
@@ -197,11 +203,13 @@
   background-color: #102D81;
   color: white;
   border: none;
+  height: 30px;
+  width: 5%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 8px;
-  border-radius: 10px;
+  border-radius: 50px;
   margin-top: 20px;
-  margin-left: 300px;
+  margin-left: 520px;
   margin-right: 400px;
  
 }
@@ -222,7 +230,7 @@
 }
 .body .head .wrap-table .table table thead {
   background-color: #f5f5f5;
-  color: #102D81;
+  color: #7a7d75;
   font-size: 15px;
   letter-spacing: 2%;
 }

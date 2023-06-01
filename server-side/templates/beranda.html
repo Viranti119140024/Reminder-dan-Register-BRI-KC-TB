@@ -15,8 +15,80 @@
 <body>
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
+        {% if session['level'] == 'Admin' : %}
+        <li>
+          
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Role: {{ session.level }} | {{ session.nama }}</a>
+          
+        </li>
+
+        <li>
+          <a href="/kelolauser" class="">
+            <img src="{{ url_for('static', filename='icon/usersettingputih.png') }}" />
+            <p>KELOLA USER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register" class="">
+            <img src="{{ url_for('static', filename='icon/icons8-add-administrator-48(1).png') }}" />
+            <p>ADD USER</p>
+          </a>
+        </li>
+
+        
+        <a href="/logout">
+          <img src="{{ url_for('static', filename='icon/exitputih.png') }}"
+           />
+          <p>KELUAR</p>
+        </a>
+      </ul>
+    </div>
+
+      
+    
+    
+      <div class="box-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Nama Debitur</th>                
+              <th>No.Rekening</th>
+              <th>Baki Debet</th> 
+              <th>Jangka Waktu</th>  
+              <th>Periode Suku Bunga</th>   
+              <th>Persentase Kenaikan </th>            
+              <th>Jatuh Tempo</th>
+              <th>Akad</th>
+              <th>Aksi</th>
+            
+              
+            </tr>
+          </thead>
+          <tbody>
+            
+              </tr>
+              <tr class="active-row">
+                  <td>Melissa</td>
+                  <td>5150</td>
+              </tr>
+              <!-- and so on... -->
+          </tbody>
+      </table>
+      
+        
+        
+      
+        
+  
+                  
+        
+          
+          
+        {% else :%}
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Role: {{ session.level }} |{{ session.username }}</a>
+        
         <li>
           <a href="/beranda" class="active">
             <img src="{{ url_for('static', filename='icon/berandabiru.png') }}" />
@@ -35,7 +107,7 @@
             <p>REGISTER</p>
           </a>
         </li>
-        <li>
+        
           <a href="/logout">
             <img src="{{ url_for('static', filename='icon/exitputih.png') }}"
              />
@@ -43,12 +115,46 @@
           </a>
       </ul>
     </div>
-
-    <div class="head">
-      <div class="Logo">
-        <img class="logo" src="{{ url_for('static', filename='icon/logo.png') }}"/>
-        <h2 class="logoTxt">BRI-Minder</h2>
+    
+    
+    <a href="/notifikasi/vewnotif">
+    <div class="box-container">
+ 
+      <div class="box box1">
+          <div class="text">
+            <div class="notif">
+              
+              <h2 class="topic-heading">{{notif}}</h2>
+              <h2 class="topic">Jatuh Tempo</h2>
+            </div>
+          </div>
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
+              alt="Views">
       </div>
+      
+    </a>
+      <div class="box box2">
+          <div class="text">
+              <h2 class="topic-heading">150</h2>
+              <h2 class="topic">Likes</h2>
+          </div>
+
+          <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png"
+               alt="likes">
+      </div>
+
+      <div class="box box3">
+          <div class="text">
+              <h2 class="topic-heading">320</h2>
+              <h2 class="topic">Comments</h2>
+          </div>
+
+          <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
+              alt="comments">
+      </div>
+
+      {% endif%}
+          
       
   </div>
 </body>

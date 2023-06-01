@@ -14,7 +14,7 @@
 <body>
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
         
         <li>
@@ -52,79 +52,88 @@
           <h2>Form Penambahan Data Debitur</h2>
         </div>
       </div>
-  
+      
       <div class="wrap-table">
-        <form action="{{ url_for('tambahdebitur') }}" method="POST" id="form">
+        <form action="{{ url_for('tambahdebitur') }}" method="POST" id="form" class="form-style-9">
+          <div class="flex-input">  
           <div class="wrap-input">
             <label htmlfor="nama_debitur" class="label-input">
               Nama Debitur
             </label>
-            <input type="text" class="input-field" name="nama_debitur" value=""/>
+            <input type="text" class="input-field" name="nama_debitur" placeholder="" value="" />
           </div>
-          <div class="flex-input">
-            <div class="wrap-input">
+              <div class="wrap-input">
               <label htmlfor="no_rekening" class="label-input">
                 No.Rekening
               </label>
-              <input type="text" class="input-field" name="no_rekening" value=""/>
+              <input type="text" class="input-field" name="no_rekening" value="" placeholder=""/>
             </div>
+          </div>
+          <div class="flex-input">  
             <div class="wrap-input">
               <label htmlfor="jenis_kredit" class="label-input">
-                Jenis Kredit
+                Plafond Awal(Rp.)
               </label>
-              <input type="text" class="input-field" name="jenis_kredit" value=""/>
-            </div>
+              <input type="text" class="input-field" name="jenis_kredit" " placeholder="" value=""/>
           </div>
-          <div class="flex-input">
+
             <div class="wrap-input">
               <label htmlfor="baki_debet" class="label-input">
-                Baki Debet
+                Baki Debet (Rp.)
               </label>
-              <input type="text" name="baki_debet" id="baki_debet"  class="input-field" value="">
-            </div>
-            <div class="wrap-input">
-              <label htmlfor="rm" class="label-input">
-                RM (Pengelola)
-              </label>
-              <input type="text" class="input-field" name="rm" value=""/>
-            </div>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="jangkawaktu" class="label-input">
-              Jangka Waktu
-            </label>
-            <input type="text" class="input-field" name="jangkawaktu" value=""/>
-          </div>
-            
-          <div class="wrap-input">
-            <label htmlfor="jadwal_pokok" class="label-input">
-             Jadwal Pokok
-            </label>
-            <input type="text" class="input-field" name="jadwal_pokok" value=""/>
-          </div>
-
-          <div class="wrap-input">
-            <label htmlfor="sukubunga" class="label-input">
-             Suku Bunga
-            </label>
-            <div class="sb"> 
-              <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbak1" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbp1" placeholder="Persen"/>
-            </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbak2" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbp2" placeholder="Persen"/>
-            </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbak3" placeholder="Bulan"/>
-              <input type="text" class="input-fieldsb" name="sbp3" placeholder="Persen"/>
+              <input type="text" name="baki_debet" id="baki_debet"  class="input-field" " placeholder="" value=""/>
             </div>
           </div>
           
+          <div class="flex-input">  
+            <div class="wrap-input">
+              <label htmlfor="rm" class="label-input">
+                Jangka Waktu Awal (Bulan)
+              </label>
+              <input type="text" class="input-field" name="rm" " placeholder="" value=""/>
+            </div>
+         
+          <div class="wrap-input">
+            <label htmlfor="jangkawaktu" class="label-input">
+              GP Restrukturisasi (Bulan)
+            </label>
+            <input type="text" class="input-field" name="jangkawaktu" " placeholder="" value=""/>
+          </div>
+        
+        </div>
+           
+        
+          <div class="wrap-input">
+            <label htmlfor="jadwal_pokok" class="label-input">
+             Bunga Pokok (%)
+            </label>
+            <input type="text" class="input-field" name="jadwal_pokok" placeholder="" value=""/>
+          </div>
+          
+
+          <div class="wrap-input">
+            <label htmlfor="sukubunga" class="label-input">
+             Suku Bunga Restrukturisasi
+            </label>
+            <div class="sb"> 
+              
+              <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan (1)"/> -
+              <input type="text" class="input-fieldsb" name="sbak1" placeholder="Bulan (2)"/> Suku Bunga % =
+              <input type="text" class="input-fieldsb" name="sbp1" placeholder="Persen"/>
+            </div>
+            <div class="sb">
+              <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan (3)"/> -
+              <input type="text" class="input-fieldsb" name="sbak2" placeholder="Bulan (4)"/> Suku Bunga % =
+              <input type="text" class="input-fieldsb" name="sbp2" placeholder="Persen"/> 
+            </div>
+            <div class="sb">
+              <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan (5)"/> -
+              <input type="text" class="input-fieldsb" name="sbak3" placeholder="Bulan (6)"/> Suku Bunga % =
+              <input type="text" class="input-fieldsb" name="sbp3" placeholder="Persen"/>
+            </div>
+          </div>
+    
+          <div class="flex-input">  
           <div class="wrap-input">
             <label htmlfor="akad" class="label-input">
               Akad 
@@ -135,9 +144,10 @@
 
           <div class="wrap-input">
             <label htmlfor="keterangan" class="label-input">
-              BAP
+              Angsuran Terbayar (Bulan)
             </label>
-            <textarea type="text" class="input-field" name="keterangan" placeholder="Masukkan Keterangan" form="form"></textarea>
+            <textarea type="text" class="input-field" name="keterangan" placeholder="" form="form"></textarea>
+          </div>
           </div>
           <p class="msg">{{ msg }}</p>
             <input type="submit" class="btn-ubah" value="Tambah Data" name="button_tambah_data"/>

@@ -16,7 +16,7 @@
 
   <div class="body">
     <div class="sidebar">
-      <header class="header">BRI-Minder</header>
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
       <ul class="ul">
         
         <li>
@@ -55,9 +55,11 @@
           <div class="inline">
             
             <h2 class="jadwal">Register Peminjaman Berkas 1</h2>
-            <label htmlfor="cari" class="label-input"></label> 
-            <div class="wrap-input">    
-              <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
+            <div class="cari">
+              <label htmlfor="cari" class="label-input"></label> 
+              <div class="wrap-input">    
+                <input type="text" class="input-field" placeholder="Cari nama debitur" id="myInput" onkeyup="myFunction()"></input>
+              </div>
             </div>
           </div>
             

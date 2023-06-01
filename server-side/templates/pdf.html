@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='detaildebitur2.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Detail Debitur</title>
+</head>
+
+<body>
+  <div class="body">
+    <div class="sidebar">
+      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
+      <ul class="ul">
+        <li>
+          <a href="/beranda">
+            <img src="{{ url_for('static', filename='icon/berandaputih.png') }}" />
+            <p>BERANDA</p>
+          </a>
+        </li>
+        <li>
+          <a href="/restrukturisasi" class="active">
+            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}" />
+            <p>RESTRUKTURISASI</p>
+          </a>
+        </li>
+        <li>
+          <a href="/register">
+            <img src="{{ url_for('static', filename='icon/registerputih.png') }}" />
+            <p>REGISTER</p>
+          </a>
+        </li>
+        <li>
+          <a href="/logout">
+            <img src="{{ url_for('static', filename='icon/exitputih.png') }}" />
+            <p>KELUAR</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="head">
+      <div class="bagianAtas">
+        <div class="inline">
+          <a href="/restrukturisasi">
+            <img class="back" src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png" />
+          </a>
+          <a href="/cetak_pdf/{{norek}}" target="_blank" style="padding-left: 1000px; padding-top: 30px;">
+            <img src="{{ url_for('static', filename='icon/icons8-pdf-48.png') }}" />
+          </a>
+        </div>
+      </div>
+      <table class="body-wrap">
+        <tbody>
+          <tr>
+            <td></td>
+            <td class="container" width="700">
+              <div class="content">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <td class="content-wrap aligncenter">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                          <tbody>
+                            <tr>
+                              <td class="content-block">
+                                <h2 style="font-family: Montserrat, sans-serif; font-size: 18px; padding-left: 50px;">Detail Restrukturisasi</h2>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="content-block">
+                                <table class="invoice" style="font-size: 14px;">
+                                  <tbody>
+                                    <tr>
+                                      <td width="150">Nomor Rekening</td>
+                                      <td>{{ detaildebitur[0]['norek'] }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Nama Debitur</td>
+                                      <td>{{ detaildebitur[0]['nama_debitur'] }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Jenis Pinjaman</td>
+                                      <td>{{ detaildebitur[0]['jenis_pinjaman'] }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Jumlah Pinjaman</td>
+                                      <td>{{ detaildebitur[0]['jumlah_pinjaman'] }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Tanggal Restrukturisasi</td>
+                                      <td>{{ detaildebitur[0]['tanggal_restrukturisasi'] }}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="footer">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td class="aligncenter content-block"><span class="apple-link">Bank ABC</span><br> Jl. Jend. Sudirman No. 123, Jakarta Pusat</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

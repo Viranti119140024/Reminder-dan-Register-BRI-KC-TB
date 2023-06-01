@@ -12,19 +12,30 @@
   height: 100%;
   background: #102d81;
 }
-.body .sidebar .header {
-  font-size: 48px;
-  color: white;
-  text-align: center;
-  line-height: 100px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-weight: bold;
-  font-family: "Montserrat", sans-serif;
-
+.body .sidebar {
+  position: fixed;
+  left: 0px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background: #9cb3f7;
+  
+  
 }
+.body .sidebar .header { 
+  width: 10px;
+  height: 30px;
+  bottom: 40px;
+  
+}
+.body .sidebar .header .gambar{ 
+  width: 350px;
+  height: 350px;
+  padding-left: 20px;
+  padding-top: 420px;
+  
+}
+
 .body .sidebar ul li {
   list-style-type: none;
 }
