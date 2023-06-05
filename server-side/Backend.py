@@ -4,6 +4,7 @@ from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash
 import mysql.connector
 from datetime import datetime
+
 import pymysql 
 import re 
 import pdfkit
@@ -115,7 +116,6 @@ def registrasi():
     # Show registration form with message (if any)
     return render_template('registrasi.html', msg=msg)
   
-
 @app.route('/kelolauser', methods=['GET', 'POST'])
 def kelolauser():
     conn = mysql.connect()
@@ -127,10 +127,58 @@ def kelolauser():
         user = cursor.fetchall()
         conn.commit()
         cursor.close()
-        return render_template('kelolauser.html', username=session['level'], user=user)  
-
+        return render_template('kelolauser.html', username=session['level'], user=user)
+    
     return redirect(url_for('login'))
-       
+
+@app.route('/gantipassword/<username>', methods=['GET', 'POST'])
+def gantipassword(username):
+    if 'loggedin' in session or session['level'] == 'admin':
+        if request.method == 'POST':
+            username = username
+            new_password = request.form['new_password']
+            confirm_password = request.form['confirm_password']
+
+            # Validasi input
+            if new_password != confirm_password:
+                flash('Password baru dan konfirmasi password tidak cocok', 'error')
+                return redirect(url_for('kelolauser'))
+
+            # Lakukan perubahan password sesuai kebutuhan
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM user WHERE username = %s', (username,))
+            user = cursor.fetchone()
+            if user:
+                # Update password user di database
+                cursor.execute('UPDATE user SET password = %s WHERE username = %s', (new_password, username))
+                conn.commit()
+                flash('Password petugas berhasil diubah', 'success')
+                return redirect(url_for('kelolauser'))
+            else:
+                flash('Username tidak ditemukan', 'error')
+                return redirect(url_for('kelolauser'))
+            cursor.close()
+            conn.close()
+            return redirect(url_for('kelolauser'))
+
+        return render_template('gantipassword.html', username=session['level'],nama=username)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/hapusakun/<username>', methods=['GET', 'POST'])
+def hapusakun(username):
+    if 'loggedin' in session or session['level'] == 'admin':
+        username = username
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('DELETE FROM user WHERE username = %s', (username))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect(url_for('kelolauser'))
+    else:
+        return redirect(url_for('login'))
    
 
 @app.route('/beranda')
@@ -495,26 +543,12 @@ def detaildebitur2(norek):
             return render_template('detaildebitur2.html', detaildebitur=detaildebitur)
     return redirect(url_for('login'))
 
-@app.route('/cetak_pdf/<norek>', methods=['GET', 'POST'])
-def cetak_pdf(norek):
-    if 'loggedin' in session:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        
-        if request.method == 'GET':
-            cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
-            detaildebitur = cursor.fetchall()
-            conn.commit()
-            cursor.close()
 
-            html = render_template("pdf.html", detaildebitur=detaildebitur, norek=norek)
-            config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
-            pdf = pdfkit.from_string(html, False, configuration=config)
 
-            response = make_response(pdf)
-            response.headers['Content-Type'] = 'application/pdf'
-            response.headers['Content-Disposition'] = 'inline; filename=laporan.pdf'
-            return response
+
+
+
+
 
 @app.route('/restrukturisasi/debiturhapus/<norek>', methods=['GET', 'POST'])
 def debiturhapus(norek):
@@ -3373,10 +3407,6 @@ def is_admin():
         return False
 
 # Halaman daftar pengguna
-
-
-
-
 
 
 

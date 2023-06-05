@@ -1,100 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-    <title>Bri-Minder</title>
-  </head>
-  <body>
-    <h1>Detail Restrukturisasi</h1>
-		<table class="table">
-		  
-		  <tbody>
-        {% for detaildebitur in detaildebitur %}
-        <td>{{detaildebitur ['namadebitur'] }} | No. Rekening (
-         {{detaildebitur ['norek'] }} )</td>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table class="body-wrap">
+    <tbody><tr>
+        <td></td>
+        <td class="container" width="900">
+            <div class="content">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td class="content-wrap aligncenter">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                    <td class="content-block">
+                                        <h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large; padding-left: 50px;">Detail Restrukturisasi</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        <table class="invoice" style="font-size: 14px;">
+                                            <tbody><tr>
+                                              <div class="notif" >
+                                                {% for detaildebitur in detaildebitur %}
+                                                <td>{{detaildebitur ['namadebitur'] }} | No. Rekening (
+                                                 {{detaildebitur ['norek'] }} )</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                          <br>
+                                                          <br>
+                                            
+                                            
+                                                          <table>
+                                                            <tr>
+                                                              <td>Plafond Awal</td>
+                                                              <td class="alignright">{{ (detaildebitur['jeniskredit'] | rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Jangka Waktu Awal</td>
+                                                              <td class="alignright">{{ detaildebitur['rm'] }} Bulan</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Pokok</td>
+                                                              <td class="alignright">{{ detaildebitur['jadwalpokok'] }} %</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Pokok Cicilan</td>
+                                                              <td class="alignright"> {{ ((detaildebitur['jeniskredit'] / detaildebitur['rm']) | round | int | rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Cicilan</td>
+                                                              <td class="alignright">{{ (((detaildebitur['jeniskredit'] * detaildebitur['jadwalpokok']) / 100) | round | int | rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Tagihan Angsuran</td>
+                                                              <td class="alignright"> {{ (((detaildebitur['jeniskredit'] / detaildebitur['rm']) + ((detaildebitur['jeniskredit'] * detaildebitur['jadwalpokok']) / 100 )) | round | int | rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Angsuran Terbayar</td>
+                                                              <td class="alignright">{{ detaildebitur['bap'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Sisa Jangka Waktu</td>
+                                                              <td class="alignright">{{ (detaildebitur['rm'] - detaildebitur['bap']) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>GP (Bulan)</td>
+                                                              <td class="alignright">{{ detaildebitur['jangkawaktu'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Jangka Waktu Baru</td>
+                                                              <td class="alignright">{{ (detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu'] }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Baki Debet</td>
+                                                              <td class="alignright">{{ (detaildebitur['bakidebet'] | rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Baru</td>
+                                                              <td class="alignright">{{ ((detaildebitur['bakidebet'] * detaildebitur['jadwalpokok']) / 100 )| rupiah }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Pokok Baru</td>
+                                                              <td class="alignright">{{ ((detaildebitur['bakidebet'] / ((detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu']))| rupiah) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Angsuran Pokok Yang Ditunda</td>
+                                                              <td class="alignright">{{ (((detaildebitur['jeniskredit'] / detaildebitur['rm']) - (detaildebitur['bakidebet'] / ((detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu'])))| rupiah) }}</td>
+                                                            </tr>
+                                                                                                                         
+                                                              
+                                                                                                                                 
+                                                           
+                                                          
+                                                          
+                                                        <tr class="total">
+                                                            <td class="alignright" width="80%">Angsuran Setelah GP =</td>
+                                                            <td class="alignright"> {{ (((((detaildebitur ['bakidebet'] * detaildebitur ['jadwalpokok'])/100)) + ((detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] ))) + (( (detaildebitur ['jeniskredit'] / detaildebitur ['rm']) - (detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] )))))) |round|int| rupiah }}</td>
+                                                        </tr>
+                                                      </div> 
+                                                        {% endfor %}
+                                                    </tbody></table>
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   
+                                  
+                                </td>
+                                        
+                                </tr>
+                                  @app.route('/restrukturisasi/detail/cetak_pdf/<norek>', methods=['GET'])
+                                  def cetak_pdf(norek):
+                                      conn = mysql.connect()
+                                      cursor = conn.cursor(pymysql.cursors.DictCursor)
+                                      
+                                      if 'loggedin' in session:
+                                          cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
+                                          detaildebitur = cursor.fetchall()
+                                          conn.commit()
+                                          cursor.close()
+                                          path_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+                                  
+                                          rendered_html = render_template('pdf.html', detaildebitur=detaildebitur)
+                                          config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+                                          resp = pdfkit.from_string(html, configuration=config),mimetype="application/pdf",headers={"Content-Disposition":"attachment;filename=outfile.pdf"}
+                                          return resp
+                                      
+                                      return redirect(url_for('login'))
+                                  
+                               
+              
+                            </tbody></table>
+                        </td>
+                    </tr>
+                </tbody></table>
+                <div class="footer">
+                    <table width="100%">
+                        <tbody><tr>
+                            <td class="aligncenter content-block">KC BRI Teluk Betung | <a href="mailto:">www.briweb.com</a></td>
+                        </tr>
+                    </tbody></table>
+                </div></div>
+        </td>
+        <td></td>
     </tr>
-    
-    <tr>
-        <td>
-            <table class="invoice-items" cellpadding="0" cellspacing="0">
-                <tbody>
-                  <br>
-                  <br>
-    
-    
-                  <table>
-                    <tr>
-                      <td>Plafond Awal</td>
-                      <td class="alignright">{{ (detaildebitur['jeniskredit'] | rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Jangka Waktu Awal</td>
-                      <td class="alignright">{{ detaildebitur['rm'] }} Bulan</td>
-                    </tr>
-                    <tr>
-                      <td>Bunga Pokok</td>
-                      <td class="alignright">{{ detaildebitur['jadwalpokok'] }} %</td>
-                    </tr>
-                    <tr>
-                      <td>Pokok Cicilan</td>
-                      <td class="alignright"> {{ ((detaildebitur['jeniskredit'] / detaildebitur['rm']) | round | int | rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Bunga Cicilan</td>
-                      <td class="alignright">{{ (((detaildebitur['jeniskredit'] * detaildebitur['jadwalpokok']) / 100) | round | int | rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Tagihan Angsuran</td>
-                      <td class="alignright"> {{ (((detaildebitur['jeniskredit'] / detaildebitur['rm']) + ((detaildebitur['jeniskredit'] * detaildebitur['jadwalpokok']) / 100 )) | round | int | rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Angsuran Terbayar</td>
-                      <td class="alignright">{{ detaildebitur['bap'] }}</td>
-                    </tr>
-                    <tr>
-                      <td>Sisa Jangka Waktu</td>
-                      <td class="alignright">{{ (detaildebitur['rm'] - detaildebitur['bap']) }}</td>
-                    </tr>
-                    <tr>
-                      <td>GP (Bulan)</td>
-                      <td class="alignright">{{ detaildebitur['jangkawaktu'] }}</td>
-                    </tr>
-                    <tr>
-                      <td>Jangka Waktu Baru</td>
-                      <td class="alignright">{{ (detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu'] }}</td>
-                    </tr>
-                    <tr>
-                      <td>Baki Debet</td>
-                      <td class="alignright">{{ (detaildebitur['bakidebet'] | rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Bunga Baru</td>
-                      <td class="alignright">{{ ((detaildebitur['bakidebet'] * detaildebitur['jadwalpokok']) / 100 )| rupiah }}</td>
-                    </tr>
-                    <tr>
-                      <td>Pokok Baru</td>
-                      <td class="alignright">{{ ((detaildebitur['bakidebet'] / ((detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu']))| rupiah) }}</td>
-                    </tr>
-                    <tr>
-                      <td>Angsuran Pokok Yang Ditunda</td>
-                      <td class="alignright">{{ (((detaildebitur['jeniskredit'] / detaildebitur['rm']) - (detaildebitur['bakidebet'] / ((detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu'])))| rupiah) }}</td>
-                    </tr>                                                                                     
-                   
-                  
-                  
-                <tr class="total">
-                    <td class="alignright" width="80%">Angsuran Setelah GP =</td>
-                    <td class="alignright"> {{ (((((detaildebitur ['bakidebet'] * detaildebitur ['jadwalpokok'])/100)) + ((detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] ))) + (( (detaildebitur ['jeniskredit'] / detaildebitur ['rm']) - (detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] )))))) |round|int| rupiah }}</td>
-                </tr>
-              </div> 
-                {% endfor %}
-		  </tbody>
-		</table>
-  </body>
+</tbody></table>
+</body>
 </html>

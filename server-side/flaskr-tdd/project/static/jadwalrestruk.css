@@ -218,14 +218,17 @@
   display: inline-block;
   font-size: 13px;
   border-radius: 10px;
+  
 }
+
+
 
 .body .head .bagianAtas .inline{
   position: relative;
   display: inline-flex;
   padding: 0%; 
   margin-top: -7px;
-  padding-left: 0px;
+  padding-left: 30px;
 }
 
 .body .head .bagianAtas .inline .back{
@@ -246,6 +249,7 @@
 
 .body .head .bagianAtas .inline .wrap-input .input-field{
   margin-top: 55px;
+  padding-left: 30px;
 }
 
 .body .head .bagianAtas .inline h2{

@@ -53,11 +53,12 @@
           </a>
           <h2 class="jadwal">Jadwal Restrukturisasi</h2>
           <label htmlfor="cari" class="label-input"></label> 
+          <div class="cari">
           <div class="wrap-input">    
             <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
           </div>
-        </div>
-      
+          </div>
+          </div>
           <div class="table">
             
 
@@ -118,7 +119,7 @@
     tr = table.getElementsByTagName("tr");
   
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[1];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
