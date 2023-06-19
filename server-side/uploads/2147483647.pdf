@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body style="display: flex;align-items: center;justify-content: center;">
+  <table class="body-wrap" >
+    <tbody><tr>
+        <td></td>
+        <td class="container" width="100%">
+            <div class="content">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                    <tbody><tr>
+                        <td class="content-wrap aligncenter">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tbody><tr>
+                                    <td class="content-block">
+                                        <h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large; padding-left: 50px;">Detail Restrukturisasi</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        <table class="invoice" style="font-size: 14px;">
+                                            <tbody><tr>
+                                              <div class="notif" >
+                                                
+                                                <td>Okta Sihombing | No. Rekening (
+                                                 2147483647 )</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                          <br>
+                                                          <br>
+                                            
+                                            
+                                                          <table>
+                                                            <tr>
+                                                              <td>Plafond Awal</td>
+                                                              <td class="alignright">Rp50.000.000,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Jangka Waktu Awal</td>
+                                                              <td class="alignright">36 Bulan</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Pokok</td>
+                                                              <td class="alignright">4.0 %</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Pokok Cicilan</td>
+                                                              <td class="alignright"> Rp1.388.889,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Cicilan</td>
+                                                              <td class="alignright">Rp2.000.000,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Tagihan Angsuran</td>
+                                                              <td class="alignright"> Rp3.388.889,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Angsuran Terbayar</td>
+                                                              <td class="alignright">17</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Sisa Jangka Waktu</td>
+                                                              <td class="alignright">19</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>GP (Bulan)</td>
+                                                              <td class="alignright">6</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Jangka Waktu Baru</td>
+                                                              <td class="alignright">25</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Baki Debet</td>
+                                                              <td class="alignright">Rp26.388.700,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Bunga Baru</td>
+                                                              <td class="alignright">Rp1.055.548,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Pokok Baru</td>
+                                                              <td class="alignright">Rp1.055.548,00</td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>Angsuran Pokok Yang Ditunda</td>
+                                                              <td class="alignright">Rp333.340,89</td>
+                                                            </tr>
+                                                                                                                         
+                                                              
+                                                                                                                                 
+                                                           
+                                                          
+                                                          
+                                                        <tr class="total">
+                                                            <td class="alignright" width="80%">Angsuran Setelah GP =</td>
+                                                            <td class="alignright"> Rp2.444.437,00</td>
+                                                        </tr>
+                                                      </div> 
+                                                        
+                                                    </tbody></table>
+                                                </td>
+                                            </tr>
+                                        </tbody></table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   
+                                  
+                                </td>
+                                        
+                                </tr>
+                                  
+                                  
+                               
+              
+                            </tbody></table>
+                        </td>
+                    </tr>
+                </tbody></table>
+                <div class="footer">
+                    <table width="100%">
+                        <tbody><tr>
+                            <td class="aligncenter content-block">KC BRI Teluk Betung | <a href="mailto:">www.briweb.com</a></td>
+                        </tr>
+                    </tbody></table>
+                </div></div>
+        </td>
+        <td></td>
+    </tr>
+</tbody></table>
+</body>
+</html>

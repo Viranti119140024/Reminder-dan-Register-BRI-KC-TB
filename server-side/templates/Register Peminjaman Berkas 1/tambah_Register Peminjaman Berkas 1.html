@@ -9,63 +9,111 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <title>Register Peminjaman Berkas 1 </title>
-</head>
-<body>
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          <a href="/beranda" >
-            <img
-              src="https://img.icons8.com/windows/48/FFFFFF/home-page.png"
-               />
-            <p>BERANDA</p>
-          </a>
-        </li>
-        <li>
-          <a href="/restrukturisasi" >
-            <img src="https://img.icons8.com/ios/45/FFFFFF/overtime.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
-            <p>RESTRUKTURISASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register/pb1"class="active" >
-            <img src="https://img.icons8.com/external-outline-geotatah/48/102d81/external-register-training-management-system-outline-geotatah.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
-            <p>REGISTER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" >
-            <img src="https://img.icons8.com/windows/48/FFFFFF/exit.png"  />
-            <!-- <a target="_blank" href="https://icons8.com/icon/22112/logout">Logout icon by Icons8</a> -->
-            <p>KELUAR</p>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+  <link rel="stylesheet" href="style.css">
     
-    <div class="head">
-      <div class="wrap-bagianAtas">
-        <div class="bagianAtas">
-          <h2>Form Penambahan Data Debitur (Register Peminjaman Berkas 1)</h2>
-        </div>
+    <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+  <!--<title>Dashboard Sidebar Menu</title>-->
+</head>
+
+<body>
+  <nav class="sidebar close">
+      <header>
+          <div class="image-text">
+              <span class="image">
+                <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+              </span>
+
+              <div class="text logo-text">
+                  <span class="name">BRIMINDER</span>
+                  <span class="profession">KC BRI Teluk Betung</span>
+              </div>
+          </div>
+
+          <i class='bx bx-chevron-right toggle'></i>
+      </header>
+
+      <div class="menu-bar">
+          <div class="menu">
+
+              <li class="search-box">
+                <i class='bx bx-user-circle icon' ></i>
+                <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+              </li>
+
+              <ul class="menu-links">
+                  <li class="nav-link">
+                      <a href="/beranda">
+                          <i class='bx bx-home-alt icon' ></i>
+                          <span class="text nav-text">Beranda</span>
+                      </a>
+                  </li>
+
+                  <li class="nav-link">
+                      <a href="/restrukturisasi">
+                          <i class='bx bx-notepad icon' ></i>
+                          <span class="text nav-text">Restrukturisasi</span>
+                      </a>
+                  </li>
+
+                  <li class="nav-link">
+                      <a href="/register">
+                          <i class='bx bxs-file-plus icon'></i>
+                          <span class="text nav-text">Register</span>
+                      </a>
+                  </li>
+
+                 
+
+                 
+
+              </ul>
+          </div>
+
+          <div class="bottom-content">
+              <li class="">
+                  <a href="/logout">
+                      <i class='bx bx-log-out icon' ></i>
+                      <span class="text nav-text">Keluar</span>
+                  </a>
+              </li>
+
+              <li class="mode">
+                  <div class="sun-moon">
+                      <i class='bx bx-moon icon moon'></i>
+                      <i class='bx bx-sun icon sun'></i>
+                  </div>
+                  <span class="mode-text text">Dark mode</span>
+
+                  <div class="toggle-switch">
+                      <span class="switch"></span>
+                  </div>
+              </li>
+              
+          </div>
       </div>
-  
-      <div class="wrap-table">
+
+  </nav>
+
+  <section class="home">
+   
+
+    <div class="container">
+      <div class="content">
         <form action="" method="POST" id="form" class="form-style-9">
-            <div class="flex-input">
-                <div class="wrap-input">
-                    <label htmlfor="tanggal" class="label-input">
+          <h2>Form Penambahan Data Debitur (Register Peminjaman Berkas 1)</h2>
+        
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname" style="width: 23%;">
+              <label htmlfor="tanggal" class="label-input">
                       Tanggal
                     </label>
                     <input type="date" class="input-field" name="tanggal" value=""/>
                   </div>
                
-                <div class="wrap-input">
+                  <div class="form-group fullname">
                     <label htmlfor="Nama Debitur" class="label-input">
                     Nama Debitur
                     </label>
@@ -73,14 +121,14 @@
                   </div>
               </div>
                      
-          <div class="flex-input">
-            <div class="wrap-input">
-                <label htmlfor="Dok yag dipinjam" class="label-input">
+              <div style="display: flex; gap: 265px;">
+                <div class="form-group fullname">
+                  <label htmlfor="Dok yag dipinjam" class="label-input">
                  Dok yag dipinjam
                 </label>
                 <input type="text" name="Dok yag dipinjam" id="Dok yag dipinjam"  class="input-field" >
               </div>
-              <div class="wrap-input">
+              <div class="form-group fullname">
                 <label htmlfor="Nama Peminjam" class="label-input">
                  Nama Peminjam
                 </label>
@@ -88,47 +136,81 @@
               </div>
           </div>
             
-          <div class="flex-input">
-             <div class="wrap-input">
-                  <label htmlfor="Keperluan" class="label-input">
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname">
+              <label htmlfor="Keperluan" class="label-input">
                    Keperluan
                   </label>
                   <input type="text" name="Keperluan" id="Keperluan"  class="input-field" >
                 </div>
-                <div class="wrap-input">
-                    <label htmlfor="tanggal" class="label-input">
+                <div class="form-group fullname" style="width: 23%;">
+                  <label htmlfor="tanggal" class="label-input">
                       Tanggal Kembali
                     </label>
                     <input type="date" class="input-field" name="tanggal" value=""/>
                   </div>
           </div>
 
-          <div class="flex-input">
-            <div class="wrap-input">
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname">
               <label htmlfor="Kelengkapan Dok" class="label-input">
                Kelengkapan Dok
               </label>
               <input type="text" name="Kelengkapan Dok" id=" Kelengkapan Dok"  class="input-field" >
             </div>
-            <div class="wrap-input">
-            <label htmlfor="Pinjam" class="label-input">
+            <div class="form-group fullname">
+              <label htmlfor="Pinjam" class="label-input">
                 Pinjam
                </label>
                <input type="text" name="Pinjam" id="Pinjam"  class="input-field" >
              </div>
             </div>
-          <div class="wrap-input">
-            <label htmlfor="Kembali" class="label-input">
+            <div class="form-group fullname" style="width: 23%;">
+              <label htmlfor="Kembali" class="label-input">
                 Kembali
               </label>
-              <textarea name="Kembali" id="" cols="30" rows="10" class="input-field"></textarea>
+              <input name="Kembali" id="" cols="30" rows="10" class="input-field"></input>
             </div>
             
-            
+            <div class="form-group submit-btn" style="width: 440px;">
             <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>
         </form>
         </div>
       </div>
     </div>
+
+  </section>
+
+  <script>
+      const body = document.querySelector('body'),
+    sidebar = body.querySelector('nav'),
+    toggle = body.querySelector(".toggle"),
+    searchBtn = body.querySelector(".search-box"),
+    modeSwitch = body.querySelector(".toggle-switch"),
+    modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+  sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+  sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+  body.classList.toggle("dark");
+  
+  if(body.classList.contains("dark")){
+      modeText.innerText = "Light mode";
+  }else{
+      modeText.innerText = "Dark mode";
+      
+  }
+});
+  </script>
+
 </body>
 </html>
+
+

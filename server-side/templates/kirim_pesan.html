@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kirim Pesan</title>
+</head>
+<body>
+    <h1>Kirim Pesan</h1>
+    <form method="POST" action="/kirim-pesan">
+        <label for="penerima">Penerima:</label>
+        <select id="penerima" name="penerima">
+            {% for user in user %}
+                <option value="{{ user[0] }}">{{ user[1] }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="isi_pesan">Isi Pesan:</label>
+        <textarea id="isi_pesan" name="isi_pesan" rows="4" cols="50"></textarea>
+        <br><br>
+        <input type="submit" value="Kirim">
+    </form>
+    <br>
+    <a href="/obrolan">Kembali ke Obrolan</a>
+</body>
+</html>

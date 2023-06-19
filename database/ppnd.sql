@@ -27,14 +27,13 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `ipkrestruk`
 --
 
-CREATE TABLE `ppnd2` (
+CREATE TABLE `ppnd` (
 
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  NoPPNTanggalPPND VARCHAR(255),
+  NoPPNdanTanggalPPN VARCHAR(255),
   NamaDebitur VARCHAR(255),
-  AlamatNoTelpHP VARCHAR(255),
+  AlamatdanNoTeleponHP VARCHAR(255),
   JenisFasilitasKredit VARCHAR(255),
-  JenisDokKreditDitunda VARCHAR(255),
+  JenisDokKredityangDitunda VARCHAR(255),
   LamanyaDitunda VARCHAR(255),
   TanggalBatasAkhir DATE,
   PejabatPemrakarsa VARCHAR(255),

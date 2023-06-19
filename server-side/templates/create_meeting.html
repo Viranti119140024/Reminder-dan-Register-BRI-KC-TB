@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Membuat Pertemuan Baru</title>
+</head>
+<body>
+    <h2>Membuat Pertemuan Baru</h2>
+    <form method="POST" action="/create_meeting">
+        <label for="judul">Judul Pertemuan:</label>
+        <input type="text" id="judul" name="judul" required><br><br>
+        
+        <label for="waktu">Waktu Pertemuan:</label>
+        <input type="datetime-local" id="waktu" name="waktu" required><br><br>
+        
+        <label for="deskripsi">Deskripsi Pertemuan:</label>
+        <textarea id="deskripsi" name="deskripsi"></textarea><br><br>
+        
+        <input type="submit" value="Buat Pertemuan">
+
+        <!DOCTYPE html>
+
+    <title>Halaman Remainders</title>
+    <p>Anda dapat melihat daftar pengingat Anda di sini:</p>
+    <a href="{{ url_for('reminders') }}">Lihat Pengingat</a>
+
+    </form>
+</body>
+</html>

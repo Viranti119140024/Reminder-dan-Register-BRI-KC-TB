@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kemajuan Pembayaran</title>
+    <!-- Tambahkan CSS dan JavaScript yang diperlukan -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Kemajuan Pembayaran</h1>
+    
+    <!-- Tampilkan grafik atau tabel untuk kemajuan pembayaran -->
+    <div id="grafik-pembayaran"></div>
+    <script>
+        // Mendapatkan data kemajuan pembayaran dari server
+        function getDataKemajuanPembayaran() {
+          // Lakukan permintaan AJAX ke server untuk mendapatkan data kemajuan pembayaran
+          // ...
+        }
+      
+        // Memperbarui tampilan kemajuan pembayaran
+        function updateKemajuanPembayaran() {
+          // Mendapatkan elemen HTML yang diperlukan
+          var grafikPembayaranElem = document.getElementById('grafik_pembayaran');
+      
+          // Mendapatkan data kemajuan pembayaran dari server
+          var dataKemajuanPembayaran = getDataKemajuanPembayaran();
+      
+          // Memperbarui tampilan dengan data kemajuan pembayaran yang diperoleh
+          // ...
+        }
+      
+        // Memanggil fungsi untuk memperbarui kemajuan pembayaran saat halaman dimuat
+        window.addEventListener('load', updateKemajuanPembayaran);
+      </script>
+      
+</body>
+</html>

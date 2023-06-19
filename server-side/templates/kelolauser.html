@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,245 +9,233 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Kelola User</title>
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="script.js" defer></script>
+  <title>Beranda</title>
     
 </head>
 
 <body>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+          <span class="image">
+            <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+          </span>
 
-  <div class="body">
-    <!DOCTYPE html>
-  <!-- Coding by CodingLab | www.codinglabweb.com -->
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!----======== CSS ======== -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='kelolauser.css') }}">
-    
-    <!----===== Boxicons CSS ===== -->
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    
-    <!--<title>Dashboard Sidebar Menu</title>--> 
-</head>
-<body>
-    <nav class="sidebar close">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <!--<img src="logo.png" alt="">-->
-                </span>
+          <div class="text logo-text">
+              <span class="name">BRIMINDER</span>
+              <span class="profession">KC BRI Teluk Betung</span>
+          </div>
+      </div>
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
 
-                <div class="text logo-text">
-                    <span class="name">BRIMINDER</span>
-                    <span class="profession">BRI</span>
-                </div>
-            </div>
 
-            <i class='bx bx-chevron-right toggle'></i>
-        </header>
+    <div class="menu-bar">
+        <div class="menu">
 
-        <div class="menu-bar">
-            <div class="menu">
+          <li class="search-box">
+            <i class='bx bx-user-circle icon' ></i>
+            <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+          </li>
 
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="text" placeholder="Search...">
-                </li>
 
-                <ul class="menu-links">
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-home-alt icon' ></i>
-                            <span class="text nav-text">Dashboard</span>
-                        </a>
-                    </li>
+         
 
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bar-chart-alt-2 icon' ></i>
-                            <span class="text nav-text">Revenue</span>
-                        </a>
-                    </li>
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="/beranda">
+                  <i class='bx bx-home-alt icon' ></i>
+                  <span class="text nav-text">Beranda</span>
+              </a>
+          </li>
 
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
-                            <span class="text nav-text">Analytics</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-heart icon' ></i>
-                            <span class="text nav-text">Likes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <li class="">
-                    <a href="#">
-                        <i class='bx bx-log-out icon' ></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                </li>
-
-                <li class="mode">
-                    <div class="sun-moon">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
-                    </div>
-                    <span class="mode-text text">Dark mode</span>
-
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-                
-            </div>
+          <li class="nav-link">
+              <a href="/kelolauser">
+                  <i class='bx bxs-user-detail icon' ></i>
+                  <span class="text nav-text">Kelola User</span>
+              </a>
+          </li>
+          <li class="nav-link">
+            <a href="/posts">
+              <i class='bx bx-news icon'></i>
+              <span class="text nav-text">Pengumuman</span>
+            </a>
+          </li>
+         
+          </ul>
         </div>
 
-    </nav>
+        <div class="bottom-content">
+          <li class="">
+              <a href="/logout">
+                  <i class='bx bx-log-out icon' ></i>
+                  <span class="text nav-text">Keluar</span>
+              </a>
+          </li>
 
-    <section class="home">
-        <div class="text">Dashboard Sidebar</div>
-    </section>
+          <li class="mode">
+              <div class="sun-moon">
+                  <i class='bx bx-moon icon moon'></i>
+                  <i class='bx bx-sun icon sun'></i>
+              </div>
+              <span class="mode-text text">Dark mode</span>
 
-    <script>
-        const body = document.querySelector('body'),
-      sidebar = body.querySelector('nav'),
-      toggle = body.querySelector(".toggle"),
-      searchBtn = body.querySelector(".search-box"),
-      modeSwitch = body.querySelector(".toggle-switch"),
-      modeText = body.querySelector(".mode-text");
+              <div class="toggle-switch">
+                  <span class="switch"></span>
+              </div>
+          </li>
+          
+      </div>
+  </div>
+
+</nav>
+
+
+
+<section class="home">
+   
+  <div class="head">
+    <div class="bagianAtas">
+      <div class="inline">
+        
+        <h2 class="jadwal">Kelola User</h2>
+        <div class="cari">
+        <label htmlfor="cari" class="label-input"></label> 
+        <div class="wrap-input">    
+          <input type="text" class="input-field" placeholder="Cari Username" id="myInput" onkeyup="myFunction()"></input>
+        </div>
+      </div>
+        </div>
+      
+        <div class="table">
+          <a href="" >                
+        
+        <div>
+          <a href="/registrasi">
+          <button class="btn_tambah"> Tambah User</button>
+          </a>
+        </div>
+        
+
+
+        <div class="container demo">
+          <table class="datatable table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th>Nama</th>                  
+              <th>Username</th>
+              <th>Password</th>                 
+              <th>Level</th>                                   
+              <th></th>                 
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in user %}
+              <tr>
+                <td>{{ user['nama'] }}</td>
+                <td>{{ user['username'] }}</td>
+                <td>{{ user['password'] }}</td>
+                <td>{{ user['level'] }}</td>
+                
+                <td style="display:flex; gap:15px">
+                
+                    <a href="/gantipassword/{{ user['username'] }}"><button class="bn632-hover bn28">Ganti Password</button></a>                      
+                   
+                 
+                    <a href="/hapusakun/{{ user['username'] }}"><button class="bn632-hover bn2">Hapus Akun</button></a>                      
+                  
+                </td>
+              </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+            
+          </table>
+        </div><!--/.container.demo -->
+
+
+
+
+        <table id="myTable">
+          
+          
+          
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+ 
+  
+
+
+
+
+
+
+
+</section>
+
+<script>
+    const body = document.querySelector('body'),
+  sidebar = body.querySelector('nav'),
+  toggle = body.querySelector(".toggle"),
+  searchBtn = body.querySelector(".search-box"),
+  modeSwitch = body.querySelector(".toggle-switch"),
+  modeText = body.querySelector(".mode-text");
 
 
 toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
+sidebar.classList.toggle("close");
 })
 
 searchBtn.addEventListener("click" , () =>{
-    sidebar.classList.remove("close");
+sidebar.classList.remove("close");
 })
 
 modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
+body.classList.toggle("dark");
+
+if(body.classList.contains("dark")){
+    modeText.innerText = "Light mode";
+}else{
+    modeText.innerText = "Dark mode";
     
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Light mode";
-    }else{
-        modeText.innerText = "Dark mode";
-        
-    }
+}
 });
-    </script>
+</script>
 
 </body>
-</html>
-      <div class="head">
-        <div class="bagianAtas">
-          <div class="inline">
-            
-            <h2 class="jadwal">Kelola User</h2>
-            <div class="cari">
-            <label htmlfor="cari" class="label-input"></label> 
-            <div class="wrap-input">    
-              <input type="text" class="input-field" placeholder="Cari Username" id="myInput" onkeyup="myFunction()"></input>
-            </div>
-          </div>
-            </div>
-          
-            <div class="table">
-              <a href="" >
-                  
 
-            
-            <div>
-              <a href="/registrasi">
-              <button
-                class="btn_tambah"
-              >
-                Tambah User
-              </button>
-              </a>
-            </div>
-            <table id="myTable">
-              <thead>
-                <tr>
-                  <th>Nama</th>                  
-                  <th>Username</th>
-                  <th>Password</th>                 
-                  <th>Level</th>                                   
-                  <th>Aksi</th>                 
-                </tr>
-              </thead>
-              <tbody>
-                {% for user in user %}
-                  <tr>
-                    <td>{{ user['nama'] }}</td>
-                    <td>{{ user['username'] }}</td>
-                    <td>{{ user['password'] }}</td>
-                    <td>{{ user['level'] }}</td>
-                    
-                    <td style="display:flex; gap:10px">
-                      <a href="/gantipassword/{{ user['username'] }}">
-                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
-                      </a> 
-                      <a href="/hapusakun/{{ user['username'] }}">
-                        <img src="{{ url_for('static', filename='icon/delete.png') }}"/>                      
-                      </a> 
-                    </td>
-                  </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-</body>
 
 <script>
   function myFunction() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
   
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
       }
     }
   }
-</script>
-
+  }
+  </script>
 </html>
+
+

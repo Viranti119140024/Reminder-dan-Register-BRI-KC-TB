@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informasi Pembayaran</title>
+    <!-- Tambahkan CSS dan JavaScript yang diperlukan -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Informasi Pembayaran</h1>
+    
+    <table>
+        <tr>
+            <th>No. Rekening</th>
+            <th>Nama Debitur</th>
+            <th>Tanggal Pembayaran</th>
+            <th>Jumlah Pembayaran</th>
+            <th>Terverifikasi</th>
+        </tr>
+        <!-- Loop melalui data pembayaran dan tampilkan dalam tabel -->
+        {% for pembayaran in daftar_pembayaran %}
+        <tr>
+            <td>{{ pembayaran.no_rekening }}</td>
+            <td>{{ pembayaran.nama_debitur }}</td>
+            <td>{{ pembayaran.tanggal_pembayaran }}</td>
+            <td>{{ pembayaran.jumlah_pembayaran }}</td>
+            <td>{{ pembayaran.terverifikasi }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <script>
+  // Mendapatkan data pembayaran dari server
+  function getDataPembayaran() {
+    // Lakukan permintaan AJAX ke server untuk mendapatkan data pembayaran
+    // ...
+  }
+
+  // Memperbarui tampilan informasi pembayaran
+  function updateInformasiPembayaran() {
+    // Mendapatkan elemen HTML yang diperlukan
+    var tanggalPembayaranElem = document.getElementById('tanggal_pembayaran');
+    var jumlahPembayaranElem = document.getElementById('jumlah_pembayaran');
+    var verifikasiElem = document.getElementById('verifikasi');
+
+    // Mendapatkan data pembayaran dari server
+    var dataPembayaran = getDataPembayaran();
+
+    // Memperbarui tampilan dengan data pembayaran yang diperoleh
+    tanggalPembayaranElem.innerText = dataPembayaran.tanggal;
+    jumlahPembayaranElem.innerText = dataPembayaran.jumlah;
+    verifikasiElem.innerText = dataPembayaran.verifikasi;
+  }
+
+  // Memanggil fungsi untuk memperbarui informasi pembayaran saat halaman dimuat
+  window.addEventListener('load', updateInformasiPembayaran);
+</script>
+
+</body>
+</html>

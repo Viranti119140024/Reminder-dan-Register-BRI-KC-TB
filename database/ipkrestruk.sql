@@ -38,6 +38,8 @@ CREATE TABLE `ipkrestruk` (
   `keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
 --
 -- Dumping data untuk tabel `ipkrestruk`
 --

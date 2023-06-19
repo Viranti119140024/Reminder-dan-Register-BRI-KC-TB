@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Laporan</title>
+</head>
+<body>
+    <h1>Edit Laporan</h1>
+    <form action="{{ url_for('edit_laporan', laporan_id=laporan[0]) }}" method="post" enctype="multipart/form-data">
+        <label for="judul">Judul:</label>
+        <input type="text" name="judul" id="judul" value="{{ laporan[3] }}">
+        <br>
+        <label for="keterangan">Keterangan:</label>
+        <textarea name="keterangan" id="keterangan">{{ laporan[4] }}</textarea>
+        <br>
+        <label for="file_laporan">File Laporan:</label>
+        <input type="file" name="file_laporan" id="file_laporan">
+        <br>
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

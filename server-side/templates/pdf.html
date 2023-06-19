@@ -4,13 +4,104 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  
+  <style>
+  /* CSS code here */
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .body-wrap {
+        width: 100%;
+    }
+
+    .content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .main {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .main td {
+        padding: 10px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .content-block {
+        margin-bottom: 10px;
+    }
+
+    .content-block h2 {
+        font-size: 24px;
+        margin: 0;
+        padding-left: 50px;
+        text-align: center;
+        color: #333333;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    .invoice td {
+        padding: 5px;
+    }
+
+    .invoice-items td {
+        padding: 5px;
+        margin-left: 300px;
+        width: 200%;
+        text-align: center;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .alignright {
+        text-align: right;
+    }
+
+    .total {
+        font-weight: bold;
+        background-color: #ffffff;
+    }
+
+    .footer {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px solid #dddddd;
+        text-align: center;
+        font-size: 14px;
+        color: #777777;
+    }
+
+    .footer a {
+        color: #999999;
+        text-decoration: none;
+    }
+    
+</style>
+
   <title>Document</title>
 </head>
-<body>
-  <table class="body-wrap">
+
+<body style="display: flex;align-items: center;justify-content: center;">
+  <table class="body-wrap" >
     <tbody><tr>
-        <td></td>
-        <td class="container" width="900">
+        
+        <td class="container" width="100%">
             <div class="content">
                 <table class="main" width="100%" cellpadding="0" cellspacing="0">
                     <tbody><tr>
@@ -19,11 +110,11 @@
                                 <tbody><tr>
                                     <td class="content-block">
                                         <h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size: large; padding-left: 50px;">Detail Restrukturisasi</h2>
-                                    </td>
-                                </tr>
+                                    
+                               
                                 <tr>
-                                    <td class="content-block">
-                                        <table class="invoice" style="font-size: 14px;">
+                                    <td class="content-block" >
+                                        <table class="invoice" style="padding-left: 60px; font-weight: 50;" >
                                             <tbody><tr>
                                               <div class="notif" >
                                                 {% for detaildebitur in detaildebitur %}
@@ -33,7 +124,7 @@
                                             
                                             <tr>
                                                 <td>
-                                                    <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0" >
                                                         <tbody>
                                                           <br>
                                                           <br>
@@ -96,12 +187,7 @@
                                                               <td>Angsuran Pokok Yang Ditunda</td>
                                                               <td class="alignright">{{ (((detaildebitur['jeniskredit'] / detaildebitur['rm']) - (detaildebitur['bakidebet'] / ((detaildebitur['rm'] - detaildebitur['bap']) + detaildebitur['jangkawaktu'])))| rupiah) }}</td>
                                                             </tr>
-                                                                                                                         
-                                                              
-                                                                                                                                 
-                                                           
-                                                          
-                                                          
+                                                
                                                         <tr class="total">
                                                             <td class="alignright" width="80%">Angsuran Setelah GP =</td>
                                                             <td class="alignright"> {{ (((((detaildebitur ['bakidebet'] * detaildebitur ['jadwalpokok'])/100)) + ((detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] ))) + (( (detaildebitur ['jeniskredit'] / detaildebitur ['rm']) - (detaildebitur ['bakidebet'] / ((detaildebitur ['rm']  - detaildebitur ['bap'] )+ detaildebitur ['jangkawaktu'] )))))) |round|int| rupiah }}</td>
@@ -120,24 +206,8 @@
                                 </td>
                                         
                                 </tr>
-                                  @app.route('/restrukturisasi/detail/cetak_pdf/<norek>', methods=['GET'])
-                                  def cetak_pdf(norek):
-                                      conn = mysql.connect()
-                                      cursor = conn.cursor(pymysql.cursors.DictCursor)
-                                      
-                                      if 'loggedin' in session:
-                                          cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
-                                          detaildebitur = cursor.fetchall()
-                                          conn.commit()
-                                          cursor.close()
-                                          path_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+                              </div>
                                   
-                                          rendered_html = render_template('pdf.html', detaildebitur=detaildebitur)
-                                          config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-                                          resp = pdfkit.from_string(html, configuration=config),mimetype="application/pdf",headers={"Content-Disposition":"attachment;filename=outfile.pdf"}
-                                          return resp
-                                      
-                                      return redirect(url_for('login'))
                                   
                                
               
@@ -151,9 +221,9 @@
                             <td class="aligncenter content-block">KC BRI Teluk Betung | <a href="mailto:">www.briweb.com</a></td>
                         </tr>
                     </tbody></table>
-                </div></div>
+                
         </td>
-        <td></td>
+        
     </tr>
 </tbody></table>
 </body>

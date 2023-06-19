@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Restrukturisasi</title>
+    <!-- Tambahkan CSS dan JavaScript yang diperlukan -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Update Restrukturisasi</h1>
+    
+    <form>
+        <!-- Tambahkan input dan elemen lain untuk pembaruan informasi restrukturisasi -->
+        <label for="no_rekening">No. Rekening:</label>
+        <input type="text" id="no_rekening" name="no_rekening">
+        <!-- ... -->
+        <button type="submit">Perbarui</button>
+    </form>
+
+    <script>
+        // Memperbarui informasi restrukturisasi
+        function updateRestrukturisasi() {
+          // Mendapatkan elemen HTML yang diperlukan
+          var jadwalPembayaranElem = document.getElementById('jadwal_pembayaran');
+          var sukuBungaElem = document.getElementById('suku_bunga');
+          var lainnyaElem = document.getElementById('lainnya');
+      
+          // Mendapatkan data restrukturisasi dari server
+          // ...
+      
+          // Memperbarui tampilan dengan data restrukturisasi yang diperoleh
+          // ...
+        }
+      
+        // Memanggil fungsi untuk memperbarui informasi restrukturisasi saat halaman dimuat
+        window.addEventListener('load', updateRestrukturisasi);
+      </script>
+
+
+</body>
+</html>

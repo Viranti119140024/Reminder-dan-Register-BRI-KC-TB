@@ -24,28 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ipkrestruk`
+-- Struktur dari tabel `reg_ass_kerugian`
 --
 
-CREATE TABLE `ipkrestruk` (
-  `noipk` varchar(30) NOT NULL,
-  `namadebitur` varchar(30) NOT NULL,
-  `noptk` varchar(30) NOT NULL,
-  `akad` date NOT NULL,
-  `jatuhtempo` date NOT NULL,
-  `jangkawaktu` int(20) NOT NULL,
-  `norek` varchar(30) NOT NULL,
-  `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE 'reg_ass_kerugian' (
+  Tanggal DATE,
+  NamaDebitur VARCHAR(255),
+  CADPremi VARCHAR(255),
+  JumlahAgunan VARCHAR(255),
+  NoPolis VARCHAR(255),
+  TanggalOB DATE,
+  Premi VARCHAR(255),
+  Keterangan VARCHAR(255)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `ipkrestruk`
+-- Dumping data untuk tabel `reg_ass_kerugian`
 --
 
-INSERT INTO `ipkrestruk` (`noipk`, `namadebitur`, `noptk`, `akad`, `jatuhtempo`, `jangkawaktu`, `norek`, `keterangan`) VALUES
-('5677.679899', 'gfyuff', '56787663', '2022-08-05', '2023-09-05', 13, '567898763', 'tfcgghhj vcytyg vuuf'),
-('31231', 'ferfe', '232141', '2022-08-05', '2022-09-05', 1, '23454', 'freger vrbrt fregss');
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

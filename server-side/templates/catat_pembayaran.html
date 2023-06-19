@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catat Pembayaran</title>
+    <!-- Tambahkan CSS dan JavaScript yang diperlukan -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Catat Pembayaran</h1>
+    
+    <form>
+        <!-- Tambahkan input dan elemen lain untuk mencatat pembayaran -->
+        <label for="no_rekening">No. Rekening:</label>
+        <input type="text" id="no_rekening" name="no_rekening">
+        <!-- ... -->
+        <button type="submit">Catat Pembayaran</button>
+    </form>
+
+    <script>
+        // Menyimpan catatan pembayaran ke server
+        function simpanCatatanPembayaran() {
+          // Mendapatkan data catatan pembayaran dari inputan pengguna
+          // ...
+      
+          // Lakukan permintaan AJAX ke server untuk menyimpan catatan pembayaran
+          // ...
+        }
+      
+        // Mengirimkan formulir catatan pembayaran
+        function submitFormCatatanPembayaran(event) {
+          event.preventDefault(); // Mencegah pengiriman formulir secara default
+      
+          // Panggil fungsi untuk menyimpan catatan pembayaran
+          simpanCatatanPembayaran();
+        }
+      </script>
+
+
+</body>
+</html>

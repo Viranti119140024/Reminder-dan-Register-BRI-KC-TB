@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Pesan</title>
+</head>
+<body>
+    <h1>Daftar Pesan</h1>
+    <h3>Selamat datang, {{ pengguna }}</h3>
+    <h4>Pesan:</h4>
+    <ul>
+        {% for pesan in pesan %}
+            <li>
+                <p>Pengirim: {{ pesan[0] }}</p>
+                <p>Isi Pesan: {{ pesan[1] }}</p>
+                <p>Tanggal Pengiriman: {{ pesan[2] }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
