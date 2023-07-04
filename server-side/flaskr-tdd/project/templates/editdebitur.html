@@ -9,149 +9,260 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-  <title>Ubah Data Debitur</title>
-</head>
-<body>
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          <a href="/beranda" >
-            <img
-              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
-               />
-            <p>BERANDA</p>
-          </a>
-        </li>
-        <li>
-          <a href="/restrukturisasi" class="active">
-            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"  />
-            <p>RESTRUKTURISASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register" >
-            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
-            <p>REGISTER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" >
-            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
-            <p>KELUAR</p>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <link rel="stylesheet" href="style.css">
     
-    <div class="head">
-      <div class="wrap-bagianAtas">
-        <div class="bagianAtas">
-          <h2>Form Pengubahan Data Debitur</h2>
+    <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!--<title>Dashboard Sidebar Menu</title>--> 
+
+  <title>Edit Data Debitur</title>
+
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                  <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">BRIMINDER</span>
+                    <span class="profession">KC BRI Teluk Betung</span>
+                </div>
+            </div>
+
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                  <i class='bx bx-user-circle icon' ></i>
+                  <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/beranda">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Beranda</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="restrukturisasi">
+                            <i class='bx bx-notepad icon' ></i>
+                            <span class="text nav-text">Restrukturisasi</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/register">
+                            <i class='bx bxs-file-plus icon'></i>
+                            <span class="text nav-text">Register</span>
+                        </a>
+                    </li>
+
+                   
+
+                   
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    <a href="/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Keluar</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
         </div>
-      </div>
-  
-      <div class="wrap-table">
-        <form action="{{ url_for('editdebitur', norek= editdebitur['norek']) }}" method="POST" id="form">
-          <div class="wrap-input">
-            <label htmlfor="nama_debitur" class="label-input">
-              Nama Debitur
-            </label>
-            <input type="text" class="input-field" name="nama_debitur" value="{{ editdebitur['namadebitur'] }}"/>
-          </div>
-          <div class="flex-input">
-            <div class="wrap-input">
+
+    </nav>
+
+    <section class="home">
+     
+
+      <div class="container">
+        <div class="content">
+          <form action="{{ url_for('editdebitur', norek= editdebitur['norek']) }}" method="POST" id="form" >
+            <h2>Edit Penjadwalan Restrukturisasi</h2>
+
+            <div style="display: flex; gap: 65px;">
+              <div class="form-group fullname">
+              <label htmlfor="nama_debitur" class="label-input">
+                Nama Debitur
+              </label>
+              <input type="text" class="input-field" name="nama_debitur" value="{{ editdebitur['namadebitur'] }}" placeholder="Nama"/>
+            </div>
+            <div class="form-group email">
               <label htmlfor="no_rekening" class="label-input">
                 No.Rekening
               </label>
-              <input type="text" class="input-field" name="no_rekening" value="{{ editdebitur['norek'] }}"/>
+              <input type="text" class="input-field" name="no_rekening" value="{{ editdebitur['norek'] }}" placeholder=" No.Rekening"/>
             </div>
-            <div class="wrap-input">
+            </div>
+            <div style="display: flex; gap: 65px;">
+            <div class="form-group fullname">
               <label htmlfor="jenis_kredit" class="label-input">
-                Plafond Awal (Bulan)
+                Plafond Awal
               </label>
-              <input type="text" class="input-field" name="jenis_kredit" value="{{ editdebitur['jeniskredit'] }}"/>
+              <input type="text" class="input-field" name="jenis_kredit" " placeholder=" Rp" value="{{ editdebitur['jeniskredit'] }}"/>
             </div>
-          </div>
-          <div class="flex-input">
-            <div class="wrap-input">
-              <label htmlfor="baki_debet" class="label-input">
-                Baki Debet (Rp.)
+            <div class="form-group email">
+              <label htmlfor="keterangan" class="label-input">
+                Angsuran Terbayar
               </label>
-              <input type="text" name="baki_debet" id="baki_debet"  class="input-field" value="{{ editdebitur['bakidebet'] }}">
+              <input type="text" class="input-field" name="keterangan"  placeholder=" Rp" value="{{ editdebitur['bap'] }}"/>
+                 </div>
             </div>
-            <div class="wrap-input">
-              <label htmlfor="rm" class="label-input">
-                Jangka Waktu Awal (Bulan)
-              </label>
-              <input type="text" class="input-field" name="rm" value="{{ editdebitur['rm'] }}"/>
-            </div>
-          </div>
 
-          <div class="wrap-input">
-            <label htmlfor="jangkawaktu" class="label-input">
-              GP Restrukturisasi (Bulan)
-            </label>
-            <input type="text" class="input-field" name="jangkawaktu" value="{{ editdebitur['jangkawaktu'] }}"/>
-          </div>
             
-          <div class="wrap-input">
-            <label htmlfor="jadwal_pokok" class="label-input">
-             Bunga Pokok (%)
-            </label>
-            <input type="text" class="input-field" name="jadwal_pokok" value="{{ editdebitur['jadwalpokok'] }}"/>
-          </div>
 
-          <div class="wrap-input">
-            <label htmlfor="sukubunga" class="label-input">
-             Suku Bunga Restrukturisasi 
-            </label>
-            <div class="sb"> 
-              <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan" value="{{ editdebitur['sbaw1'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbak1" placeholder="Bulan" value="{{ editdebitur['sbak1'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbp1" placeholder="Persen" value="{{ editdebitur['sbp1'] }}"/>
+              
+            <div style="display: flex; gap: 65px;">
+              <div class="form-group fullname" style="width: 23%;">
+                <label htmlfor="baki_debet" class="label-input">
+                    Baki Debet
+                  </label>
+                  <input type="text" name="baki_debet" id="baki_debet"  class="input-field" " placeholder="Rp" value="{{ editdebitur['bakidebet'] }}"/>
+                </div>
+                <div class="form-group fullname" style="width: 23%;">
+                  <label htmlfor="rm" class="label-input">
+                    Jangka Waktu Awal 
+                  </label>
+                  <input type="text" class="input-field" name="rm" " placeholder="Bulan" value="{{ editdebitur['rm'] }}"/>
+                </div>
             </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan" value="{{ editdebitur['sbaw2'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbak2" placeholder="Bulan" value="{{ editdebitur['sbak2'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbp2" placeholder="Persen" value="{{ editdebitur['sbp2'] }}"/>
-            </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan" value="{{ editdebitur['sbaw3'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbak3" placeholder="Bulan" value="{{ editdebitur['sbak3'] }}"/>
-              <input type="text" class="input-fieldsb" name="sbp3" placeholder="Persen" value="{{ editdebitur['sbp3'] }}"/>
-            </div>
-          </div>
+            <div style="display: flex; gap: 65px;">
+              <div class="form-group fullname" style="width: 23%;">
+                <label htmlfor="jangkawaktu" class="label-input">
+                    GP Restrukturisasi 
+                  </label>
+                  <input type="text" class="input-field" name="jangkawaktu" " placeholder="Bulan" value="{{ editdebitur['jangkawaktu'] }}"/>
+                </div>
+                <div class="form-group fullname" style="width: 23%;">
+                  <label htmlfor="jadwal_pokok" class="label-input">
+                    Bunga Pokok 
+                   </label>
+                   <input type="text" class="input-field" name="jadwal_pokok" placeholder="%" value="{{ editdebitur['jadwalpokok'] }}"/>
+                </div>
+                </div>
+                
 
-          <div class="wrap-input">
-            <label htmlfor="akad" class="label-input">
-              Akad 
-            </label>
-            <input type="date" class="input-field" name="akad" value="{{ editdebitur['akad'] }}"/>
-             
-          </div>
+                  <div class="form-group email">
+                    <label htmlfor="sukubunga" class="label-input">
+                      Suku Bunga Restrukturisasi
+                     </label>
+                     <div class="sb"> 
+                      <div style="display: flex; gap: 10px; font-size: x-small;">  
+                       <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan (1)" value="{{ editdebitur['sbaw1'] }}"/> 
+                       <input type="text" class="input-fieldsb" name="sbak1" placeholder="Bulan (2)" value="{{ editdebitur['sbak1'] }}"/> Suku Bunga =
+                       <input type="text" class="input-fieldsb" name="sbp1" placeholder="Persen" value="{{ editdebitur['sbp1'] }}"/>
+                      </div>
+                     </div>
+                     <br>
+                     <div class="sb">
+                      <div style="display: flex; gap: 10px;font-size: x-small;"> 
+                       <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan (3)" value="{{ editdebitur['sbaw2'] }}"/> 
+                       <input type="text" class="input-fieldsb" name="sbak2" placeholder="Bulan (4)" value="{{ editdebitur['sbak2'] }}"/> Suku Bunga  =
+                       <input type="text" class="input-fieldsb" name="sbp2" placeholder="Persen" value="{{ editdebitur['sbp2'] }}"/> 
+                      </div>
+                     </div>
 
-          <div class="wrap-input">
-            <label htmlfor="keterangan" class="label-input">
-              Angsuran Terbayar (Bulan)
-            </label>
-            <textarea type="text" class="input-field" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan" form="form">{{ editdebitur['bap'] }}</textarea>
-          </div>
+                     <br>
 
-          <p class="msg">{{ msg }}</p>
-            <input type="submit" class="btn-ubah" value="Tambah Data" name="button_tambah_data"/>
-        </form>
-        </div>
-      </div>
-    </div>
+                     <div class="sb">
+                      <div style="display: flex; gap: 10px;font-size: x-small;"> 
+                       <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan (5)" value="{{ editdebitur['sbaw3'] }}"/> 
+                       <input type="text" class="input-fieldsb" name="sbak3" placeholder="Bulan (6)"value="{{ editdebitur['sbak3'] }}"/> Suku Bunga =
+                       <input type="text" class="input-fieldsb" name="sbp3" placeholder="Persen" value="{{ editdebitur['sbp3'] }}"/>
+                      </div>
+                     </div>
+                  </div>
+                  <br>
+                  <div style="display: flex; gap: 10px;"">  
+                    <div class="form-group fullname" style="width: 23%;">
+                      <label htmlfor="akad" class="label-input">
+                        Akad 
+                      </label>
+                      <input type="date" class="input-field" name="akad"  value="{{ editdebitur['akad'] }}"/>
+                    </div>
+                    
+                    </div>
+
+                    <p class="msg">{{ msg }}</p>
+                    <div class="form-group submit-btn">
+                    <input type="submit" class="btn-ubah" value="Tambah Data" name="button_tambah_data"/>
+                    </div>
+
+                    <script>
+                      function edit() {
+                        document.getElementById("keterangan").value = "{{ editdebitur['bap'] }}";
+                      }
+                      </script>
+          </form>
+      
+
+
+
+
+
+    </section>
+
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+    
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+    }else{
+        modeText.innerText = "Dark mode";
+        
+    }
+});
+    </script>
+
 </body>
-
-<script>
-  function edit() {
-    document.getElementById("keterangan").value = "{{ editdebitur['bap'] }}";
-  }
-  </script>
-
 </html>
+
+
+
+
+
+
+
+

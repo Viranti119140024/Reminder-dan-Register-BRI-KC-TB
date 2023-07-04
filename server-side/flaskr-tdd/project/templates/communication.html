@@ -1,0 +1,25 @@
+<html>
+<body>
+    <h1>Manajemen Komunikasi Internal</h1>
+
+    <form action="{{ url_for('add_message') }}" method="POST">
+        <label for="sender">Pengirim:</label>
+        <input type="text" name="sender" id="sender"><br>
+
+        <label for="recipient">Penerima:</label>
+        <input type="text" name="recipient" id="recipient"><br>
+
+        <label for="message">Pesan:</label>
+        <textarea name="message" id="message"></textarea><br>
+
+        <button type="submit">Kirim Pesan</button>
+    </form>
+
+    <h2>Pesan Komunikasi</h2>
+    <ul>
+        {% for message in messages %}
+            <li>{{ message[1] }} - {{ message[2] }}: {{ message[3] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

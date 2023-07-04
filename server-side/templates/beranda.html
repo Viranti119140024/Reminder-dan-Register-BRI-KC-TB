@@ -10,68 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script src="script.js" defer></script>
   
-  
-  <title>Beranda</title>
-
-</head>
-
-<body>
-  <nav class="sidebar close">
-    <header>
-      <div class="image-text">
-        <span class="image">
-          <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
-        </span>
-
-        <div class="text logo-text">
-          <span class="name">BRIMINDER</span>
-          <span class="profession">KC BRI Teluk Betung</span>
-        </div>
-      </div>
-      <i class='bx bx-chevron-right toggle'></i>
-    </header>
-
-
-    <div class="menu-bar">
-      <div class="menu">
-
-        <li class="search-box">
-          <i class='bx bx-user-circle icon'></i>
-          <a class="text nav-text">{{ session.level }} | {{ session.nama }}</a>
-        </li>
+  <style>
+         /* Styles for body dashboard */
         
-
-        <ul class="menu-links">
-          {% if session['level'] == 'Admin' : %}
-          <li class="nav-link">
-            <a href="/beranda">
-              <i class='bx bx-home-alt icon'></i>
-              <span class="text nav-text">Beranda</span>
-            </a>
-          </li>
-
-          <li class="nav-link">
-            <a href="/kelolauser">
-              <i class='bx bxs-user-detail icon'></i>
-              <span class="text nav-text">Kelola User</span>
-            </a>
-          </li>
-          <li class="nav-link">
-            <a href="/posts">
-              <i class='bx bx-news icon'></i>
-              <span class="text nav-text">Pengumuman</span>
-            </a>
-          </li>
-          
-
-
-          {% else %}
-          <style>
-            /* Styles for body dashboard */
-        
-        body {
+         body {
           font-family: Arial, sans-serif;
           background-color: #f8f9fa;
           
@@ -140,7 +85,11 @@
         .datatable tbody tr:nth-child(even) {
           background-color: #f8f9fa;
         }
-        
+        .box-content .big {
+          text-decoration: none;
+        }
+
+
         .info-box {
           display: flex;
           align-items: center;
@@ -174,9 +123,147 @@
           font-size: 24px;
           font-weight: bold;
         }
+        .dashboard {
+  display: flex;
+}
+
+.menu-box {
+  background-color: #333;
+  width: 200px;
+  padding: 20px;
+}
+
+.menu-item {
+  display: block;
+  margin-bottom: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: #555;
+}
+
+.content-box {
+  flex-grow: 1;
+  padding: 20px;
+  width: 560%;
+  margin-left: -60px;
+}
+
+.content-header {
+  margin-bottom: 20px;
+  
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+p {
+  color: #777;
+  line-height: 1.5;
+}
+
+.feature {
+  margin-bottom: 30px;
+}
+
+.notification {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #515aff;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+}
+.red-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+
+  </style>
+  
+  <title>Beranda</title>
+
+</head>
+
+<body>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">BRIMINDER</span>
+          <span class="profession">KC BRI Teluk Betung</span>
+        </div>
+      </div>
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        <li class="search-box">
+          <i class='bx bx-user-circle icon'></i>
+          <a class="text nav-text">{{ session.level }} | {{ session.nama }}</a>
+        </li>
         
-        
-          </style>
+
+        <ul class="menu-links">
+          {% if session['level'] == 'Admin' : %}
+          
+
+
+          <li class="nav-link">
+            <a href="/beranda">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Beranda</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="/kelolauser">
+              <i class='bx bxs-user-detail icon'></i>
+              <span class="text nav-text">Kelola User</span>
+            </a>
+          </li>
+          
+          <li class="nav-link">
+            <a href="/laporan">
+              <i class='bx bxs-report icon'></i>
+              <span class="text nav-text">laporan</span>
+            </a>
+          </li>
+          <li class="nav-link">
+            <a href="/register">
+              <i class='bx bxs-file-plus icon'></i>
+              <span class="text nav-text">Register</span>
+            </a>
+          </li>
+
+          
+
+
+          {% else %}
+         
           <li class="nav-link">
             <a href="/beranda">
               <i class='bx bx-home-alt icon'></i>
@@ -235,101 +322,133 @@
       <div class="bagianAtas">
         <div class="inline">
 
-          <h2 class="jadwal">Daftar Pengguna</h2>
-          <div class="cari">
-            <label htmlfor="cari" class="label-input"></label>
-            <div class="wrap-input">
+                  
 
-              <input type="text" class="input-field" placeholder="Cari Username" id="myInput" onkeyup="myFunction()"></input>
+          <div class="content-box">
+            <div class="content-header">
+              <h2>Welcome to the Dashboard, {{session.username}}</h2>
+            </div>
+            <div class="content-body">
+              <!-- Jadwal Jatuh Tempo -->
+              <div class="feature">
+                <h3>Jadwal Jatuh Tempo</h3>
+                <p>Lihat debitur yang mengalami jatuh tempo kenaikan suku bunga</p>
+                <a href="/notifikasi/vewnotif">
+                  
+                <div class="notification">Jatuh Tempo</div>
+                {% if unread_count > 0 %}
+                <div class="notification-bell"><span class="notification-count">{{ unread_count }}</span> </div>
+                {% endif %}
+               
+                </a>
+              </div>
+              
+              <!-- Obrolan -->
+              <div class="feature">
+                
+                <h3>Obrolan</h3>
+                <p>Kirimkan pesan, gambar, dan file untuk semua anggota.</p>
+                <a href="/group-chat">
+                <div class="notification">New Message</div>
+                </a>
+              </div>
+              
+              <!-- Laporan -->
+              <div class="feature">
+                <h3>Laporan</h3>
+                
+                   <p>Temukan laporan terbaru dan analisis yang menarik.</p>
+                   <a href="/laporan">
+                <div class="notification">New Report</div>
+                {% if unread_count > 0 %}
+                <div class="notification-bell"><span class="notification-count">{{ unread_counts }}</span> </div>
+                {% endif %}
+                </a>
+              </div>
+              <div class="feature">
+                <h3>Validasi</h3>
+                
+                   <p>Temukan laporan terbaru dan analisis yang menarik.</p>
+                   <a href="/dashboard">
+                <div class="notification">Creat Report</div>
+                {% if data_count > 0 %}
+                        <div class="notification-bell"><span class="notification-count">{{ data_count }}</span></div>
+                    {% endif %}
+
+                
+                </a>
+              </div>
+              <!-- Postingan -->
+              
             </div>
           </div>
         </div>
-      
 
-      <div class="table">
-        <div class="container demo">
-          <table class="datatable table table-striped table-bordered">
-            <thead>
-              <br>
-              <br>
-              <tr>
-                <th>Nama</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Level</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for user in user %}
-              <tr>
-                <td>{{ user['nama'] }}</td>
-                <td>{{ user['username'] }}</td>
-                <td>{{ user['password'] }}</td>
-                <td>{{ user['level'] }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div><!--/.container.demo -->
-        <table id="myTable"></table>
-      </div>
-    </div>
-  </div>
+          
+      
+        </section>
+  
 
     {% else %}
 
-    <div style="display: flex; gap: 50px;">
-    <a href="/notifikasi/vewnotif">
-    <div class="info-box">
-      <div class="box-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 10H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V11a1 1 0 0 0-1-1zm-1 10H5v-8h14v8zM5 6h14v2H5zM7 2h10v2H7z"/></svg>
+    
+    <div class="content-box">
+      <div class="content-header">
+        <h2>Welcome to the Dashboard, {{session.username}}</h2>
       </div>
-    <div class="box-content">
-      <span class="big">{{notif}}</span>
-       Debitur Jatuh Tempo
-    </div>
-  </div>
-  </a>
-  <a href="/group-chat">
-    
-  <div class="info-box">
-    <div class="box-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 10H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V11a1 1 0 0 0-1-1zm-1 10H5v-8h14v8zM5 6h14v2H5zM7 2h10v2H7z"/></svg>
-    </div>
-    
-    <div class="box-content">
-      <span class="big">Obrolan Group</span>
-      
-    </div>
-  </div>
-</a>
-</div>
-<br>
-<br>
-<br>
-<div style="display: flex; gap: 50px;">
-  <a href="/posts">
-  <div class="info-box">
-    <div class="box-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 10H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V11a1 1 0 0 0-1-1zm-1 10H5v-8h14v8zM5 6h14v2H5zM7 2h10v2H7z"/></svg>
-    </div>
-  <div class="box-content">
-    <span class="big">44.51</span>
-    Postingan
-  </div>
-</div>
-</a>
+      <div class="content-body">
+        <!-- Jadwal Jatuh Tempo -->
+        <div class="feature">
+          <h3>Jadwal Jatuh Tempo</h3>
+          <p>Lihat debitur yang mengalami jatuh tempo kenaikan suku bunga</p>
+          <a href="/notifikasi/vewnotif">
+            
+          <div class="notification">Jatuh Tempo</div>
+          {% if unread_count > 0 %}
+          <div class="notification-bell"><span class="notification-count">{{ unread_count }}</span> </div>
+          {% endif %}
+         
+          </a>
+        </div>
+        
+        <!-- Obrolan -->
+        <div class="feature">
+          
+          <h3>Obrolan</h3>
+          <p>Kirimkan pesan, gambar, dan file untuk semua anggota.</p>
+          <a href="/group-chat">
+          <div class="notification">New Message</div>
+          </a>
+        </div>
+        
+        <!-- Laporan -->
+        <div class="feature">
+          <h3>Laporan</h3>
+          
+             <p>Temukan laporan terbaru dan analisis yang menarik.</p>
+             <a href="/upload">
+          <div class="notification">Creat Report</div>
+          
+          </a>
+        </div>
+        <div class="feature">
+          <h3>Laporan Restrukturisasi</h3>
+          
+             <p>Temukan laporan terbaru dan analisis yang menarik.</p>
+             <a href="/laporan_restrukturisasi">
+              
 
-<div class="info-box">
-  <a href="/upload">
-  <div class="box-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 10H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V11a1 1 0 0 0-1-1zm-1 10H5v-8h14v8zM5 6h14v2H5zM7 2h10v2H7z"/></svg>
+          <div class="notification">Creat Report</div>
+          
+          </a>
+        </div>
+        
+        
+        
+       
+      </div>
+    </div>
   </div>
-  <div class="box-content">
-    <span class="big">132</span>
-    Laporan</a>
-  </div>
-</div>
 
 </section>
 

@@ -1,79 +1,216 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='notifikasi.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='editdebitur.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Notifikasi</title>
-</head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+  <link rel="stylesheet" href="style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!--<title>Dashboard Sidebar Menu</title>-->
+<style>
+.notif {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-right: 200px;
+  
+}
+
+.notif h2 {
+  font-size: 24px;
+  color: #333333;
+  margin: 0;
+  font-weight: bold;
+}
+
+.btn_view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #102d81;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  margin-left: 450px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn_view:hover {
+  background-color: #0a1a52;
+}
+
+</style>  
+
+  <title>Tambah Data Debitur</title>
 
 <body>
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          <a href="/beranda" >
-            <img
-              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
-               />
-            <p>BERANDA</p>
-          </a>
-        </li>
-        <li>
-          <a href="/restrukturisasi" class="active">
-            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"  />
-            <p>RESTRUKTURISASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register" >
-            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
-            <p>REGISTER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" >
-            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
-            <p>KELUAR</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-      <div class="head">
-        <div class="bagianAtas">
-      
-          <div class="table">
-            <h2></h2>
-            
-          </div>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                  <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+                </span>
 
-            <div class="notif">
-              <h2> {{notif}} Debitur mengalami Jatuh Tempo  </h2>
+                <div class="text logo-text">
+                    <span class="name">BRIMINDER</span>
+                    <span class="profession">KC BRI Teluk Betung</span>
+                </div>
+            </div>
 
-            <a href="/notifikasi/vewnotif">
-              
-              <button
-                class="btn_view"
-              >
-                View
-              </button>
-              </a>
-            
-            
-          </div>        
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
 
-          
-        
-    
-  
+        <div class="menu-bar">
+            <div class="menu">
+
+                <li class="search-box">
+                  <i class='bx bx-user-circle icon' ></i>
+                  <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/beranda">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Beranda</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="restrukturisasi">
+                            <i class='bx bx-notepad icon' ></i>
+                            <span class="text nav-text">Restrukturisasi</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link">
+                        <a href="/register">
+                            <i class='bx bxs-file-plus icon'></i>
+                            <span class="text nav-text">Register</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                    <a href="/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Keluar</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
         </div>
-      </div>
-    </div>
+
+    </nav>
+
+    <section class="home">
+     
+
+      <div class="container">
+        <div class="content">
+          <div class="notif">
+            <h2> {{notif}} Debitur mengalami Jatuh Tempo  </h2>
+
+            <br>
+            <br>
+
+          <a href="/notifikasi/vewnotif">
+            
+            <button
+              class="btn_view"
+            >
+              View
+            </button>
+            </a>
+          
+          
+          </div>   
+          </div>
+          </div>
+          </form>
+      
+
+
+
+
+
+    </section>
+
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+    
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+    }else{
+        modeText.innerText = "Dark mode";
+        
+    }
+});
+    </script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

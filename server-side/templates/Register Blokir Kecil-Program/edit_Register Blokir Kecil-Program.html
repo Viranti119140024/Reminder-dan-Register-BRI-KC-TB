@@ -145,19 +145,15 @@
                 <input type="text" name="Buka" id="Buka"  class="input-field" value="{{ editblokirkecil['Buka'] }}" >
               </div>
               <div class="form-group fullname">
-                <label htmlfor="Paraf" class="label-input">
-                  Paraf
-                  </label>
-                  <input type="text" name="Paraf" id="Paraf"  class="input-field" value="{{ editblokirkecil['Paraf'] }}" >
-                </div>
+                <label htmlfor="keterangan" class="label-input">
+                        Keterangan
+                      </label>
+                      <textarea name="keterangan" id="" cols="30" rows="2" class="input-field">{{ editblokirkecil['Keterangan'] }}</textarea>
+                    </div>
+              
           </div>
           
-          <div class="form-group fullname">
-            <label htmlfor="keterangan" class="label-input">
-                    Keterangan
-                  </label>
-                  <textarea name="keterangan" id="" cols="30" rows="2" class="input-field">{{ editblokirkecil['Keterangan'] }}</textarea>
-                </div>
+          
             
             <div class="form-group submit-btn" style="width: 440px;">
             <input type="submit" class="btn-ubah" value="Selesai" name="button_tambah_data"/>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notifikasi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <!-- Tampilkan ikon notifikasi jika level pengguna adalah "admin" -->
+    <!-- Tampilkan nama pengguna jika pengguna telah login -->
+    {% if 'loggedin' in session %}
+      <span class="username">Halo, {{ session['nama'] }}</span>
+    {% endif %}
+  </header>
+
+  <div class="content">
+    <h1>Notifikasi</h1>
+    <body>
+    <h1>Notifications</h1>
+    <ul>
+        {% for notification in notifications %}
+        <li>
+            <h3>{{ notification.judul }}</h3>
+            <p>{{ notification.keterangan }}</p>
+            <p>Created at: {{ notification.created_at }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+  <footer>
+    <!-- Tampilkan link Logout jika pengguna telah login -->
+    {% if 'loggedin' in session %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+  </footer>
+</body>
+</html>

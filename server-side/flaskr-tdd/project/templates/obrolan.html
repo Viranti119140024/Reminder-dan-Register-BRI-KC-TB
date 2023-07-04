@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obrolan</title>
+</head>
+<body>
+    <h1>Halaman Obrolan</h1>
+    <h3>Selamat datang, {{ get_current_user() }}</h3>
+    <h4>Daftar Pengguna:</h4>
+    <ul>
+        {% for user in users %}
+            <li><a href="/room-chat/{{ user[0] }}">{{ user[1] }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="/kirim-pesan">Kirim Pesan</a>
+</body>
+</html>

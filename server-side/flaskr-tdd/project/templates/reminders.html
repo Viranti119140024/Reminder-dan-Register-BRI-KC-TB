@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reminders</title>
+</head>
+<body>
+    <h1>Reminders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Waktu</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reminders in reminders %}
+            <tr>
+                <td>{{ reminders[2] }}</td>
+                <td>{{ reminders[3] }}</td>
+                <td>{{ reminders[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

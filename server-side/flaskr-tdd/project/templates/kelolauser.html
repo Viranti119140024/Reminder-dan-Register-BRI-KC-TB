@@ -8,140 +8,291 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <title>Kelola User</title>
-    
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/iWvYUhV7AFp2ANZ9O5CFZGv6apkiqof8YbwWWP5A9j18nU9EMTKldcmt7F7g3w9" crossorigin="anonymous">
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="script.js" defer></script>
+  <title>Beranda</title>
+  <style>
+    /* Tambahkan kode CSS ini pada file kelolauser.css */
+
+    /* Gaya tombol Tambah User */
+    .btn-tambah {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn-tambah:hover {
+      background-color: #0056b3;
+    }
+
+    /* Gaya tombol Ganti Password */
+    .btn-ganti-password {
+      background-color: #ffc107;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn-ganti-password:hover {
+      background-color: #ffab00;
+    }
+
+    /* Gaya tombol Hapus Akun */
+    .btn-hapus-akun {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn-hapus-akun:hover {
+      background-color: #c82333;
+    }
+
+    /* Gaya tabel */
+    .datatable {
+      width: 10%;
+      border-collapse: collapse;
+    }
+
+    .datatable th,
+    .datatable td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    .datatable th {
+      background-color: #fff;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .datatable tbody tr:nth-child(even) {
+      background-color: #ffffff;
+    }
+
+    .datatable tbody tr:hover {
+      background-color: #f2f2f2;
+    }
+    .container-box {
+      padding: 20px;
+      margin: 20px;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 10px;
+      border-radius: 10px;
+      margin-left: -55px;
+      margin-top: 40px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow-x: auto; /* Add overflow property for horizontal scrolling */
+    }
+
+    /* Adjust table width to fit the container box */
+    .datatable {
+      width: 100%; /* Adjust width to fit the container box */
+    }
+
+    /* Adjust table headers to prevent stretching */
+    .datatable th {
+      white-space: nowrap; /* Prevent header text from wrapping */
+    }
+
+  </style>
 </head>
-
 <body>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+          <span class="image">
+            <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+          </span>
 
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">Role: {{ session.level }} | {{ session.nama }}</a>
-          
-        </li>
-
-        <li>
-          <a href="/kelolauser" class="">
-            <img src="{{ url_for('static', filename='icon/usersettingputih.png') }}" />
-            <p>KELOLA USER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register" class="">
-            <img src="{{ url_for('static', filename='icon/icons8-add-administrator-48(1).png') }}" />
-            <p>ADD USER</p>
-          </a>
-        </li>
-
-        
-        <a href="/logout">
-          <img src="{{ url_for('static', filename='icon/exitputih.png') }}"
-           />
-          <p>KELUAR</p>
-        </a>
-      </ul>
-    
-
-      </ul>
-    </div>
-      <div class="head">
-        <div class="bagianAtas">
-          <div class="inline">
-            
-            <h2 class="jadwal">Kelola User</h2>
-            <div class="cari">
-            <label htmlfor="cari" class="label-input"></label> 
-            <div class="wrap-input">    
-              <input type="text" class="input-field" placeholder="Cari Username" id="myInput" onkeyup="myFunction()"></input>
-            </div>
+          <div class="text logo-text">
+              <span class="name">BRIMINDER</span>
+              <span class="profession">KC BRI Teluk Betung</span>
           </div>
-            </div>
-          
-            <div class="table">
-              <a href="" >
-                  
+      </div>
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
 
+
+    <div class="menu-bar">
+        <div class="menu">
+
+          <li class="search-box">
+            <i class='bx bx-user-circle icon' ></i>
+            <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+          </li>
+
+
+         
+
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="/beranda">
+                  <i class='bx bx-home-alt icon' ></i>
+                  <span class="text nav-text">Beranda</span>
+              </a>
+          </li>
+
+          <li class="nav-link">
+              <a href="/kelolauser">
+                  <i class='bx bxs-user-detail icon' ></i>
+                  <span class="text nav-text">Kelola User</span>
+              </a>
+          </li>
+          
+          <li class="nav-link">
+            <a href="/laporan">
+              <i class='bx bxs-report icon'></i>
+              <span class="text nav-text">laporan</span>
+            </a>
+          </li>
+         
+          </ul>
+        </div>
+
+        <div class="bottom-content">
+          <li class="">
+              <a href="/logout">
+                  <i class='bx bx-log-out icon' ></i>
+                  <span class="text nav-text">Keluar</span>
+              </a>
+          </li>
+
+          <li class="mode">
+              <div class="sun-moon">
+                  <i class='bx bx-moon icon moon'></i>
+                  <i class='bx bx-sun icon sun'></i>
+              </div>
+              <span class="mode-text text">Dark mode</span>
+
+              <div class="toggle-switch">
+                  <span class="switch"></span>
+              </div>
+          </li>
+          
+      </div>
+  </div>
+
+</nav>
+
+  <section class="home">
+     <div class="container-box">
+      <div class="bagianAtas">
+        <div class="inline">
+        
+          <h2 class="jadwal">Kelola User</h2>
+          <div class="cari">
             
+            
+          </div>
+        
+        <br>
+
+        <div class="table">
+          
             <div>
               <a href="/registrasi">
-              <button
-                class="btn_tambah"
-              >
-                Tambah User
-              </button>
+                <button class="btn-tambah">Tambah User</button>
               </a>
             </div>
-            <table id="myTable">
+          </a>
+          <br>
+          
+          
+          <div class="container demo">
+            <table class="datatable table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>Nama</th>                  
+                  <th>Nama</th>
                   <th>Username</th>
-                  <th>Password</th>                 
-                  <th>Level</th>                                   
+                  <th>Password</th>
+                  <th>Level</th>
                   <th>Aksi</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>                  
-                  <th></th>
-                  
                 </tr>
               </thead>
               <tbody>
                 {% for user in user %}
-                  <tr>
-                    <td>{{ user['nama'] }}</td>
-                    <td>{{ user['username'] }}</td>
-                    <td>{{ user['password'] }}</td>
-                    <td>{{ user['level'] }}</td>
-                    
-                    <td>
-                      <a href="/gantipassword" >
-                      <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
-                      </a> 
-                    </td> 
-                      <td>
-                        {% if user['level'] == 'admin' %}
-                        <a href="/gantipassword?username={{ user['username'] }}">
-                          <img src="{{ url_for('static', filename='icon/edit.png') }}"/>                      
-                        </a> 
-                      {% endif %}
+                <tr>
+                  <td>{{ user['nama'] }}</td>
+                  <td>{{ user['username'] }}</td>
+                  <td>{{ user['password'] }}</td>
+                  <td>{{ user['level'] }}</td>
+                  <td style="display:flex; gap:15px">
+                    <a href="/gantipassword/{{ user['username'] }}"><button class="btn-ganti-password">Ganti Password</button></a>
+                    <a href="/hapusakun/{{ user['username'] }}"><button class="btn-hapus-akun">Hapus Akun</button></a>
                   </td>
-                  </tr>
+                </tr>
                 {% endfor %}
               </tbody>
             </table>
-          </div>
+          </div><!--/.container.demo -->
         </div>
       </div>
     </div>
-</body>
+  </div>
+  </section>
 
-<script>
-  function myFunction() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-  
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    });
+
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    });
+
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
+
+  <script>
+    function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
         }
       }
     }
-  }
-</script>
-
+  </script>
+</body>
 </html>

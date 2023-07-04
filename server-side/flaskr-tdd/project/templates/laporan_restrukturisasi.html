@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laporan Restrukturisasi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ffffff;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #ffffff;
+            color: #333;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        .detail-link {
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #337ab7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            background-color: #23527c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Laporan Restrukturisasi</h1>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nama Debitur</th>
+                    <th>Norek</th>
+                    <th>Jangka Waktu</th>
+                    <th>Akad</th>
+                    <th>Restrukturisasi Berakhir</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for debitur in debitur_laporan %}
+                <tr>
+                    <td class="align-middle">{{ debitur['namadebitur'] }}</td>
+                    <td class="align-middle">{{ debitur['norek'] }}</td>
+                    <td class="align-middle">{{ debitur['jangkawaktu'] }}</td>
+                    <td class="align-middle">{{ debitur['akad'] }}</td>
+                    <td class="align-middle">{{ debitur['jadwaltempo'] }}</td>
+                    <td class="detail-link align-middle"><a href="/restrukturisasi/detail/{{ debitur['norek'] }}" class="btn btn-primary">Detail</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

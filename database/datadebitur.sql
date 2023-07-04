@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `datadebitur` (
   `id` int(11) NOT NULL,
-  `namadebitur` varchar(50) NOT NULL,
+  `nama_debitur` varchar(50) NOT NULL,
   `norek` int(30) NOT NULL,
   `jeniskredit` varchar(50) NOT NULL,
   `bakidebet` int(50) NOT NULL,

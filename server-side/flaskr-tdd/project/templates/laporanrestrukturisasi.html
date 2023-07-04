@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laporan Restrukturisasi</title>
+</head>
+<body>
+    <h1>Laporan Restrukturisasi</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Jumlah Debitur</th>
+                <th>Target</th>
+                <th>Persentase</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in laporan %}
+            <tr>
+                <td>{{ data['no'] }}</td>
+                <td>{{ data['tanggal'] }}</td>
+                <td>{{ data['jumlah_debitur'] }}</td>
+                <td>{{ data['target'] }}</td>
+                <td>{{ data['persentase'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

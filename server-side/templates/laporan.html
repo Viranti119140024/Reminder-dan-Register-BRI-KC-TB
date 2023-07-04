@@ -4,18 +4,25 @@
     <title>Halaman Laporan</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             background-color: #f8f9fa;
         }
         
         .container {
-            max-width: 800px;
-            margin-top: 50px;
+            max-width: 1400px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
         
         .table-wrapper {
-            overflow-x: auto;
+            width: 1400px;
+            background-color: #fff;
+            padding: 60px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         
         .table {
@@ -36,62 +43,206 @@
             background-color: #dc3545;
             color: #fff;
         }
+        
+        .page-link {
+            color: #17a2b8;
+        }
+        
+        .page-link:hover {
+            color: #0c7b8b;
+        }
+        
+        .page-item.active .page-link {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .search-form {
+            text-align: right;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            margin-left: 928px;
+        }
+
+        .search-form input[type="text"] {
+            width: 300px;
+            margin-right: 10px;
+            padding-right: 30px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Daftar Laporan</h1>
         <div class="table-wrapper">
-            <table class="table">
+            <div class="back-btn">
+                <a href="{{ url_for('home') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+            </div>
+
+            <h1 class="text-center">Daftar Laporan</h1>
+            <br>
+            <div class="search-form">
+                <form action="{{ url_for('laporan') }}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="cari-keterangan" name="keterangan"
+                            placeholder="Cari berdasarkan keterangan">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Username</th>
                         <th>Tanggal</th>
                         <th>Keterangan</th>
                         <th>File Laporan</th>
+                        <th>Status Laporan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for laporan_item in laporan %}
+                    {% for laporan_item in laporan[ (page-1)*5 : page*5 ] %}
                     <tr>
                         <td>{{ laporan_item[1] }}</td>
                         <td>{{ laporan_item[2] }}</td>
-                        <td>{{ laporan_item[4] }}</td>
-                        <td><a href="{{ url_for('download_file', filename=laporan_item[5]) }}">Download</a></td>
+                        <td>{{ laporan_item[6] }}</td>
                         <td>
-                            <a href="{{ url_for('edit_laporan', laporan_id=laporan_item[0]) }}" class="btn btn-edit">Edit</a>
+                            <a href="{{ url_for('download_laporan', laporan_id=laporan_item[0]) }}" class="download-link" data-laporanid="{{ laporan_item[0] }}">{{ laporan_item[7] }}</a>
+                        </td>
+                        <td>
+                            <a class="">{{ laporan_item[5] }}</a>
+
+                        </td>
+
+                        <td>
                             <form action="{{ url_for('hapus_laporan', laporan_id=laporan_item[0]) }}" method="post" style="display: inline;">
-                                <button type="submit" class="btn btn-delete">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>
                     {% endfor %}
+
                 </tbody>
             </table>
-        </div>
-        <div class="text-center">
-            <ul class="pagination">
-                {% if page > 1 %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('laporan', page=page-1) }}">Previous</a></li>
-                {% endif %}
-                
-                {% for i in range(1, total_pages+1) %}
-                {% if i == page %}
-                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
-                {% else %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('laporan', page=i) }}">{{ i }}</a></li>
-                {% endif %}
-                {% endfor %}
-                
-                {% if page < total_pages %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('laporan', page=page+1) }}">Next</a></li>
-                {% endif %}
-            </ul>
+
+            <div class="text-center mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page > 1 %}
+                    <li class="page-item"><a class="page-link"
+                            href="{{ url_for('laporan', page=page-1) }}">Previous</a></li>
+                    {% endif %}
+
+                    {% for i in range(1, total_pages+1) %}
+                    {% if i == page %}
+                    <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('laporan', page=i) }}">{{ i }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if page < total_pages %}
+                    <li class="page-item"><a class="page-link"
+                            href="{{ url_for('laporan', page=page+1) }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
+    <script>
+        // Menggunakan JavaScript untuk mengurangi unread_counts setelah file laporan diunduh
+        const downloadLinks = document.getElementsByClassName('download-link');
+        for (const link of downloadLinks) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();  // Mencegah tautan langsung mengarahkan ke unduhan
+    
+                const laporanId = this.dataset.laporanid;
+                // Mengirim permintaan AJAX ke server untuk mengurangi unread_counts
+                fetch(`/laporan/download/${laporanId}`, { method: 'GET' })
+                    .then(response => {
+                        // Mengubah tampilan link jika permintaan berhasil
+                        this.style.color = 'gray';
+                        this.style.textDecoration = 'line-through';
+                        // Mengurangi unread_counts pada tampilan
+                        const unreadCountElement = document.getElementById('unread-count');
+                        if (unreadCountElement) {
+                            const unreadCount = parseInt(unreadCountElement.innerText);
+                            if (!isNaN(unreadCount) && unreadCount > 0) {
+                                unreadCountElement.innerText = unreadCount - 1;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error:', error);
+                    });
+    
+                // Mengarahkan tautan unduh ke URL yang sebenarnya setelah permintaan dikirim
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 100);
+            });
+        }
+    </script>
 
     <!-- Include Bootstrap JS (Optional) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- Include Font Awesome JS (Optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        document.getElementById('cari-keterangan').addEventListener('input', function () {
+            var keyword = this.value.toLowerCase();
+            var rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(function (row) {
+                var keterangan = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+
+                if (keterangan.indexOf(keyword) !== -1) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        const body = document.querySelector('body'),
+            sidebar = body.querySelector('nav'),
+            toggle = body.querySelector(".toggle"),
+            searchBtn = body.querySelector(".search-box"),
+            modeSwitch = body.querySelector(".toggle-switch"),
+            modeText = body.querySelector(".mode-text");
+
+        toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        })
+
+        searchBtn.addEventListener("click", () => {
+            sidebar.classList.remove("close");
+        })
+
+        modeSwitch.addEventListener("click", () => {
+            body.classList.toggle("dark");
+
+            if (body.classList.contains("dark")) {
+                modeText.innerText = "Light mode";
+            } else {
+                modeText.innerText = "Dark mode";
+            }
+        });
+    </script>
 </body>
+
 </html>

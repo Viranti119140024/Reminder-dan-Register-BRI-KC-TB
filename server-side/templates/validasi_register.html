@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- validasi_register.html -->
+<h1>Halaman Admin</h1>
+
+<!-- Daftar permintaan validasi -->
+<table>
+  <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>Nama Debitur</th>
+      <th>Dok yang dipinjam</th>
+      <th>Nama Peminjam</th>
+      <th>Keperluan</th>
+      <th>Tanggal Kembali</th>
+      <th>Kelengkapan Dokumen</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for request in validation_requests %}
+    <tr>
+      <td>{{ request['Tanggal'] }}</td>
+      <td>{{ request['NamaDebitur'] }}</td>
+      <td>{{ request['DokyangDipinjam'] }}</td>
+      <td>{{ request['NamaPeminjam'] }}</td>
+      <td>{{ request['Keperluan'] }}</td>
+      <td>{{ request['TanggalKembali'] }}</td>
+      <td>{{ request['KelengkapanDokumen'] }}</td>
+      <td>
+        <form action="/register/validate/{{ request['ID'] }}" method="post">
+          <input type="submit" name="approve" value="Setujui">
+          <input type="submit" name="reject" value="Tolak">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

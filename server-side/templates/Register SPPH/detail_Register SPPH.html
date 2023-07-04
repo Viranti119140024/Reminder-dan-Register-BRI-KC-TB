@@ -10,6 +10,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <script src="script.js" defer></script>
+  <style>
+    .btn_wrapper {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-approve {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+
+    .btn-reject {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-batalkan {
+      background-color: orange;
+      color: white;
+      border: none;
+      padding: 4px 13px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .bx {
+        font-size: 24px; /* Ubah ukuran ikon sesuai kebutuhan */
+        color: #102d81; /* Ubah warna ikon sesuai kebutuhan */
+        margin-right: 3px; /* Tambahkan jarak antara ikon */
+      }
+  </style>
   <title>Register SPPH</title>
     
 </head>
@@ -134,57 +172,81 @@
               </button>
               </a>
             </div>
-            <table id="myTable">
-              <thead>
-                <tr>
-                  <th>Nama Debitur</th>
-                  <th>Nomor SPPA </th>  
-                  <th>Nomor Premi</th>                                                 
-                  <th>Jenis Pertanggungan </th>
-                  <th>Nilai Pertanggungan</th>
-                  <th>Jangka Waktu</th>
-                  <th>Setor Rp.</th>
-                  <th>Setor Tanggal.</th>
-                  <th>Paraf</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for spph in spph %}
-                <tr>
-                  <td>{{ spph['NamaDebitur'] }}</td>
-                  <td>{{ spph['NomorSPPA'] }}</td>
-                  <td>{{ spph['premi'] }}</td>
-                  <td>{{ spph['JenisPertanggungan'] }}</td>
-                  <td>{{ spph['NilaiPertanggungan'] }}</td>
-                  <td>{{ spph['JangkaWaktu'] }}</td>       
-                  <td>{{ spph['SetorRp'] }}</td> 
-                  <td>{{ spph['SetorTanggal'] }}</td> 
-                  <td>{{ spph['Paraf'] }}</td>      
-         
-                  <td>
-                    <a href="/register/spph/edit/{{ spph['premi'] }}" >
-                       
-                      <img
-                        src="{{ url_for('static', filename='icon/edit.png') }}"
-                      />                      
-                    </a>  
-                    <a href="/register/spph/hapus/{{ spph['premi'] }}">
-                      <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
-                    </a>   
-                 </td>
 
-
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+    <table id="myTable">
+    <thead>
+      <tr>
+        <th>Nama Debitur</th>
+        <th>Nomor SPPA</th>
+        <th>Nomor Premi</th>
+        <th>Jenis Pertanggungan</th>
+        <th>Nilai Pertanggungan</th>
+        <th>Jangka Waktu</th>
+        <th>Setor Rp.</th>
+        <th>Setor Tanggal</th>
+        
+        {% if session['level'] == 'Admin' %}
+        <th>Status</th>
+        <th>Validasi</th>
+        {% else %}
+        <th>Status</th>
+        {% endif %}
+        
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for spph in spph %}
+      <tr>
+        <td>{{ spph['NamaDebitur'] }}</td>
+        <td>{{ spph['NomorSPPA'] }}</td>
+        <td>{{ spph['premi'] }}</td>
+        <td>{{ spph['JenisPertanggungan'] }}</td>
+        <td>{{ spph['NilaiPertanggungan'] }}</td>
+        <td>{{ spph['JangkaWaktu'] }}</td>
+        <td>{{ spph['SetorRp'] }}</td>
+        <td>{{ spph['SetorTanggal'] }}</td>
+        <td>{{ spph['Status'] }}</td>
+        <td>
+          {% if session['level'] == 'Admin' %}
+          {% if spph['Status'] == 'Belum Divalidasi' %}
+          <div class="btn_wrapper">
+          <form action="{{ url_for('approve_spph', premi=spph['premi']) }}" method="post" style="display: inline;">
+            <button type="submit" name="status" value="Approve" class="btn-approve">Approve</button>
+          </form>
+          
+          <form action="{{ url_for('reject_spph', premi=spph['premi']) }}" method="post" style="display: inline;">
+            <button type="submit" name="status" value="Reject" class="btn-reject">Reject</button>
+          </form>
           </div>
-        </div>
-      </div>
-    </div>
+          {% elif spph['Status'] == 'Disetujui' or spph['Status'] == 'Ditolak' %}
+          <form action="{{ url_for('batalkan_validasi_spph', premi=spph['premi']) }}" method="post" style="display: inline;">
+            <button type="submit" name="status" value="Batalkan Validasi" class="btn-batalkan">Batalkan Validasi</button>
+          </form>
+          
+          {% endif %}
+          {% else %}
+          {{ spph['Status'] }}
+          {% endif %}
+        </td>
+        <td>
+          <a href="/register/spph/edit/{{ spph['premi'] }}"class="bx">
+            <i class="bx bx-edit"></i>
+          </a>
+          <a href="/register/spph/hapus/{{ spph['premi'] }}" class="bx">
+            <i class="bx bx-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-  </section>
 
   <script>
     const body = document.querySelector('body'),

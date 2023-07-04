@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mengatur Pengingat</title>
+</head>
+<body>
+    <h2>Mengatur Pengingat</h2>
+    <form method="POST" action="/set_reminder/{{ meeting.id }}">
+        <label for="pengingat">Pengingat:</label>
+        <input type="text" id="pengingat" name="pengingat" required><br><br>
+        
+        <input type="submit" value="Simpan Pengingat">
+    </form>
+</body>
+</html>

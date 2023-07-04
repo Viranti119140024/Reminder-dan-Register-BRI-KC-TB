@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,98 +9,155 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="script.js" defer></script>
+
   <title>View Notifikasi</title>
 </head>
 
 <body>
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          <a href="/beranda" >
-            <img
-              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
-               />
-            <p>BERANDA</p>
-          </a>
-        </li>
-        <li>
-          <a href="/restrukturisasi" class="active">
-            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"   />
-            <p>RESTRUKTURISASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register" >
-            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
-            <p>REGISTER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" >
-            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
-            <p>KELUAR</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-      <div class="head">
-        <div class="bagianAtas">
-          <div class="inline">
-          <a href="/notifikasi"><img class="back"
-            src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png"/> 
-          </a>
-          <h2 class="jadwal">Jadwal Restrukturisasi</h2>
-          <label htmlfor="cari" class="label-input"></label> 
-          <div class="cari">
-          <div class="wrap-input">    
-            <input type="text" class="input-field" placeholder="Cari Berdasarkan Nama" id="myInput" onkeyup="myFunction()"></input>
-          </div>
-          </div>
-          </div>
-          <div class="table">
-            
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+        </span>
 
-            
+        <div class="text logo-text">
+          <span class="name">BRIMINDER</span>
+          <span class="profession">KC BRI Teluk Betung</span>
+        </div>
+      </div>
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        <li class="search-box">
+          <i class='bx bx-user-circle icon'></i>
+          <a class="text nav-text">{{ session.level }} | {{ session.nama }}</a>
+        </li>
+
+        <ul class="menu-links">
+          {% if session['level'] == 'Admin' : %}
+          <li class="nav-link">
+            <a href="/beranda">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Beranda</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="/kelolauser">
+              <i class='bx bxs-user-detail icon'></i>
+              <span class="text nav-text">Kelola User</span>
+            </a>
+          </li>
+
+          {% else %}
+          <li class="nav-link">
+            <a href="/beranda">
+              <i class='bx bx-home-alt icon'></i>
+              <span class="text nav-text">Beranda</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="/restrukturisasi">
+              <i class='bx bx-notepad icon'></i>
+              <span class="text nav-text">Restrukturisasi</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="/register">
+              <i class='bx bxs-file-plus icon'></i>
+              <span class="text nav-text">Register</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="">
+          <a href="/logout">
+            <i class='bx bx-log-out icon'></i>
+            <span class="text nav-text">Keluar</span>
+          </a>
+        </li>
+
+        <li class="mode">
+          <div class="sun-moon">
+            <i class='bx bx-moon icon moon'></i>
+            <i class='bx bx-sun icon sun'></i>
+          </div>
+          <span class="mode-text text">Dark mode</span>
+
+          <div class="toggle-switch">
+            <span class="switch"></span>
+          </div>
+        </li>
+      </div>
+    </div>
+  </nav>
+
+  <section class="home">
+
+    <div class="head">
+      <div class="bagianAtas">
+        <div class="inline">
+          <a href="/notifikasi"><img class="back" src="https://img.icons8.com/ios-filled/20/102d81/long-arrow-left.png" /></a>
+          <h2 class="jadwal">Jadwal Restrukturisasi</h2>
+          <label htmlfor="cari" class="label-input"></label>
+          <div class="cari">
+            <div class="wrap-input">
+              <input type="text" class="input-field" placeholder="Cari No. Rekening" id="myInput" onkeyup="myFunction()"></input>
+            </div>
+          </div>
+        </div>
+
+        <div class="table">
+
+          <div class="bubble-box">
             <table id="myTable">
               <thead>
                 <tr>
                   <th>Nama Debitur</th>
-                  <th>No.Rekening</th>                 
+                  <th>No.Rekening</th>
                   <th>Baki Debet</th>
-                  <th>Jangka Waktu</th>                  
+                  <th>Jangka Waktu</th>
                   <th>Periode Suku Bunga</th>
                   <th>Persentase Bunga</th>
                   <th>Jatuh Tempo</th>
                   <th>Akad</th>
                   <th>Bunga Baru</th>
                   <th>Aksi</th>
-                  
                 </tr>
               </thead>
               <tbody>
                 {% for kenaikansukubunga in kenaikansukubunga %}
-                  <tr>
-                    <td>{{ kenaikansukubunga['namadebitur'] }}</td>
-                    <td>{{ kenaikansukubunga['norek'] }}</td>
-                    <td>{{ kenaikansukubunga['bakidebet']| rupiah }}</td>
-                    <td>{{ kenaikansukubunga['jangkawaktu'] }}</td>
-                    <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} </td>
-                    <td>{{ kenaikansukubunga['sukubunga'] }} % </td>
-                    <td>{{ kenaikansukubunga['jadwaljatuhtempo'] }}</td>
-                    <td>{{ kenaikansukubunga['akad'] }}</td>
-                    <td>{{ ((kenaikansukubunga['bakidebet'] * kenaikansukubunga['sukubunga']) / 100)|round|int| rupiah }}</td>
-                    <td>
-                      <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}" >
-                        <img src="{{ url_for('static', filename='icon/detail.png') }}"/>
-                      </a>
-                      <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
-                          <img src="{{ url_for('static', filename='icon/done.png') }}"/>
-                      </a>
-                    </td>
-                  </tr>
+                <tr>
+                  <td>{{ kenaikansukubunga['namadebitur'] }}</td>
+                  <td>{{ kenaikansukubunga['norek'] }}</td>
+                  <td>{{ kenaikansukubunga['bakidebet']| rupiah }}</td>
+                  <td>{{ kenaikansukubunga['jangkawaktu'] }}</td>
+                  <td>{{ kenaikansukubunga['sbaw'] }} - {{ kenaikansukubunga['sbak'] }} </td>
+                  <td>{{ kenaikansukubunga['sukubunga'] }} % </td>
+                  <td>{{ kenaikansukubunga['jadwaljatuhtempo'] }}</td>
+                  <td>{{ kenaikansukubunga['akad'] }}</td>
+                  <td>{{ ((kenaikansukubunga['bakidebet'] * kenaikansukubunga['sukubunga']) / 100)|round|int| rupiah }}</td>
+                  <td>
+                    <a href="/notifikasi/vewnotif/detail/{{ kenaikansukubunga['norek'] }}">
+                      <img src="{{ url_for('static', filename='icon/detail.png') }}" />
+                    </a>
+                    <a href="/notifikasi/viewnotif/notifhapus/{{ kenaikansukubunga['norek'] }}">
+                      <img src="{{ url_for('static', filename='icon/done.png') }}" />
+                    </a>
+                  </td>
+                </tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -107,29 +165,57 @@
         </div>
       </div>
     </div>
-</body>
 
-<script>
-  function myFunction() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-  
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+  </section>
+
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
+
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
         }
       }
     }
-  }
-</script>
+  </script>
 
 </html>

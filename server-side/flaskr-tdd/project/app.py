@@ -1,17 +1,27 @@
-from flask import Flask, request, session, redirect, url_for, render_template, make_response, flash
+from flask import Flask, request, session, redirect, url_for, render_template, make_response, flash,Response
 from flask_change_password.flask_change_password import ChangePassword, ChangePasswordForm
 from flaskext.mysql import MySQL
+from werkzeug.utils import secure_filename
+from flask import flash
 from werkzeug.security import generate_password_hash
+from flask import send_from_directory
+from flask import jsonify
 import mysql.connector
+import math
 from datetime import datetime
+from datetime import date
+from flask import send_file
+import datetime
 import pymysql 
+import os
 import re 
 import pdfkit
 import locale
 
+
  
 app = Flask(__name__)
-
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')  # Mengatur lokasi folder upload
  
 app.secret_key = 'cairocoders-ednalan'
  
@@ -27,6 +37,7 @@ app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'bri-minder'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
+
 
 @app.route('/', methods=['POST', 'GET'])
 def function():
@@ -104,7 +115,7 @@ def registrasi():
             msg = 'Please fill out the form!'
         else:
             
-            cursor.execute('INSERT INTO user VALUES ( %s, %s, %s, %s)', (username, nama, password, level)) 
+            cursor.execute('INSERT INTO user VALUES ( %s, %s, %s, %s, %s)', (id, username, nama, password, level)) 
             conn.commit()
    
             msg = 'You have successfully registered!'
@@ -114,7 +125,6 @@ def registrasi():
     # Show registration form with message (if any)
     return render_template('registrasi.html', msg=msg)
   
-
 @app.route('/kelolauser', methods=['GET', 'POST'])
 def kelolauser():
     conn = mysql.connect()
@@ -126,32 +136,100 @@ def kelolauser():
         user = cursor.fetchall()
         conn.commit()
         cursor.close()
-        return render_template('kelolauser.html', username=session['level'], user=user)  
-
+        return render_template('kelolauser.html', username=session['level'], user=user)
+    
     return redirect(url_for('login'))
-       
-   
 
+@app.route('/gantipassword/<username>', methods=['GET', 'POST'])
+def gantipassword(username):
+    if 'loggedin' in session or session['level'] == 'admin':
+        if request.method == 'POST':
+            username = username
+            new_password = request.form['new_password']
+            confirm_password = request.form['confirm_password']
+
+            # Validasi input
+            if new_password != confirm_password:
+                flash('Password baru dan konfirmasi password tidak cocok', 'error')
+                return redirect(url_for('kelolauser'))
+
+            # Lakukan perubahan password sesuai kebutuhan
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute('SELECT * FROM user WHERE username = %s', (username,))
+            user = cursor.fetchone()
+            if user:
+                # Update password user di database
+                cursor.execute('UPDATE user SET password = %s WHERE username = %s', (new_password, username))
+                conn.commit()
+                flash('Password petugas berhasil diubah', 'success')
+                return redirect(url_for('kelolauser'))
+            else:
+                flash('Username tidak ditemukan', 'error')
+                return redirect(url_for('kelolauser'))
+            cursor.close()
+            conn.close()
+            return redirect(url_for('kelolauser'))
+
+        return render_template('gantipassword.html', username=session['level'],nama=username)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/hapusakun/<username>', methods=['GET', 'POST'])
+def hapusakun(username):
+    if 'loggedin' in session or session['level'] == 'admin':
+        username = username
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('DELETE FROM user WHERE username = %s', (username))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect(url_for('kelolauser'))
+    else:
+        return redirect(url_for('login'))
+   
 @app.route('/beranda')
 def home():
-    
     if 'loggedin' in session:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        notif = cursor.execute("SELECT * FROM kenaikansukubunga")
+
+        # Menghitung jumlah notifikasi kenaikansukubunga
+        cursor.execute("SELECT COUNT(*) FROM kenaikansukubunga")
+        notif_result = cursor.fetchone()
+        notif = notif_result['COUNT(*)'] if notif_result else 0
+
+        # Menghitung jumlah notifikasi laporan yang belum terbaca
+        cursor.execute("SELECT COUNT(*) FROM laporan WHERE status = 'unread'")
+        unread_counts_result = cursor.fetchone()
+        unread_counts = unread_counts_result['COUNT(*)'] if unread_counts_result else 0
+
+        
+       
+        # Mengambil data user
+        cursor.execute('SELECT * FROM user')
+        user = cursor.fetchall()
+
         conn.commit()
         cursor.close()
 
-        return render_template('beranda.html', username=session['level'], notif=notif)
+        # Menyimpan nilai unread_counts dalam sesi
+        session['unread_counts'] = unread_counts
+
         
+
+        return render_template('beranda.html', username=session['level'], unread_count=notif, unread_counts=unread_counts,  user=user)
+
     return redirect(url_for('login'))
+
 
 @app.route('/restrukturisasi')
 def restrukturisasi():
     
     if 'loggedin' in session:
         if request.method == 'GET':
-            date = datetime.today()
+            date = datetime.datetime.now()
             date = date.strftime('%Y-%m-%d')
             conn = mysql.connect()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -192,6 +270,7 @@ def restrukturisasi():
             return render_template('jadwalrestruk.html', datadebitur=datadebitur, notif=notif)
         return render_template('jadwalrestruk.html', username=session['username'])
     return redirect(url_for('login'))
+
 
 @app.route('/notifikasi', methods=['GET', 'POST'])
 def notifikasi():
@@ -257,6 +336,7 @@ def tambahdebitur():
 
         return render_template('jadwalrestruk.html', msg=msg)
     return redirect(url_for('login'))
+    
 @app.route('/restrukturisasi/editdebitur/<norek>', methods=['GET', 'POST'])
 def editdebitur(norek):
     if 'loggedin' in session:
@@ -494,26 +574,36 @@ def detaildebitur2(norek):
             return render_template('detaildebitur2.html', detaildebitur=detaildebitur)
     return redirect(url_for('login'))
 
-@app.route('/cetak_pdf/<norek>', methods=['GET', 'POST'])
+
+@app.route('/generate_pdf/<norek>', methods=['GET'])
 def cetak_pdf(norek):
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)                              
     if 'loggedin' in session:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
+        detaildebitur = cursor.fetchall()
+        conn.commit()
+        cursor.close()
         
-        if request.method == 'GET':
-            cursor.execute('SELECT * FROM datadebitur WHERE norek = %s', (norek,))
-            detaildebitur = cursor.fetchall()
-            conn.commit()
-            cursor.close()
+        path_wkhtmltopdf = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+        config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
-            html = render_template("pdf.html", detaildebitur=detaildebitur, norek=norek)
-            config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
-            pdf = pdfkit.from_string(html, False, configuration=config)
+        rendered_html = render_template('pdf.html', detaildebitur=detaildebitur)
 
-            response = make_response(pdf)
-            response.headers['Content-Type'] = 'application/pdf'
-            response.headers['Content-Disposition'] = 'inline; filename=laporan.pdf'
-            return response
+        pdf = pdfkit.from_string(rendered_html,configuration=config)
+        
+        response = make_response(pdf)
+        response.headers['Content-Type'] = 'application/pdf'
+        #response.headers['Content-Disposition'] = 'attachment; filename=detail_debitur.pdf'
+        return response
+
+                                      
+    return redirect(url_for('login'))
+
+
+
+
+
 
 @app.route('/restrukturisasi/debiturhapus/<norek>', methods=['GET', 'POST'])
 def debiturhapus(norek):
@@ -783,55 +873,17 @@ def editppnd(NoPPNdanTanggalPPN):
                 cursor.execute('UPDATE IGNORE ppnd SET NamaDebitur = %s WHERE NoPPNdanTanggalPPN = %s', (new_Nama_Debitur, NoPPNdanTanggalPPN))
                 conn.commit()
                 
-            if not request.form['Alamat No. Telp/HP'] == '':
-                new_Alamat_No_Telp_HP = request.form['Alamat No. Telp/HP']
-                cursor.execute('UPDATE IGNORE ppnd SET AlamatdanNoTeleponHP = %s WHERE NoPPNdanTanggalPPN = %s', (new_Alamat_No_Telp_HP, NoPPNdanTanggalPPN))
-                conn.commit()
+            # Tambahkan logika update untuk kolom lainnya yang sesuai
             
-            if not request.form['Jenis Fasilitas Kredit'] == '':
-                new_Jenis_Fasilitas_Kredit = request.form['Jenis Fasilitas Kredit']
-                cursor.execute('UPDATE IGNORE ppnd SET JenisFasilitasKredit = %s WHERE NoPPNdanTanggalPPN = %s', (new_Jenis_Fasilitas_Kredit, NoPPNdanTanggalPPN))
-                conn.commit()
-
-            if not request.form['Jenis Dok Kredit yang Ditunda'] == '':
-                new_Jenis_Dok_Kredit_yang_Ditunda = request.form['Jenis Dok Kredit yang Ditunda']
-                cursor.execute('UPDATE IGNORE ppnd SET JenisDokKredityangDitunda = %s WHERE NoPPNdanTanggalPPN = %s', (new_Jenis_Dok_Kredit_yang_Ditunda, NoPPNdanTanggalPPN))
-                conn.commit()
-            
-            if not request.form['Lamanya ditunda'] == '':
-                new_Lamanya_ditunda = request.form['Lamanya ditunda']
-                cursor.execute('UPDATE IGNORE ppnd SET LamanyaDitunda = %s WHERE NoPPNdanTanggalPPN = %s', (new_Lamanya_ditunda, NoPPNdanTanggalPPN))
-                conn.commit()
-
-            if not request.form['Tanggal Batas Akhir'] == '':
-                new_Tanggal_Batas_Akhir = request.form['Tanggal Batas Akhir']
-                cursor.execute('UPDATE IGNORE ppnd SET TanggalBatasAkhir = %s WHERE NoPPNdanTanggalPPN = %s', (new_Tanggal_Batas_Akhir, NoPPNdanTanggalPPN))
-                conn.commit()
-            
-            if not request.form['Pejabat Pemrakarsa'] == '':
-                new_Pejabat_Pemrakarsa = request.form['Pejabat Pemrakarsa']
-                cursor.execute('UPDATE IGNORE ppnd SET PejabatPemrakarsa = %s WHERE NoPPNdanTanggalPPN = %s', (new_Pejabat_Pemrakarsa, NoPPNdanTanggalPPN))
-                conn.commit()
-
-            if not request.form['Pejabat Pemutus'] == '':
-                new_Pejabat_Pemutus = request.form['Pejabat Pemutus']
-                cursor.execute('UPDATE IGNORE ppnd SET PejabatPemutus = %s WHERE NoPPNdanTanggalPPN = %s', (new_Pejabat_Pemutus, NoPPNdanTanggalPPN))
-                conn.commit()
-
-            if not request.form['keterangan'] == '':
-                new_keterangan = request.form['keterangan']
-                cursor.execute('UPDATE IGNORE ppnd SET Keterangan = %s WHERE NoPPNdanTanggalPPN = %s', (new_keterangan, NoPPNdanTanggalPPN))
-                conn.commit()
-                
             return redirect(url_for('ppnd'))
     return redirect(url_for('login'))
 
 @app.route('/register/ppnd/hapus/<NoPPNdanTanggalPPN>', methods=['GET', 'POST'])
 def hapusppnd(NoPPNdanTanggalPPN):
-    conn = mysql.connect()
-    cursor = conn.cursor(pymysql.cursors.DictCursor)
     if 'loggedin' in session:
         if request.method == 'GET':
+            conn = mysql.connect()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute('DELETE IGNORE FROM ppnd WHERE NoPPNdanTanggalPPN = %s', (NoPPNdanTanggalPPN,))
             conn.commit()
             cursor.close()
@@ -1536,7 +1588,7 @@ def editangkringan(NoRekening):
             
             if not request.form['Waktu'] == '':
                 new_Waktu = request.form['Waktu']
-                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET Waktu = %s WHERE NoRekening = %s', (new_Waktu, NoRekening))
+                cursor.execute('UPDATE IGNORE reg_kkb_cop_angkr SET JangkaWaktu = %s WHERE NoRekening = %s', (new_Waktu, NoRekening))
                 conn.commit()
 
             if not request.form['Angsuran Pokok'] == '':
@@ -1562,7 +1614,6 @@ def editangkringan(NoRekening):
             return redirect(url_for('angkringan'))
 
     return redirect(url_for('login'))
-
 
 @app.route('/register/angkringan/hapus/<NoRekening>', methods=['GET', 'POST'])
 def hapusangkringan(NoRekening):
@@ -2799,21 +2850,6 @@ def editslik(NamaDebitur):
                 conn.commit()
                 
             
-            if not request.form['Tanggal1'] == '':
-                new_Tanggal1 = request.form['Tanggal1']
-                cursor.execute('UPDATE IGNORE reg_slik SET Tanggal_ = %s WHERE NamaDebitur = %s', (new_Tanggal1, NamaDebitur))
-                conn.commit()
-
-            if not request.form['Nama'] == '':
-                new_Nama = request.form['Nama']
-                cursor.execute('UPDATE IGNORE reg_slik SET Nama = %s WHERE NamaDebitur = %s', (new_Nama, NamaDebitur))
-                conn.commit()
-            
-            if not request.form['Debitur'] == '':
-                new_Debitur = request.form['Debitur']
-                cursor.execute('UPDATE IGNORE reg_slik SET Debitur = %s WHERE NamaDebitur = %s', (new_Debitur, NamaDebitur))
-                conn.commit()
-            
             return redirect(url_for('slik'))
 
     return redirect(url_for('login'))
@@ -3360,84 +3396,117 @@ def hapusadk(Keterangan):
     return redirect(url_for('login'))
 
 
-
-# Fungsi untuk memeriksa apakah pengguna adalah admin
 def is_admin():
-    # Masukkan logika atau kode untuk memeriksa apakah pengguna memiliki hak admin di sini
-    # Misalnya, dapatkan informasi pengguna saat ini dari session dan periksa apakah mereka adalah admin
-    # Kembalikan True jika pengguna adalah admin, dan False jika bukan
-    # Contoh sederhana:
     if 'level' in session and session['level'] == 'admin':
         return True
     else:
         return False
 
+
 # Halaman daftar pengguna
-@app.route('/')
-def daftar_pengguna():
-    # Membuat koneksi ke basis data
-    conn = mysql.connection
-    cursor = conn.cursor()
+@app.route('/group-chat', methods=['GET', 'POST'])
+def group_chat():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            message = request.form['message']
+            sender = session['username']  # Mengambil username pengirim dari sesi
+            current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            
+            # Menyimpan pesan ke tabel GroupChat bersama dengan waktu pengiriman dan pengirim
+            query = "INSERT INTO GroupChat (message, created_at, sender) VALUES (%s, %s, %s)"
+            cursor.execute(query, (message, current_time, sender))
+            conn.commit()
+        # Mengambil semua pesan dari tabel GroupChat
+        query = "SELECT * FROM GroupChat ORDER BY created_at ASC"
+        cursor.execute(query)
+        messages = cursor.fetchall()
+        
 
-    # Mendapatkan data pengguna dari basis data
-    cursor.execute("SELECT * FROM user")
-    users = cursor.fetchall()
+        return render_template('group_chat.html', messages=messages)
+    else:
+        return redirect(url_for('login'))
+    
+@app.route('/clear-chat', methods=['POST'])
+def clear_chat():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        # Hapus semua data dari tabel GroupChat
+        query = "TRUNCATE TABLE GroupChat"
+        cursor.execute(query)
+        conn.commit()
+        return redirect(url_for('group_chat'))
+    else:
+        return redirect(url_for('login'))
 
-    # Menutup kursor dan koneksi
-    cursor.close()
-    conn.close()
 
-    return render_template('daftar_pengguna.html', users=users)
 
-# Halaman ganti password
-@app.route('/gantipassword', methods=['GET', 'POST'])
-def ganti_password():
-    if request.method == 'POST':
-        # Ambil data dari form
-        username = request.form.get('username', '')  # Menggunakan nilai default untuk menghindari KeyError
-        password_baru = request.form.get('password_baru', '')
-        konfirmasi_password = request.form.get('konfirmasi_password', '')
+'''@app.route('/notes', methods=['GET', 'POST'])
+def notes():
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            title = request.form['title']
+            content = request.form['content']
+            # Menyimpan judul dan konten catatan ke tabel Notes
+            query = "INSERT INTO Notes (title, content) VALUES (%s, %s)"
+            cursor.execute(query, (title, content,))
+            conn.commit()
+    
+    # Mengambil semua catatan dari tabel Notes
+    query = "SELECT * FROM Notes"
+    cursor.execute(query)
+    notes = cursor.fetchall()
 
-        if username and password_baru and konfirmasi_password:
-            # Membuat koneksi ke basis data
-            conn = mysql.connection
-            cursor = conn.cursor()
+    return render_template('notes.html', notes=notes)
 
-            # Mendapatkan data pengguna dari basis data berdasarkan username
-            cursor.execute("SELECT * FROM user WHERE username = %s", (username,))
-            user = cursor.fetchone()
 
-            if user:
-                # Periksa apakah pengguna adalah admin
-                if user[3] == 'admin':  # asumsikan level admin berada di indeks kolom ke-3
-                    if password_baru == konfirmasi_password:
-                        # Update password pengguna di basis data
-                        cursor.execute("UPDATE user SET password = %s WHERE username = %s", (password_baru, username))
-                        conn.commit()
-                        # Menutup kursor dan koneksi
-                        cursor.close()
-                        conn.close()
-                        return 'Password telah diubah.'
-                    else:
-                        # Menutup kursor dan koneksi
-                        cursor.close()
-                        conn.close()
-                        return 'Konfirmasi password tidak cocok.'
-                else:
-                    # Menutup kursor dan koneksi
-                    cursor.close()
-                    conn.close()
-                    return 'Anda tidak memiliki izin untuk mengubah password pengguna.'
-            else:
-                # Menutup kursor dan koneksi
-                cursor.close()
-                conn.close()
-                return 'Pengguna tidak ditemukan.'
-        else:
-            return 'Harap isi semua kolom form.'
 
-    return render_template('gantipassword.html')
 
+@app.route('/obrolan')
+def obrolan():
+    if 'username' in session:
+        conn = mysql.connect()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM user")
+        users = cur.fetchall()
+        cur.close()
+        conn.close()
+        return render_template('obrolan.html', users=users)
+    else:
+        return redirect('/login')
+
+@app.route('/room-chat/<int:user_id>')
+def room_chat(user_id):
+    if 'username' in session:
+        conn = mysql.connect()
+        cur = conn.cursor()
+
+        # Ambil informasi pengguna yang sedang login
+        current_user_id = session['user_id']
+        cur.execute("SELECT username FROM user WHERE id = %s", (current_user_id,))
+        current_username = cur.fetchone()[0]
+
+        # Ambil informasi pengguna yang akan diajak obrolan
+        cur.execute("SELECT username FROM user WHERE id = %s", (user_id,))
+        target_username = cur.fetchone()[0]
+
+        # Ambil pesan yang dikirim antara kedua pengguna
+        cur.execute("SELECT * FROM pesan WHERE (pengirim = %s AND penerima = %s) OR (pengirim = %s AND penerima = %s) ORDER BY tanggal_pengiriman ASC",
+                    (current_user_id, user_id, user_id, current_user_id))
+        pesan = cur.fetchall()
+        session['user_id'] = user_id
+
+
+        cur.close()
+        conn.close()
+
+        return render_template('room_chat.html', current_username=current_username, target_username=target_username, pesan=pesan)
+    else:
+        return redirect('/login')
 
 
 
@@ -3452,7 +3521,338 @@ def delete():
         return redirect(url_for('user'))
     return redirect(url_for('login'))
 
+# Fungsi untuk memeriksa apakah pengguna sudah login
+def user_belum_login():
+    return 'username' not in session
 
+# Fungsi untuk mendapatkan pengguna yang sedang login
+def get_current_user():
+    return session['username']
+
+# Register the function as a template context processor
+@app.context_processor
+def inject_current_user():
+    return dict(get_current_user=get_current_user)
+
+
+
+        
+
+# Halaman pengiriman pesan
+@app.route('/kirim-pesan', methods=['GET', 'POST'])
+def kirim_pesan():
+    if request.method == 'POST':
+        penerima = request.form['penerima']
+        isi_pesan = request.form['isi_pesan']
+        
+        if 'username' in session:
+            pengirim = session['username']
+            simpan_pesan(pengirim, penerima, isi_pesan)
+            return redirect('/pesan')
+        else:
+            return render_template('error.html', message="Anda harus login untuk mengirim pesan.")
+    
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM user")
+    user = cur.fetchall()
+    cur.close()
+    conn.close()
+    
+    return render_template('kirim_pesan.html', user=user)
+
+# Fungsi untuk menyimpan pesan ke database
+def simpan_pesan(pengirim, penerima, isi_pesan):
+    conn = mysql.connect()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM user WHERE username = %s", (penerima,))
+    result = cur.fetchone()
+    if result:
+        penerima_id = result[0]
+        cur.execute("INSERT INTO pesan (pengirim, penerima, isi_pesan) VALUES (%s, %s, %s)", (pengirim, penerima_id, isi_pesan))
+        conn.commit()
+    cur.close()
+    conn.close()
+
+# Halaman pesan
+@app.route('/pesan')
+def pesan():
+    if 'username' in session:
+        pengguna = session['username']
+        
+        conn = mysql.connect()
+        cur = conn.cursor()
+        cur.execute("SELECT u.username AS pengirim, p.isi_pesan, p.tanggal_pengiriman FROM pesan p JOIN user u ON p.pengirim = u.id JOIN user u2 ON p.penerima = u2.id WHERE u2.username = %s ORDER BY p.tanggal_pengiriman DESC", (pengguna,))
+        pesan = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        return render_template('pesan.html', pesan=pesan, pengguna=pengguna)
+    else:
+        return redirect('/login')'''
+
+
+# Fungsi untuk menghasilkan nama file yang unik
+def generate_unique_filename(filename):
+    timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+    unique_filename = f"{timestamp}_{filename}"
+    return unique_filename
+
+@app.route('/laporan', methods=['GET'])
+@app.route('/laporan/<int:page>', methods=['GET'])
+def laporan(page=1):
+    if 'loggedin' in session:
+        username = session['username']
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        keterangan = request.args.get('keterangan')  # Ambil parameter pencarian keterangan
+
+        # Retrieve laporan data from the database based on the search query and order by tanggal descending
+        if keterangan:
+            cursor.execute("SELECT * FROM laporan WHERE keterangan LIKE %s ORDER BY tanggal DESC", ('%' + keterangan + '%',))
+        else:
+            cursor.execute("SELECT * FROM laporan ORDER BY tanggal ASC")
+
+        laporan = cursor.fetchall()
+
+        # Update status laporan menjadi "read" untuk semua laporan
+        cursor.execute("UPDATE laporan SET status = 'read'")
+        conn.commit()
+
+        # Commit perubahan ke database
+        conn.commit()
+
+        # Mendapatkan jumlah notifikasi yang belum dibaca oleh admin
+        if session['level'] == 'admin':
+            unread_counts = get_unread_notifications_count()
+        else:
+            unread_counts = 0
+
+        # Set nilai unread_counts menjadi 0 saat halaman laporan dibuka
+        session['unread_counts'] = 0
+
+        # Count the total number of laporan
+        cursor.execute("SELECT COUNT(*) FROM laporan")
+        total_laporan = cursor.fetchone()[0]
+        total_pages = math.ceil(total_laporan / 5)
+
+        # Close cursor and database connection
+        cursor.close()
+        conn.close()
+
+        return render_template('laporan.html', laporan=laporan, page=page, total_pages=total_pages, unread_counts=session.get('unread_counts', 0))
+
+    return redirect(url_for('login'))
+
+@app.route('/laporan/download/<int:laporan_id>', methods=['GET'])
+def download_laporan(laporan_id):
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Dapatkan informasi laporan berdasarkan ID dari database
+        cursor.execute("SELECT * FROM laporan WHERE id = %s", (laporan_id,))
+        laporan = cursor.fetchone()
+
+        # Periksa apakah laporan ditemukan
+        if laporan:
+            # Periksa status laporan sebelum diubah
+            if laporan[7] != 'read':  # Ganti indeks 3 dengan indeks yang benar untuk kolom status di tabel laporan
+                # Update status laporan menjadi "read"
+                cursor.execute("UPDATE laporan SET status = 'read' WHERE id = %s", (laporan_id,))
+                conn.commit()
+
+                # Kurangi nilai unread_counts sebanyak 1
+                session['unread_counts'] = session.get('unread_counts', 0) - 1
+
+            # Close cursor and database connection
+            cursor.close()
+            conn.close()
+
+            # Lakukan proses unduh file
+            file_name = laporan[7]  # Ganti dengan indeks yang benar untuk kolom yang menyimpan nama file di tabel laporan
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)  # Ganti dengan path direktori uploads yang sesuai
+            if os.path.exists(file_path):
+                return send_from_directory(app.config['UPLOAD_FOLDER'], file_name, as_attachment=True)
+
+        # Jika laporan tidak ditemukan atau file tidak ada, kembali ke halaman laporan
+        return redirect(url_for('laporan'))
+
+    return redirect(url_for('login'))
+
+
+
+
+
+
+@app.route('/laporan/hapus/<int:laporan_id>', methods=['POST'])
+def hapus_laporan(laporan_id):
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Hapus laporan berdasarkan ID dari database
+        cursor.execute("DELETE FROM laporan WHERE id = %s", (laporan_id,))
+        conn.commit()
+
+        # Close cursor and database connection
+        cursor.close()
+        conn.close()
+
+        return redirect(url_for('laporan'))
+
+    return redirect(url_for('login'))
+
+
+@app.route('/laporan/edit/<int:laporan_id>', methods=['GET', 'POST'])
+def edit_laporan(laporan_id):
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            judul = request.form['judul']
+            keterangan = request.form['keterangan']
+
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Update data laporan berdasarkan ID
+            cursor.execute("UPDATE laporan SET judul = %s, keterangan = %s WHERE id = %s",
+                           (judul, keterangan, laporan_id))
+            conn.commit()
+
+            # Close cursor and database connection
+            cursor.close()
+            conn.close()
+
+            return redirect(url_for('laporan'))
+
+        else:
+            conn = mysql.connect()
+            cursor = conn.cursor()
+
+            # Ambil data laporan berdasarkan ID dari database
+            cursor.execute("SELECT * FROM laporan WHERE id = %s", (laporan_id,))
+            laporan = cursor.fetchone()
+
+            # Close cursor and database connection
+            cursor.close()
+            conn.close()
+
+            return render_template('edit_laporan.html', laporan=laporan)
+
+    return redirect(url_for('login'))
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            # Mengambil data dari form
+            judul = request.form.get('judul')
+            keterangan = request.form.get('keterangan')
+            dokumen = request.files.get('dokumen')
+            username = session['username']
+            tanggal = date.today().strftime("%Y-%m-%d")
+
+            if judul and keterangan:
+                dokumen_filename = None
+                if dokumen and dokumen.filename != '':
+                    # Mengamankan nama file yang diunggah
+                    dokumen_filename = secure_filename(dokumen.filename)
+                    # Menyimpan file ke direktori UPLOAD_FOLDER yang telah dikonfigurasi
+                    dokumen.save(os.path.join(app.config['UPLOAD_FOLDER'], dokumen_filename))
+
+                # Mendapatkan koneksi database
+                conn = mysql.connect()
+                cursor = conn.cursor()
+
+                # Insert data laporan ke dalam database
+                cursor.execute('INSERT INTO laporan (username, tanggal, judul, keterangan, file_laporan) VALUES (%s, %s, %s, %s, %s)',
+                               (username, tanggal, judul, keterangan, dokumen_filename))
+                conn.commit()
+
+                # Membuat notifikasi baru untuk admin
+                if session['level'] == 'admin':
+                    cursor.execute('SELECT id FROM user WHERE level = "admin"')
+                    admin_id = cursor.fetchone()[0]
+                    laporan_id = cursor.lastrowid
+                    cursor.execute('INSERT INTO notifications (user_id, laporan_id) VALUES (%s, %s)',
+                                   (admin_id, laporan_id))
+                    conn.commit()
+
+                cursor.close()
+                conn.close()
+
+                return redirect(url_for('upload'))
+
+        return render_template('upload.html')
+
+    return redirect(url_for('login'))
+
+def update_unread_notifications_count(count):
+    session['unread_count'] = count
+
+def get_unread_notifications_count():
+    if 'loggedin' in session and session['level'] == 'admin':
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Mengambil jumlah notifikasi yang belum terbaca dari tabel notifikasi
+        cursor.execute("SELECT COUNT(*) FROM notifikasi WHERE status = 'unread'")
+        unread_count = cursor.fetchone()[0]
+
+        # Menutup cursor dan koneksi database
+        cursor.close()
+        conn.close()
+
+        return unread_count
+    else:
+        return 0
+
+@app.route('/laporan/set_read/<int:laporan_id>', methods=['GET'])
+def set_read(laporan_id):
+    if 'loggedin' in session and session['level'] == 'admin':
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        # Update status laporan menjadi "read" berdasarkan ID
+        cursor.execute("UPDATE laporan SET status = 'read' WHERE id = %s", (laporan_id,))
+        conn.commit()
+
+        # Close cursor and database connection
+        cursor.close()
+        conn.close()
+
+        # Mengurangi unreads_count
+        update_unread_notifications_count()
+
+        return jsonify({'status': 'success'})  # Mengirim respons JSON jika berhasil
+
+    return jsonify({'status': 'error'})  # Mengirim respons JSON jika terjadi kesalahan
+
+
+
+@app.route('/laporan_restrukturisasi')
+def laporan_restrukturisasi():
+    if 'loggedin' in session:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+        # Mengambil data debitur yang melewati jangka waktu dari database
+        today = datetime.date.today()
+        cursor.execute("SELECT namadebitur, norek, jangkawaktu, akad, jadwaltempo  FROM datadebitur WHERE jadwaltempo < %s", (today,))
+        debitur_laporan = cursor.fetchall()
+
+
+        cursor.close()
+
+        return render_template('laporan_restrukturisasi.html', debitur_laporan=debitur_laporan)
+
+    return redirect(url_for('login'))
+
+
+
+
+  
 @app.route('/logout')
 def logout():
    session.clear()

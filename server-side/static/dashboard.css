@@ -1,0 +1,67 @@
+/* dashboard.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+  }
+  
+  .box-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .box {
+    width: calc(33.33% - 20px);
+    padding: 20px;
+    background-color: #f1f1f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .box h2 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .box p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .box ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+  }
+  
+  .box li {
+    margin-bottom: 5px;
+  }
+  
+  /* Styling untuk ketika user sudah login */
+  .box.logged-in {
+    background-color: #e0f2ff;
+  }
+  
+  .box.logged-in h2 {
+    color: #007bff;
+  }
+  
+  .box.logged-in p {
+    color: #333333;
+  }
+  
+  .box.logged-in ul {
+    color: #333333;
+  }
+  

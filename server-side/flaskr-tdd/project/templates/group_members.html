@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daftar Anggota Grup</title>
+</head>
+<body>
+    <h1>Daftar Anggota Grup</h1>
+    <ul>
+        {% for member in group_members %}
+            <li>{{ member.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

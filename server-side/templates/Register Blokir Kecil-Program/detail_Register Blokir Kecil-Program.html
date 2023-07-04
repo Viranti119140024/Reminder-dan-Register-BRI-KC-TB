@@ -11,7 +11,50 @@
   <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   
   <script src="script.js" defer></script>
+
+  <style>
+    
+    .btn_wrapper {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-approve {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 30px;
+    }
+
+    .btn-reject {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-batalkan {
+      background-color: orange;
+      color: white;
+      border: none;
+      padding: 4px 13px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .bx {
+        font-size: 24px; /* Ubah ukuran ikon sesuai kebutuhan */
+        color: #102d81; /* Ubah warna ikon sesuai kebutuhan */
+        margin-right: 3px; /* Tambahkan jarak antara ikon */
+      }
+  </style>
+  
   <title> Register Blokir Kecil-Program</title>
+
+  
     
 </head>
 
@@ -144,21 +187,50 @@
                   <th>Jumlah</th>
                   <th>Tanggal</th>
                   <th>Buka</th>
-                  <th>Paraf</th>
-                  <th>Keterangan</th>       
+                  
+                  <th>Keterangan</th>
+                  
+                  {% if session['level'] == 'Admin' %}
+                  <th>Status</th>
+                  <th>Validasi</th>
+                  {% else %}
+                  <th>Status</th>
+                  {% endif %}
+           
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {% for blokirkecil in blokirkecil %}
                 <tr>
-                  <td>{{ blokirkecil['NamaDebitur'] }}</td>
+                  <td>{{ blokirkecil['Nama'] }}</td>
                   <td>{{ blokirkecil['NoRekening'] }}</td>
                   <td>{{ blokirkecil['Jumlah'] }}</td>
                   <td>{{ blokirkecil['Tanggal'] }}</td>
                   <td>{{ blokirkecil['Buka'] }}</td>
-                  <td>{{ blokirkecil['Paraf'] }}</td>
-                  <td>{{ blokirkecil['Keterangan'] }}</td>                    
+                  
+                  <td>{{ blokirkecil['Keterangan'] }}</td>  
+                  <td>{{ blokirkecil['Status'] }}</td>
+                  <td>
+                    {% if session['level'] == 'Admin' %}
+                      {% if blokirkecil['Status'] == 'Belum Divalidasi' %}
+                        <div class="btn_wrapper">
+                          <form action="{{ url_for('approve_blokirkecil', no_rekening=blokirkecil['NoRekening']) }}" method="post" style="display: inline;">
+                            <button type="submit" class="btn-approve">Approve</button>
+                          </form>
+
+                          <form action="{{ url_for('reject_blokirkecil', no_rekening=blokirkecil['NoRekening']) }}" method="post" style="display: inline;">
+                            <button type="submit" class="btn-reject" >Reject</button>
+                        </form>
+                        
+                        </div>
+                      {% elif blokirkecil['Status'] == 'Disetujui' or blokirkecil['Status'] == 'Ditolak' %}
+                        <form action="{{ url_for('batalkan_validasi_blokirkecil', no_rekening=blokirkecil['NoRekening']) }}" method="post" style="display: inline;">
+                          <button type="submit" name="status" value="Batalkan Validasi" class="btn-batalkan">Batalkan Validasi</button>
+                        </form>
+                      {% endif %}
+                    {% endif %}
+                  </td>                  
                   
                   
                   <td>
@@ -228,7 +300,7 @@ table = document.getElementById("myTable");
 tr = table.getElementsByTagName("tr");
 
 for (i = 0; i < tr.length; i++) {
-  td = tr[i].getElementsByTagName("td")[0];
+  td = tr[i].getElementsByTagName("td")[1];
   if (td) {
     txtValue = td.textContent || td.innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {

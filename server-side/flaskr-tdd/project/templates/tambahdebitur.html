@@ -9,132 +9,191 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-  <title>Tambah Data Debitur</title>
+  <link rel="stylesheet" href="style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+  <!--<title>Dashboard Sidebar Menu</title>--> 
+    <title>Tambah Data Debitur</title>
 </head>
 <body>
-  <div class="body">
-    <div class="sidebar">
-      <header class="header"> <img class="gambar" src="{{ url_for('static', filename='icon/login-18.png') }}"></header>
-      <ul class="ul">
-        
-        <li>
-          <a href="/beranda" >
-            <img
-              src="{{ url_for('static', filename='icon/berandaputih.png') }}"
-               />
-            <p>BERANDA</p>
-          </a>
-        </li>
-        <li>
-          <a href="/restrukturisasi" class="active">
-            <img src="{{ url_for('static', filename='icon/restrukbiru.png') }}"  />
-            <p>RESTRUKTURISASI</p>
-          </a>
-        </li>
-        <li>
-          <a href="/register" >
-            <img src="{{ url_for('static', filename='icon/registerputih.png') }}"  />
-            <p>REGISTER</p>
-          </a>
-        </li>
-        <li>
-          <a href="/logout" >
-            <img src="{{ url_for('static', filename='icon/exitputih.png') }}"  />
-            <p>KELUAR</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="head">
-      <div class="wrap-bagianAtas">
-        <div class="bagianAtas">
-          <h2>Form Penambahan Data Debitur</h2>
-        </div>
+  <nav class="sidebar close">
+      <header>
+          <div class="image-text">
+              <span class="image">
+                <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+              </span>
+
+              <div class="text logo-text">
+                  <span class="name">BRIMINDER</span>
+                  <span class="profession">KC BRI Teluk Betung</span>
+              </div>
+          </div>
+
+          <i class='bx bx-chevron-right toggle'></i>
+      </header>
+
+      <div class="menu-bar">
+          <div class="menu">
+
+              <li class="search-box">
+                <i class='bx bx-user-circle icon' ></i>
+                <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+              </li>
+
+              <ul class="menu-links">
+                  <li class="nav-link">
+                      <a href="/beranda">
+                          <i class='bx bx-home-alt icon' ></i>
+                          <span class="text nav-text">Beranda</span>
+                      </a>
+                  </li>
+
+                  <li class="nav-link">
+                      <a href="/restrukturisasi">
+                          <i class='bx bx-notepad icon' ></i>
+                          <span class="text nav-text">Restrukturisasi</span>
+                      </a>
+                  </li>
+
+                  <li class="nav-link">
+                      <a href="/register">
+                          <i class='bx bxs-file-plus icon'></i>
+                          <span class="text nav-text">Register</span>
+                      </a>
+                  </li>
+
+                 
+
+                 
+
+              </ul>
+          </div>
+
+          <div class="bottom-content">
+              <li class="">
+                  <a href="/logout">
+                      <i class='bx bx-log-out icon' ></i>
+                      <span class="text nav-text">Keluar</span>
+                  </a>
+              </li>
+
+              <li class="mode">
+                  <div class="sun-moon">
+                      <i class='bx bx-moon icon moon'></i>
+                      <i class='bx bx-sun icon sun'></i>
+                  </div>
+                  <span class="mode-text text">Dark mode</span>
+
+                  <div class="toggle-switch">
+                      <span class="switch"></span>
+                  </div>
+              </li>
+              
+          </div>
       </div>
-      
-      <div class="wrap-table">
+
+  </nav>
+
+  <section class="home">
+   
+    <div class="container">
+      <div class="content">
         <form action="{{ url_for('tambahdebitur') }}" method="POST" id="form" class="form-style-9">
-          <div class="flex-input">  
-          <div class="wrap-input">
-            <label htmlfor="nama_debitur" class="label-input">
+          <h2>Form Penambahan Data Debitur</h2>
+        
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname">
+              <label htmlfor="nama_debitur" class="label-input">
               Nama Debitur
             </label>
             <input type="text" class="input-field" name="nama_debitur" placeholder="" value="" />
           </div>
-              <div class="wrap-input">
-              <label htmlfor="no_rekening" class="label-input">
+          <div class="form-group fullname">
+            <label htmlfor="no_rekening" class="label-input">
                 No.Rekening
               </label>
               <input type="text" class="input-field" name="no_rekening" value="" placeholder=""/>
             </div>
           </div>
-          <div class="flex-input">  
-            <div class="wrap-input">
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname">
               <label htmlfor="jenis_kredit" class="label-input">
                 Plafond Awal(Rp.)
               </label>
               <input type="text" class="input-field" name="jenis_kredit" " placeholder="" value=""/>
           </div>
 
-            <div class="wrap-input">
-              <label htmlfor="baki_debet" class="label-input">
+          <div class="form-group fullname">
+            <label htmlfor="baki_debet" class="label-input">
                 Baki Debet (Rp.)
               </label>
               <input type="text" name="baki_debet" id="baki_debet"  class="input-field" " placeholder="" value=""/>
             </div>
           </div>
           
-          <div class="flex-input">  
-            <div class="wrap-input">
+          <div style="display: flex; gap: 265px;">
+            <div class="form-group fullname">
               <label htmlfor="rm" class="label-input">
                 Jangka Waktu Awal (Bulan)
               </label>
               <input type="text" class="input-field" name="rm" " placeholder="" value=""/>
             </div>
          
-          <div class="wrap-input">
-            <label htmlfor="jangkawaktu" class="label-input">
+            <div class="form-group fullname">
+              <label htmlfor="jangkawaktu" class="label-input">
               GP Restrukturisasi (Bulan)
             </label>
             <input type="text" class="input-field" name="jangkawaktu" " placeholder="" value=""/>
           </div>
-        
         </div>
            
-        
-          <div class="wrap-input">
-            <label htmlfor="jadwal_pokok" class="label-input">
+        <div style="display: flex; gap: 265px;">
+        <div class="form-group fullname">
+          <label htmlfor="jadwal_pokok" class="label-input">
              Bunga Pokok (%)
             </label>
             <input type="text" class="input-field" name="jadwal_pokok" placeholder="" value=""/>
           </div>
+          <div class="form-group fullname">
+            <label htmlfor="keterangan" class="label-input">
+              Angsuran Terbayar (Bulan)
+            </label>
+            <textarea type="text" class="input-field" name="keterangan" cols="61" rows="2"placeholder="" form="form"></textarea>
+          </div>
+        </div>
           
 
-          <div class="wrap-input">
+          <div style="display: flex; gap: 26px;">
+            <div class="form-group fullname" style="width: 100%;">
+
             <label htmlfor="sukubunga" class="label-input">
              Suku Bunga Restrukturisasi
             </label>
-            <div class="sb"> 
+            <div class="sb" style="display: flex; gap: 20px; font-size: 10px;" > 
               
-              <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan (1)"/> -
+              <input type="text" class="input-fieldsb" name="sbaw1" placeholder="Bulan (1)"/> 
               <input type="text" class="input-fieldsb" name="sbak1" placeholder="Bulan (2)"/> Suku Bunga % =
               <input type="text" class="input-fieldsb" name="sbp1" placeholder="Persen"/>
             </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan (3)"/> -
+            <br>
+            <div class="sb" style="display: flex; gap: 20px; font-size: 10px;">
+              <input type="text" class="input-fieldsb" name="sbaw2" placeholder="Bulan (3)"/> 
               <input type="text" class="input-fieldsb" name="sbak2" placeholder="Bulan (4)"/> Suku Bunga % =
               <input type="text" class="input-fieldsb" name="sbp2" placeholder="Persen"/> 
             </div>
-            <div class="sb">
-              <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan (5)"/> -
+            <br>
+            <div class="sb" style="display: flex; gap: 20px; font-size: 10px;">
+              <input type="text" class="input-fieldsb" name="sbaw3" placeholder="Bulan (5)"/> 
               <input type="text" class="input-fieldsb" name="sbak3" placeholder="Bulan (6)"/> Suku Bunga % =
               <input type="text" class="input-fieldsb" name="sbp3" placeholder="Persen"/>
             </div>
           </div>
+          </div>
     
-          <div class="flex-input">  
-          <div class="wrap-input">
+          <div style="display: flex; gap: 265px;">
+            <div class="wrap-input">
             <label htmlfor="akad" class="label-input">
               Akad 
             </label>
@@ -142,18 +201,49 @@
              
           </div>
 
-          <div class="wrap-input">
-            <label htmlfor="keterangan" class="label-input">
-              Angsuran Terbayar (Bulan)
-            </label>
-            <textarea type="text" class="input-field" name="keterangan" placeholder="" form="form"></textarea>
-          </div>
+          
           </div>
           <p class="msg">{{ msg }}</p>
+          <div class="form-group submit-btn" style="width: 440px;">
             <input type="submit" class="btn-ubah" value="Tambah Data" name="button_tambah_data"/>
         </form>
         </div>
       </div>
     </div>
+
+  </section>
+
+  <script>
+      const body = document.querySelector('body'),
+    sidebar = body.querySelector('nav'),
+    toggle = body.querySelector(".toggle"),
+    searchBtn = body.querySelector(".search-box"),
+    modeSwitch = body.querySelector(".toggle-switch"),
+    modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+  sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+  sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+  body.classList.toggle("dark");
+  
+  if(body.classList.contains("dark")){
+      modeText.innerText = "Light mode";
+  }else{
+      modeText.innerText = "Dark mode";
+      
+  }
+});
+  </script>
+
 </body>
 </html>
+
+
+  

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room Chat</title>
+</head>
+<body>
+    <h1>Room Chat dengan {{ username  }}</h1>
+    <h3>Selamat datang, {{ get_current_user() }}</h3>
+    <h4>Pesan:</h4>
+    <ul>
+        {% for message in pesan %}
+        <li>{{ message[3] }}</li>
+        {% endfor %}
+    </ul>
+    <br>
+    <form action="" method="POST">
+        <input type="text" name="isi_pesan">
+        <button type="submit">Kirim</button>
+    </form>
+    <br>
+    <a href="/obrolan">Kembali ke Obrolan</a>
+</body>
+</html>

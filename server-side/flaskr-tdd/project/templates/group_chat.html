@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='tambahdebitur.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+  <link rel="stylesheet" href="style.css">
+    
+    <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+  <!--<title>Dashboard Sidebar Menu</title>--> 
+    <title>Obrolan Grup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-right: 290px;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: scroll;
+            margin-right: 30%;
+            max-height: 550px; /* Set maksimum tinggi kontainer chat */
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 10px;
+
+        }
+
+        .outgoing {
+            align-self: flex-end;
+            background-color: #dcf8c6;
+            margin-left: 50%;
+
+        }
+
+        .incoming {
+            align-self: flex-start;
+            background-color: #f5f5f5;
+            margin-right: 50%;
+        }
+
+        .time {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .message-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        background-color: #e5e9f8;
+
+        padding: 10px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+        .message-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .message-form button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .message-form button:hover {
+            background-color: #45a049;
+        }
+
+        .message-form button[type="button"] {
+            background-color: #f44336;
+        }
+
+        .message-form button[type="button"]:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                  <img src="{{ url_for('static', filename='icon/bank-bri.jpg') }}" alt="logo_img" />
+                </span>
+  
+                <div class="text logo-text">
+                    <span class="name">BRIMINDER</span>
+                    <span class="profession">KC BRI Teluk Betung</span>
+                </div>
+            </div>
+  
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+  
+        <div class="menu-bar">
+            <div class="menu">
+  
+                <li class="search-box">
+                  <i class='bx bx-user-circle icon' ></i>
+                  <a class="text nav-text" >{{ session.level }} | {{ session.nama }}</a>                    
+                </li>
+  
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/beranda">
+                            <i class='bx bx-home-alt icon' ></i>
+                            <span class="text nav-text">Beranda</span>
+                        </a>
+                    </li>
+  
+                    <li class="nav-link">
+                        <a href="/restrukturisasi">
+                            <i class='bx bx-notepad icon' ></i>
+                            <span class="text nav-text">Restrukturisasi</span>
+                        </a>
+                    </li>
+  
+                    <li class="nav-link">
+                        <a href="/register">
+                            <i class='bx bxs-file-plus icon'></i>
+                            <span class="text nav-text">Register</span>
+                        </a>
+                    </li>
+  
+                </ul>
+            </div>
+  
+            <div class="bottom-content">
+                <li class="">
+                    <a href="/logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Keluar</span>
+                    </a>
+                </li>
+  
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+  
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
+            </div>
+        </div>
+  
+    </nav>
+  
+    <section class="home">
+  
+    <h1>Group ADK KC BRI Teluk Betung</h1>
+    
+    <div class="chat-container" id="chat-container">
+        
+        {% for message in messages %}
+            {% if message['sender'] == session['username'] %}
+                <div class="message outgoing">
+                    <p>{{ message['message'] }}</p>
+                    <span class="time">{{ message['created_at'] }}</span>
+                    <span class="sender" style="font-size: x-small;">~  {{ session['username'] }}</span>
+                </div>
+            {% else %}
+                <div class="message incoming">
+                    <p>{{ message['message'] }}</p>
+                    <span class="time">{{ message['created_at'] }}</span>
+                    <span class="sender" style="font-size: x-small;"> ~ {{ message['sender'] }}</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <form method="POST" action="/group-chat" class="message-form">
+        <input type="text" name="message" placeholder="Ketik pesan...">
+        <button type="submit">Kirim</button>
+        <button type="button" onclick="clearChat()">Clear Chat</button>
+    </form>
+    <script>
+        function clearChat() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua chat?')) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/clear-chat', true);
+                xhr.onload = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        location.reload();
+                    }
+                };
+                xhr.send();
+            }
+        }
+    
+        // Fungsi untuk otomatis scroll ke bagian bawah chat saat ada pesan baru
+        function scrollToBottom() {
+            var chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    
+        // Panggil fungsi scrollToBottom saat halaman pertama kali dimuat dan saat ada pesan baru
+        window.onload = scrollToBottom;
+        document.querySelector('.message-form').addEventListener('submit', function() {
+            setTimeout(scrollToBottom, 100); // Tunggu 100ms sebelum scroll ke bawah untuk memastikan pesan sudah muncul di kontainer chat
+        });
+    </script>
+    
+
+</section>
+
+<script>
+    const body = document.querySelector('body'),
+  sidebar = body.querySelector('nav'),
+  toggle = body.querySelector(".toggle"),
+  searchBtn = body.querySelector(".search-box"),
+  modeSwitch = body.querySelector(".toggle-switch"),
+  modeText = body.querySelector(".mode-text");
+
+
+toggle.addEventListener("click" , () =>{
+sidebar.classList.toggle("close");
+})
+
+searchBtn.addEventListener("click" , () =>{
+sidebar.classList.remove("close");
+})
+
+modeSwitch.addEventListener("click" , () =>{
+body.classList.toggle("dark");
+
+if(body.classList.contains("dark")){
+    modeText.innerText = "Light mode";
+}else{
+    modeText.innerText = "Dark mode";
+    
+}
+});
+</script>
+
+</body>
+</html>

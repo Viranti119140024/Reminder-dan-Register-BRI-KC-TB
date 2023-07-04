@@ -8,8 +8,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <script src="script.js" defer></script>
+  <style>
+    .btn_wrapper {
+      display: flex;
+      gap: 7px;
+    }
+  
+    .btn_approve{
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 18px;
+    }
+
+    .btn_reject {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+
+    }
+  
+    .btn_batalkan_validasi {
+      background-color: orange;
+      color: white;
+      padding: 4px 13px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .bx {
+    font-size: 24px; /* Ubah ukuran ikon sesuai kebutuhan */
+    color: #102d81; /* Ubah warna ikon sesuai kebutuhan */
+    margin-right: 3px; /* Tambahkan jarak antara ikon */
+  }
+  </style>
+  
+  
   <title>Register Peminjaman Berkas 1</title>
     
 </head>
@@ -145,8 +187,16 @@
                   <th>Keperluan</th>
                   <th>Tanggal Kembali</th>
                   <th>Kelengkapan Dokumen</th>
-                  <th>Pinjam (paraf)</th>  
-                  <th>Kembali (paraf)</th>                 
+                  
+
+                  {% if session['level'] == 'Admin' : %}
+                  <th>Status</th>
+                  <th>Validasi</th>
+                  {% else %}
+                  <th>Status</th>
+                  {% endif %}
+                 
+
                   <th>Aksi</th>
                   
                 </tr>
@@ -161,19 +211,39 @@
                   <td>{{ pb1['Keperluan'] }}</td>
                   <td>{{ pb1['TanggalKembali'] }}</td>
                   <td>{{ pb1['KelengkapanDokumen'] }}</td>
-                  <td>{{ pb1['Pinjamparaf'] }}</td>
-                  <td>{{ pb1['Kembaliparaf'] }}</td>
+                  
+                  <td>{{ pb1['Status'] }}</td>
+                  {% if session['level'] == 'Admin' : %}
                   <td>
-                    <a href="/register/pb1/edit/{{ pb1['NamaDebitur'] }}" >
-                       
-                      <img
-                        src="{{ url_for('static', filename='icon/edit.png') }}"
-                      />                      
+                    {% if pb1['Status'] == 'Belum Divalidasi' %}
+                    <div class="btn_wrapper">
+                      <form action="/register/pb1/approve/{{ pb1['NamaDebitur'] }}" method="post" style="display: inline;">
+                        <button type="submit" name="status" value="Approve" class="btn_approve">Approve</button>
+                      </form>
+                      <form action="/register/pb1/reject/{{ pb1['NamaDebitur'] }}" method="post" style="display: inline;">
+                        <button type="submit" name="status" value="Reject" class="btn_reject">Reject</button>
+                      </form>
+                    </div>
+                    {% elif pb1['Status'] == 'Disetujui' or pb1['Status'] == 'Ditolak' %}
+                    <form action="/register/pb1/batalkan-validasi/{{ pb1['NamaDebitur'] }}" method="post" style="display: inline;">
+                      <button type="submit" name="status" value="Batalkan Validasi" class="btn_batalkan_validasi">Batalkan Validasi</button>
+                    </form>
+                    {% endif %}
+                  </td>
+                  {% else %}
+                  
+                  {% endif %}
+                  
+
+                  <td>
+                    <a href="/register/pb1/edit/{{ pb1['NamaDebitur'] }}" class="bx">
+                      <i class="bx bx-edit"></i>   
                     </a>  
-                    <a href="/register/pb1/hapus/{{ pb1['NamaDebitur'] }}">
-                      <img src="{{ url_for('static', filename='icon/delete.png') }}"/>
-                    </a> 
-                 </td>
+                    <a href="/register/pb1/hapus/{{ pb1['NamaDebitur'] }}" class="bx">
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
+                  
 
 
                 </tr>
@@ -243,5 +313,3 @@ for (i = 0; i < tr.length; i++) {
 </script>
 
 </html>
-
-
